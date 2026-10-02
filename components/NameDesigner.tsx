@@ -68,8 +68,24 @@ export default function NameDesigner() {
     const NS = "http://www.w3.org/2000/svg", FS = 150;
     const svg = $<SVGSVGElement>("#np-svg"), text = $<SVGTextElement>("#np-text"),
       swash = $<SVGPathElement>("#np-swash"), beads = $<SVGGElement>("#np-beads"),
-      input = $<HTMLInputElement>("#np-name"), count = $<HTMLSpanElement>("#np-count");
+      input = $<HTMLInputElement>("#np-name"), count = $<HTMLSpanElement>("#np-count"),
+      // outline copy drawn behind the name, so joined script letters get one outline with no seams between them
+      edgeText = $<SVGTextElement>("#np-text-edge");
     let metal = "gold", font = "script", line = "line", ice = "none", kind = "pendant";
+    // showcase: until the visitor types or picks an option, rotate through example pieces
+    const DEMOS = [
+      { name: "Elena", font: "script", metal: "gold", ice: "none" },
+      { name: "Marco", font: "gothic", metal: "silver", ice: "line" },
+      { name: "Bella", font: "retro", metal: "rose", ice: "all" },
+      { name: "Jayden", font: "bold", metal: "gold", ice: "all" },
+      { name: "Sofia", font: "signature", metal: "gold", ice: "line" },
+    ];
+    let demo = true, demoI = 0, demoTimer = 0;
+    const demoOn = () => demo && !input.value.trim() && kind === "pendant";
+    function stopDemo() {
+      if (!demo) return;
+      demo = false; clearInterval(demoTimer); svg.classList.remove("swap");
+    }
     let bottomCanvas: HTMLCanvasElement | null = null, hookCtx: CanvasRenderingContext2D | null = null, hookCanvas: HTMLCanvasElement | null = null;
 
     function clean(v: string) {
@@ -110,8 +126,10 @@ export default function NameDesigner() {
     function paint() {
       const [fill, edge] = METALS[metal];
       text.setAttribute("fill", ice === "all" ? `url(#pave-${metal})` : fill);
-      text.setAttribute("stroke", edge);
-      text.setAttribute("stroke-width", ice === "all" ? "2.5" : "2");
+      text.setAttribute("stroke", "none");
+      edgeText.setAttribute("fill", edge);
+      edgeText.setAttribute("stroke", edge);
+      edgeText.setAttribute("stroke-width", ice === "all" ? "5" : "4");
       swash.setAttribute("stroke", fill);
       $("#np-hooks").setAttribute("stroke", fill);
       beads.querySelectorAll(".st-base").forEach(c => { c.setAttribute("fill", "url(#m-dia)"); c.setAttribute("stroke", edge); });
@@ -120,14 +138,26 @@ export default function NameDesigner() {
       beads.querySelectorAll(".st-hi").forEach(c => { c.setAttribute("fill", "#fff"); });
     }
     function layout() {
+      if (!demoOn()) return drawLayout();
+      const d = DEMOS[demoI], saved = [metal, font, ice, line] as const;
+      metal = d.metal; font = d.font; ice = d.ice; line = "line";
+      drawLayout();
+      [metal, font, ice, line] = saved;
+    }
+    function drawLayout() {
       if (!alive) return;
-      let name = input.value.trim();
-      const empty = !name;
+      // nothing typed yet: show a faded sample name so the preview is never just a line
+      const sample = !input.value.trim();
+      let name = sample ? (demoOn() ? DEMOS[demoI].name : kind === "earrings" ? "OG" : "Elena") : input.value.trim();
+      const empty = false;
+      svg.classList.toggle("sample", sample && !demoOn());
       name = name.charAt(0).toUpperCase() + name.slice(1);
       const f = FONTS[font];
       if (f[4]) name = name.toUpperCase();
       text.setAttribute("font-family", `'${f[0]}', cursive`); text.setAttribute("font-style", f[1]); text.setAttribute("font-weight", f[2]);
       text.textContent = name;
+      for (const a of ["font-family", "font-style", "font-weight"]) edgeText.setAttribute(a, text.getAttribute(a)!);
+      edgeText.textContent = name;
       // horizontal size from the real letters; vertical shape from the font size, so letters like g, j, y never break it
       // no name yet: draw only the underline, sized like a medium name
       const bb = empty ? { x: -260, y: -FS * 0.62, width: 520, height: FS * 0.8 } : text.getBBox();
@@ -226,10 +256,11 @@ export default function NameDesigner() {
     }
     function group(id: string, fn: (b: HTMLButtonElement) => void) {
       const btns = $$<HTMLButtonElement>("#" + id + " button");
-      btns.forEach(b => on(b, "click", () => { btns.forEach(x => x.setAttribute("aria-pressed", String(x === b))); fn(b); }));
+      btns.forEach(b => on(b, "click", () => { stopDemo(); btns.forEach(x => x.setAttribute("aria-pressed", String(x === b))); fn(b); }));
     }
 
     on(input, "input", () => {
+      stopDemo();
       const v = clean(input.value);
       if (v !== input.value) input.value = v;
       count.textContent = `${input.value.length} / ${input.maxLength}`;
@@ -282,7 +313,17 @@ export default function NameDesigner() {
     layout();
     if (document.fonts) { document.fonts.load("150px Yellowtail").then(layout, () => {}); document.fonts.ready.then(layout); }
 
-    return () => { alive = false; ac.abort(); };
+    // load the showcase fonts, then start rotating (not for visitors who prefer reduced motion)
+    if (document.fonts) DEMOS.forEach(d => { const f = FONTS[d.font]; document.fonts.load(`${f[1]} ${f[2]} 150px "${f[0]}"`).then(layout, () => {}); });
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      demoTimer = window.setInterval(() => {
+        if (!demoOn()) return;
+        svg.classList.add("swap");
+        setTimeout(() => { if (!alive || !demoOn()) return; demoI = (demoI + 1) % DEMOS.length; layout(); svg.classList.remove("swap"); }, 380);
+      }, 2800);
+    }
+
+    return () => { alive = false; clearInterval(demoTimer); ac.abort(); };
   }, [router]);
 
   return (
@@ -307,7 +348,8 @@ export default function NameDesigner() {
           <g id="np-piece" filter="url(#np-shadow)">
             <path id="np-swash" fill="none" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
             <g id="np-beads"></g>
-            <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeWidth="2" paintOrder="stroke">Elena</text>
+            <text id="np-text-edge" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeLinejoin="round" aria-hidden="true">Elena</text>
+            <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400">Elena</text>
           </g>
           <use id="np-clone" href="#np-piece" style={{ display: "none" }} />
           <g id="np-hooks" fill="none" strokeWidth="4" strokeLinecap="round" style={{ display: "none" }}><path id="np-h1" /><path id="np-h2" /></g>

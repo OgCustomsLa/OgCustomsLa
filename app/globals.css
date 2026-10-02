@@ -78,6 +78,8 @@ nav.main a,.top .btn{white-space:nowrap}
 .np .stage{aspect-ratio:2/1;background:radial-gradient(ellipse at 50% 45%,#FBFBF8 0%,#EDEDE6 100%);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .np svg{width:100%;height:100%;display:block;opacity:0;transition:opacity .4s ease}
 .np svg.ready{opacity:1}
+.np svg.ready.sample{opacity:.55}
+.np svg.ready.swap{opacity:0}
 .np-body{padding:1rem;display:grid;gap:.75rem}
 .seg.kind{margin-bottom:.1rem}
 .np-field label{display:flex;justify-content:space-between;margin-bottom:.35rem;font-size:.66rem}
@@ -120,12 +122,21 @@ nav.main a,.top .btn{white-space:nowrap}
 .morph .l2,.morph .l3{clip-path:inset(0 100% 0 0)}
 .morph .handle{position:absolute;top:0;bottom:0;left:0;width:2px;background:#A8854F;transform:translateX(-1px);pointer-events:none;transition:opacity .2s}
 .morph .handle span{display:none;position:absolute;top:50%;left:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#141414;color:#F1F1EC;display:flex;align-items:center;justify-content:center;font-size:.85rem}
-.morph-steps{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
-.morph-steps li{padding-left:.8rem;border-left:2px solid var(--line);transition:border-color .2s}
-.morph-steps b{display:block;font-size:.9rem;font-weight:500;color:var(--muted)}
-.morph-steps span{display:block;font-size:.8rem;color:var(--muted)}
-.morph-steps li.on{border-color:var(--gold)}
-.morph-steps li.on b{color:var(--ink)}
+/* sketch -> 3D print -> gold timeline, kept in step with the Elena animation */
+.morph-steps{--dot:34px;list-style:none;margin:.3rem 0 0;padding:0;display:grid;gap:1.05rem;position:relative}
+.morph-steps::before,.morph-steps::after{content:"";position:absolute;left:calc(var(--dot) / 2 - 1px);top:calc(var(--dot) / 2);bottom:calc(var(--dot) / 2);width:2px;background:var(--line)}
+.morph-steps::after{background:linear-gradient(#F3DC93,#A8854F);transform-origin:top;transform:scaleY(var(--fill,0));transition:transform .7s cubic-bezier(.3,.7,.2,1)}
+.morph-steps li{position:relative;z-index:1;display:flex;align-items:center;gap:.8rem}
+.ms-dot{flex:none;width:var(--dot);height:var(--dot);border-radius:50%;display:grid;place-items:center;background:var(--bg);border:1.5px solid var(--line);color:var(--muted);transition:background .4s ease,border-color .4s ease,color .4s ease,transform .4s ease,box-shadow .4s ease}
+.ms-dot svg{width:17px;height:17px}
+.ms-text b{display:block;font-size:.9rem;font-weight:500;color:var(--muted);letter-spacing:.02em;transition:color .3s ease}
+.ms-text span{display:block;font-size:.78rem;color:var(--muted);opacity:.75;line-height:1.35}
+.morph-steps li.done .ms-dot{border-color:#A8854F;color:#A8854F}
+.morph-steps li.on .ms-dot{background:linear-gradient(160deg,#F3DC93,#C9A24E 55%,#8C6A22);border-color:#8C6A22;color:#fff;transform:scale(1.12);box-shadow:0 6px 14px -6px rgba(140,106,34,.7)}
+.morph-steps li.on .ms-text b{color:var(--ink)}
+.morph-steps li.on .ms-text span{opacity:1}
+@media (prefers-reduced-motion:no-preference){.morph-steps li.on .ms-dot{animation:msPulse 1.6s ease-out infinite}}
+@keyframes msPulse{0%{box-shadow:0 6px 14px -6px rgba(140,106,34,.7),0 0 0 0 rgba(201,162,78,.5)}100%{box-shadow:0 6px 14px -6px rgba(140,106,34,.7),0 0 0 12px rgba(201,162,78,0)}}
 @media (max-width:520px){.morph-wrap{grid-template-columns:1fr}}
 
 .divider{display:flex;align-items:center;gap:1rem;margin-top:clamp(2.5rem,5vw,3.5rem)}

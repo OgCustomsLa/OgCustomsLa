@@ -47,7 +47,11 @@ export default function Morph() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const steps = [["Sketch", "Your idea on paper"], ["3D print", "Modeled and printed"], ["Gold", "Cast and polished"]];
+  const steps: [string, string, React.ReactNode][] = [
+    ["Sketch", "Your idea on paper", <path key="p" d="M5 19l1.2-4.2L15.5 5.5a2 2 0 0 1 2.9 0l.1.1a2 2 0 0 1 0 2.9L9.2 17.8z M13.5 7.5l3 3" />],
+    ["3D print", "Modeled and printed", <path key="c" d="M12 3l8 4.5v9L12 21l-8-4.5v-9z M4 7.5l8 4.5 8-4.5 M12 12v9" />],
+    ["Gold", "Cast and polished", <path key="d" d="M7 4h10l4 5-9 11L3 9z M3 9h18 M9 4l-1.5 5L12 20l4.5-11L15 4" />],
+  ];
 
   return (
     <div className="morph-wrap">
@@ -59,9 +63,14 @@ export default function Morph() {
       </div>
       <div className="morph-side">
         <p className="opt-label">From sketch to gold</p>
-        <ol className="morph-steps">
-          {steps.map(([b, s], i) => (
-            <li key={b} className={i === step ? "on" : undefined}><b>{b}</b><span>{s}</span></li>
+        <ol className="morph-steps" style={{ "--fill": step / (steps.length - 1) } as React.CSSProperties}>
+          {steps.map(([b, s, icon], i) => (
+            <li key={b} className={i === step ? "on" : i < step ? "done" : undefined}>
+              <span className="ms-dot" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{icon}</svg>
+              </span>
+              <span className="ms-text"><b>{b}</b><span>{s}</span></span>
+            </li>
           ))}
         </ol>
       </div>

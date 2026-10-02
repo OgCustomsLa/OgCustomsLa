@@ -84,7 +84,7 @@ export default function Home() {
             <div>
               <HeroTitle />
               <Morph />
-              <p className="lede"><b>If you can imagine it, we can make it.</b> A photo, a sketch on a napkin or just a few words — we turn it into a one-of-a-kind ring, pendant, earrings or bracelet, designed in 3D and made just for you.</p>
+              <p className="lede"><b>If you can imagine it, we can make it.</b> Send a sketch, a photo or an idea — we design it in 3D and make it yours.</p>
               <div className="ctas">
                 <Link href="/order" className="btn">Start an order</Link>
                 <a href="#process" className="btn ghost">How it works</a>
