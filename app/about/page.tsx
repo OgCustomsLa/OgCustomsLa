@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EMAIL } from "@/lib/site";
 
-export const metadata: Metadata = { title: "About — OG Customs LA" };
+export const metadata: Metadata = { title: "About us" };
 
 export default function AboutPage() {
   return (
@@ -18,7 +18,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="ab-values">
+        <div className="ab-values" data-reveal>
           <div>
             <svg viewBox="0 0 32 32" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M7 25l3-1 13-13-2-2L8 22z" stroke="#141414" /><path d="M6 28h20" stroke="#A8854F" /></svg>
             <h3>Made for one person</h3>
@@ -36,7 +36,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="ab-two">
+        <div className="ab-two" data-reveal>
           <div>
             <p className="label">Who we work with</p>
             <h2>People <span className="g">and jewelers</span></h2>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="ab-cta">
+        <div className="ab-cta" data-reveal>
           <h2>Your vision. <span className="g">Our expertise.</span></h2>
           <div className="ab-cta-row">
             <Link href="/order" className="btn">Start an order</Link>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import HeroTitle from "@/components/HeroTitle";
 import Morph from "@/components/Morph";
+import Ticker from "@/components/Ticker";
 import NameDesigner from "@/components/NameDesigner";
 import RevealList from "@/components/RevealList";
 import SizeFinder from "@/components/SizeFinder";
@@ -48,13 +49,25 @@ const FAQ: { group: string; items: { q: string; a: React.ReactNode; open?: boole
   },
 ];
 
+// Business details for search engines (Google rich results).
+const BUSINESS_LD = {
+  "@context": "https://schema.org",
+  "@type": "JewelryStore",
+  name: "OG Customs LA",
+  description: "Custom jewelry made to order in Los Angeles: designed in 3D and cast in gold or silver, or delivered as cast-ready 3D files.",
+  email: EMAIL,
+  address: { "@type": "PostalAddress", addressLocality: "Los Angeles", addressRegion: "CA", addressCountry: "US" },
+  areaServed: "Worldwide",
+  sameAs: ["https://www.instagram.com/ogcustomsla", "https://www.facebook.com/ogcustomsla"],
+};
+
 function Strip({ label, images }: { label: string; images: [string, string, string][] }) {
   return (
     <div className="strip" aria-label={label}>
       {images.map(([src, alt, cap], i) => (
         <Fragment key={src}>
           {i > 0 && <div className="arrow" aria-hidden="true">→</div>}
-          <figure><img src={src} alt={alt} /><figcaption><span>{i + 1}</span>{cap}</figcaption></figure>
+          <figure><img src={src} alt={alt} loading="lazy" decoding="async" /><figcaption><span>{i + 1}</span>{cap}</figcaption></figure>
         </Fragment>
       ))}
     </div>
@@ -64,6 +77,7 @@ function Strip({ label, images }: { label: string; images: [string, string, stri
 export default function Home() {
   return (
     <main id="home">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_LD) }} />
       <section className="hero">
         <div className="wrap">
           <div className="hero-grid">
@@ -86,7 +100,7 @@ export default function Home() {
         </div>
         <div className="wrap">
           <div className="divider" aria-hidden="true"><span></span></div>
-          <div className="strip-intro">
+          <div className="strip-intro" data-reveal>
             <p className="label">Your drawing or from scratch</p>
             <h2>Already drew it? <span className="g">We&apos;ll make it real.</span></h2>
             <p>Send your sketch, or just an idea, and we&apos;ll design it from scratch.</p>
@@ -100,7 +114,7 @@ export default function Home() {
             ]}
           />
           <div className="divider" aria-hidden="true"><span></span></div>
-          <div className="strip-intro second">
+          <div className="strip-intro second" data-reveal>
             <p className="label">From a real photo</p>
             <h2>Got a photo? <span className="g">We&apos;ll make it in silver.</span></h2>
             <p>A coin, a logo, a face, anything you can take a picture of.</p>
@@ -116,18 +130,20 @@ export default function Home() {
         </div>
       </section>
 
+      <Ticker />
+
       <section className="block" id="make">
         <div className="wrap">
-          <div className="head">
+          <div className="head" data-reveal>
             <div><p className="label">Bespoke design</p><h2>What we <span className="g">make</span></h2></div>
             <p className="sub">Made one at a time, for one person. Your idea, your size, your piece.</p>
           </div>
           <div className="make">
-            {MAKE.map(m => (
-              <article key={m.t}>{m.icon}<h3>{m.t}</h3><p>{m.p}</p></article>
+            {MAKE.map((m, i) => (
+              <article key={m.t} data-reveal style={{ "--rd": i % 4 } as React.CSSProperties}>{m.icon}<h3>{m.t}</h3><p>{m.p}</p></article>
             ))}
           </div>
-          <div className="choose">
+          <div className="choose" data-reveal>
             <div>
               <p className="label">For you</p>
               <h3>The finished piece</h3>
@@ -144,13 +160,13 @@ export default function Home() {
 
       <section className="block" id="process">
         <div className="wrap">
-          <div className="head">
+          <div className="head" data-reveal>
             <div><p className="label">How it works</p><h2>From idea <span className="g">to your hands</span></h2></div>
             <p className="sub">Four steps. You see and approve the design before anything is made.</p>
           </div>
           <RevealList className="flow">
             <li>
-              <div className="pic"><img src="/images/elena-sketch.jpg" alt="A customer's colored pencil sketch of a name pendant" /></div>
+              <div className="pic"><img src="/images/elena-sketch.jpg" alt="A customer's colored pencil sketch of a name pendant" loading="lazy" decoding="async" /></div>
               <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M11 19a7 7 0 1 1 10 0c-1 1-1.5 2-1.5 3.5h-7C12.5 21 12 20 11 19z" stroke="currentColor" /><path d="M13 25.5h6M14 28.5h4" stroke="#A8854F" /><path d="M16 2v2M5 7l1.5 1.5M27 7l-1.5 1.5" stroke="#A8854F" /></svg><b>1</b></div>
               <h3>Share your idea</h3>
               <p>A sketch, a photo, or just a few words. Anything works.</p>
@@ -166,13 +182,13 @@ export default function Home() {
               <p>We message you with questions, a quote and a timeline.</p>
             </li>
             <li>
-              <div className="pic render"><img src="/images/elena-3d-print.jpg" alt="The pendant as a detailed 3D model" /></div>
+              <div className="pic render"><img src="/images/elena-3d-print.jpg" alt="The pendant as a detailed 3D model" loading="lazy" decoding="async" /></div>
               <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M16 6l9 5v10l-9 5-9-5V11z" stroke="currentColor" /><path d="M7 11l9 5 9-5M16 16v10" stroke="currentColor" /><path d="M28 13a13 13 0 0 1-3 12M4 19a13 13 0 0 1 3-12" stroke="#A8854F" /></svg><b>3</b></div>
               <h3>See it in 3D</h3>
               <p>We build your piece in 3D. Change anything until it&apos;s right.</p>
             </li>
             <li>
-              <div className="pic"><img src="/images/elena-gold.jpg" alt="The finished pendant in gold" /></div>
+              <div className="pic"><img src="/images/elena-gold.jpg" alt="The finished pendant in gold" loading="lazy" decoding="async" /></div>
               <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M9 5h14l5 7-12 15L4 12z" stroke="currentColor" /><path d="M4 12h24M12 5l-3 7 7 15 7-15-3-7" stroke="#A8854F" /></svg><b>4</b></div>
               <h3>Get your piece</h3>
               <p>Cast in gold or silver and polished, or just the cast-ready 3D file.</p>
@@ -183,28 +199,28 @@ export default function Home() {
 
       <section className="block" id="work">
         <div className="wrap">
-          <div className="head">
+          <div className="head" data-reveal>
             <div><p className="label">A real client piece</p><h2>From sketch <span className="g">to gold</span></h2></div>
             <p className="sub">This name pendant started as a colored pencil sketch. Every curve of the letters and every bead was carried into gold.</p>
           </div>
-          <div className="case">
-            <figure><div className="ph"><img src="/images/elena-sketch.jpg" alt="Pencil sketch of a script name pendant reading Elena" /></div><figcaption><h3><span>1</span>Your sketch</h3><p>You send a drawing, a photo or just an idea.</p></figcaption></figure>
+          <div className="case" data-reveal>
+            <figure><div className="ph"><img src="/images/elena-sketch.jpg" alt="Pencil sketch of a script name pendant reading Elena" loading="lazy" decoding="async" /></div><figcaption><h3><span>1</span>Your sketch</h3><p>You send a drawing, a photo or just an idea.</p></figcaption></figure>
             <div className="arrow" aria-hidden="true">→</div>
-            <figure><div className="ph"><img src="/images/elena-3d-print.jpg" alt="The same Elena pendant as a blue 3D printed model" /></div><figcaption><h3><span>2</span>3D model &amp; print</h3><p>We model every detail in 3D and print it, ready for casting.</p></figcaption></figure>
+            <figure><div className="ph"><img src="/images/elena-3d-print.jpg" alt="The same Elena pendant as a blue 3D printed model" loading="lazy" decoding="async" /></div><figcaption><h3><span>2</span>3D model &amp; print</h3><p>We model every detail in 3D and print it, ready for casting.</p></figcaption></figure>
             <div className="arrow" aria-hidden="true">→</div>
-            <figure><div className="ph"><img src="/images/elena-gold.jpg" alt="The finished Elena pendant in polished gold" /></div><figcaption><h3><span>3</span>Cast in gold</h3><p>Cast in gold or silver and hand-polished into the finished piece.</p></figcaption></figure>
+            <figure><div className="ph"><img src="/images/elena-gold.jpg" alt="The finished Elena pendant in polished gold" loading="lazy" decoding="async" /></div><figcaption><h3><span>3</span>Cast in gold</h3><p>Cast in gold or silver and hand-polished into the finished piece.</p></figcaption></figure>
           </div>
         </div>
       </section>
 
       <section className="block" id="sizes">
         <div className="wrap">
-          <div className="head">
+          <div className="head" data-reveal>
             <div><p className="label">Size guide</p><h2>How to <span className="g">measure</span></h2></div>
             <p className="sub">Three quick steps with a soft tape. The size finder does the rest.</p>
           </div>
 
-          <ol className="how">
+          <ol className="how" data-reveal>
             <li>
               <svg viewBox="0 0 160 110" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path stroke="#141414" d="M58 108V70c-6-6-12-16-10-24 2-6 8-4 10 2l4 10V18c0-4 6-4 6 0v26M68 16c0-4 6-4 6 0v28M74 18c0-4 6-4 6 0v26M80 22c0-4 6-4 6 0v40c0 8-4 12-6 14v32" />
@@ -240,7 +256,7 @@ export default function Home() {
             </li>
           </ol>
 
-          <div className="fitrow">
+          <div className="fitrow" data-reveal>
             <SizeFinder />
             <div className="card chart">
               <h3>Quick chart</h3>
@@ -262,7 +278,7 @@ export default function Home() {
 
       <section className="block faq" id="faq">
         <div className="wrap faq-grid">
-          <aside className="faq-side">
+          <aside className="faq-side" data-reveal>
             <p className="label">FAQ</p>
             <h2>Questions, <span className="g">answered</span></h2>
             <p className="faq-lead">Everything you need to know before you order. Can&apos;t find your answer? Ask us directly.</p>
@@ -272,7 +288,7 @@ export default function Home() {
               <Link href="/order" className="btn">Start an order</Link>
             </div>
           </aside>
-          <div className="faq-list">
+          <div className="faq-list" data-reveal>
             {FAQ.map(g => (
               <Fragment key={g.group}>
                 <p className="faq-group">{g.group}</p>
@@ -290,17 +306,15 @@ export default function Home() {
 
       <section className="block" id="contact">
         <div className="wrap contact">
-          <div className="info">
+          <div className="info" data-reveal>
             <p className="label">Start an order</p>
             <h2>Tell us your <span className="g">idea</span></h2>
             <p style={{ color: "var(--muted)", maxWidth: "40ch", margin: "1.25rem 0 0" }}>We reply with questions, a quote and a timeline. No commitment until you approve the design.</p>
             <dl>
-              <dt>Phone</dt>
-              <dd><a href="tel:+10000000000">(000) 000-0000</a></dd>
               <dt>Email</dt>
               <dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd>
               <dt>Studio</dt>
-              <dd>Street address<br />Los Angeles, CA 90210<br /><span style={{ color: "var(--muted)" }}>(Beverly Hills)</span></dd>
+              <dd>Los Angeles, CA<br /><span style={{ color: "var(--muted)" }}>Beverly Hills area</span></dd>
               <dt>Hours</dt>
               <dd>By appointment</dd>
               <dt>Follow</dt>
@@ -311,8 +325,6 @@ export default function Home() {
                   <span>@OgCustomsLa</span>
                 </div>
               </dd>
-              <dt>Shop</dt>
-              <dd><a href="#">OG Customs LA on Etsy</a></dd>
             </dl>
           </div>
           <ContactForm />
