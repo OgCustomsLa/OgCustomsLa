@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
+import HeroTitle from "@/components/HeroTitle";
 import Morph from "@/components/Morph";
 import NameDesigner from "@/components/NameDesigner";
 import RevealList from "@/components/RevealList";
@@ -68,17 +69,7 @@ export default function Home() {
         <div className="wrap">
           <div className="hero-grid">
             <div>
-              <div className="hero-title">
-                <p className="label">Made to order · Los Angeles</p>
-                <h1 aria-label="Custom Jewelry" className="intro">
-                  <span className="w1" aria-hidden="true">
-                    {"Custom".split("").map((c, i) => <span key={i} className="ch" style={{ "--i": i } as React.CSSProperties}>{c}</span>)}
-                  </span>{" "}
-                  <span className="g" aria-hidden="true">Jewelry</span>
-                  <span className="glint" aria-hidden="true"></span>
-                </h1>
-                <hr className="rule" />
-              </div>
+              <HeroTitle />
               <p className="lede"><b>If you can imagine it, we can make it.</b> A photo, a sketch on a napkin or just a few words — we turn it into a one-of-a-kind ring, pendant, earrings or bracelet, designed in 3D and made just for you.</p>
               <div className="ctas">
                 <Link href="/order" className="btn">Start an order</Link>

@@ -147,26 +147,49 @@ nav.main a,.top .btn{white-space:nowrap}
 
 .hero-title{text-align:center}
 @media (min-width:861px){.hero .hero-grid{zoom:.92}}
-.hero-title .rule{margin-inline:auto}
-.hero-title h1{transition:transform .35s ease;cursor:default}
-.hero-title h1 .g{background:linear-gradient(100deg,#A8854F 0%,#A8854F 40%,#F3DC93 50%,#A8854F 60%,#A8854F 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;transition:background-position 1s ease}
-.hero-title .rule{transition:width .4s ease}
-.hero-title h1{position:relative}
-.hero-title h1 .ch{display:inline-block}
-.hero-title h1{perspective:600px}
-.hero-title h1 .w1{display:inline-block;transition:letter-spacing .5s ease}
-.hero-title .glint{position:absolute;left:0;bottom:12%;width:26px;height:26px;opacity:0;pointer-events:none;background:#fff;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);filter:drop-shadow(0 0 6px rgba(255,236,170,.95))}
-@media (prefers-reduced-motion:no-preference){
-  .hero-title:hover .ch{animation:flip .7s cubic-bezier(.3,.7,.2,1) both;animation-delay:calc(var(--i) * .07s)}
-  .hero-title:hover .w1{letter-spacing:.04em}
-  .hero-title:hover .glint{animation:glint 1.6s ease-in-out .2s infinite}
+.hero-title .rule{margin-inline:auto;transition:width .4s ease}
+.hero-title h1{position:relative;isolation:isolate;cursor:default;perspective:600px;transition:transform .35s ease}
+.hero-title h1 .w1{display:inline-block}
+.hero-title h1 .ch{display:inline-block;transform-origin:50% 100%}
+/* JEWELRY: gold outline, filled by a pour of molten gold, then a shine sweeps across */
+.hero-title h1 .g{
+  color:transparent;-webkit-text-stroke:1.5px #A8854F;
+  background:
+    linear-gradient(100deg,transparent 40%,rgba(255,246,214,.95) 50%,transparent 60%) -50% 0/250% 100% no-repeat,
+    linear-gradient(180deg,#F6E3A6 0%,#D9B158 38%,#A9822F 70%,#8C6A22 100%) 0 100%/100% 100% no-repeat;
+  -webkit-background-clip:text;background-clip:text
 }
-@keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(180deg);color:#A8854F}100%{transform:rotateX(360deg)}}
-@keyframes glint{0%{left:10%;opacity:0;transform:scale(.2) rotate(0)}20%{opacity:1;transform:scale(1) rotate(45deg)}80%{opacity:1;transform:scale(.9) rotate(135deg)}100%{left:88%;opacity:0;transform:scale(.2) rotate(180deg)}}
-.hero-title:hover h1{transform:translateY(-4px) scale(1.02)}
-.hero-title:hover h1 .g{background-position:100% 0}
-.hero-title:hover .rule{width:140px}
-@media (prefers-reduced-motion:reduce){.hero-title:hover h1{transform:none}}
+/* $100 bills falling across the whole top bar, behind the logo and links */
+.top-bills{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 15%,#000 80%,transparent);mask-image:linear-gradient(transparent,#000 15%,#000 80%,transparent)}
+.top-bills .bill{position:absolute;top:0;left:var(--x);width:var(--w);aspect-ratio:362/149;opacity:0;filter:drop-shadow(0 4px 4px rgba(20,20,20,.18))}
+.top-bills .bill img{display:block;width:100%;height:100%}
+/* narrower bars get fewer, smaller bills so they stay spread out instead of piling up */
+@media (max-width:900px){.top-bills .bill:nth-child(even){display:none}}
+@media (max-width:600px){.top-bills .bill{display:none}.top-bills .bill:nth-child(3n+1){display:block;width:calc(var(--w) * .72)}}
+@media (prefers-reduced-motion:no-preference){
+  .hero-title h1 .ch{animation:coinDrop .9s cubic-bezier(.3,.7,.2,1) both;animation-delay:calc(var(--i) * .08s)}
+  .hero-title h1 .g{animation:pour 1.6s cubic-bezier(.45,.05,.3,1) .55s both,shine 4.5s ease-in-out 2.2s infinite}
+  .top-bills .bill{animation:billFall var(--d) ease-in-out var(--delay) infinite backwards}
+  .hero-title:hover h1{transform:translateY(-4px) scale(1.02)}
+  .hero-title:hover .rule{width:140px}
+}
+@keyframes coinDrop{
+  0%{opacity:0;transform:translateY(-110%) rotateX(80deg)}
+  55%{opacity:1;transform:translateY(6%) rotateX(0)}
+  72%{transform:translateY(-7%) rotateX(-12deg);color:#C9A24E}
+  86%{transform:translateY(2%)}
+  100%{transform:none}
+}
+@keyframes pour{from{background-size:250% 100%,100% 0%}to{background-size:250% 100%,100% 100%}}
+@keyframes shine{0%,55%{background-position:150% 0,0 100%}100%{background-position:-50% 0,0 100%}}
+@keyframes billFall{
+  0%{opacity:0;top:-12%;transform:rotate(var(--tilt)) rotateX(0)}
+  10%{opacity:1}
+  25%{top:18%;transform:translateX(var(--drift)) rotate(calc(var(--tilt) * -1)) rotateX(55deg)}
+  50%{top:45%;transform:translateX(calc(var(--drift) * -.6)) rotate(var(--tilt)) rotateX(-40deg)}
+  75%{top:72%;transform:translateX(var(--drift)) rotate(calc(var(--tilt) * -.6)) rotateX(50deg)}
+  100%{opacity:0;top:100%;transform:rotate(var(--tilt)) rotateX(0)}
+}
 
 
 /* transformation strip — the signature moment */

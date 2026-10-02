@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import HeaderBills from "@/components/HeaderBills";
 import Logo from "@/components/Logo";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <header className="top">
+          <HeaderBills />
           <div className="wrap">
             <Logo />
             <nav className="main" aria-label="Main">
