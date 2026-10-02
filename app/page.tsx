@@ -83,6 +83,7 @@ export default function Home() {
           <div className="hero-grid">
             <div>
               <HeroTitle />
+              <Morph />
               <p className="lede"><b>If you can imagine it, we can make it.</b> A photo, a sketch on a napkin or just a few words — we turn it into a one-of-a-kind ring, pendant, earrings or bracelet, designed in 3D and made just for you.</p>
               <div className="ctas">
                 <Link href="/order" className="btn">Start an order</Link>
@@ -93,7 +94,6 @@ export default function Home() {
                 <li><b>See it first</b><span>3D renders before anything is cast</span></li>
                 <li><b>Ships worldwide</b><span>Or pick up in Los Angeles</span></li>
               </ul>
-              <Morph />
             </div>
             <NameDesigner />
           </div>

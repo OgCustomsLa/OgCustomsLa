@@ -18,12 +18,12 @@ export default function ContactForm() {
     if (!/^\S+@\S+\.\S+$/.test(d.email.trim())) { setStatus({ msg: "Check the email address — it looks incomplete.", cls: "err" }); return; }
     setSending(true); setStatus({ msg: "Sending…" });
     const res = await submitInquiry({ name: d.name, email: d.email, phone: d.phone, type: d.type, metal: d.metal, message: d.message })
-      .catch((): SubmitResult => ({ ok: false, error: "", fallback: true }));
+      .catch((): SubmitResult => ({ ok: false, error: "Couldn’t reach our server — refresh the page and send again, or ", fallback: true }));
     setSending(false);
     if (res.ok) { form.reset(); setStatus({ msg: "Request sent. We’ll reply within 1–2 business days.", cls: "ok" }); return; }
     if (!res.fallback) { setStatus({ msg: res.error, cls: "err" }); return; }
     const body = `Name: ${d.name}\nPhone: ${d.phone || "-"}\nEmail: ${d.email}\nPiece: ${d.type}\nMetal: ${d.metal}\n\n${d.message}`;
-    setStatus({ msg: "The form couldn’t send from here. ", cls: "err", href: mailto("Order request from " + d.name, body) });
+    setStatus({ msg: res.error.startsWith("Couldn") ? res.error : "The form couldn’t send from here. ", cls: "err", href: mailto("Order request from " + d.name, body) });
   }
 
   return (

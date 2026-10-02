@@ -156,12 +156,12 @@ export default function OrderWizard() {
   async function submit() {
     setSending(true);
     const data = rows();
-    const res = await submitOrder(orderInput()).catch((): SubmitResult => ({ ok: false, error: "", fallback: true }));
+    const res = await submitOrder(orderInput()).catch((): SubmitResult => ({ ok: false, error: "Couldn’t reach our server — refresh the page and send again, or ", fallback: true }));
     setSending(false);
     if (res.ok) { setDone(true); window.scrollTo(0, 0); return; }
     if (!res.fallback) { setErr({ msg: res.error }); return; }
     const body = data.map(([k, v]) => `${k}: ${v}`).join("\n");
-    setErr({ msg: "The form couldn’t send from here. ", href: mailto("Order request — " + f.name.trim(), body) });
+    setErr({ msg: res.error.startsWith("Couldn") ? res.error : "The form couldn’t send from here. ", href: mailto("Order request — " + f.name.trim(), body) });
   }
 
   function next() {

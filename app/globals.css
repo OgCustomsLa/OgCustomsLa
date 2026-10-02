@@ -112,6 +112,8 @@ nav.main a,.top .btn{white-space:nowrap}
 .facts span{display:block;color:var(--muted);font-size:.85rem;line-height:1.45;margin-top:.2rem}
 @media (max-width:520px){.facts{grid-template-columns:1fr;gap:.9rem}}
 
+/* the Elena animation sits right under the title, before the intro text */
+.morph-wrap + .lede{margin-top:1.75rem}
 .morph-wrap{margin-top:1.25rem;display:grid;grid-template-columns:minmax(0,380px) 1fr;gap:1.5rem;align-items:center}
 .morph{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#F1F1EC;border:1px solid var(--line);user-select:none}
 .morph img{position:absolute;inset:20% 18%;width:64%;height:60%;object-fit:contain}
