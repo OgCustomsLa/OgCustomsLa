@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { DESIGN_KEY, EMAIL, mailto, sendRequest, type DesignPrefill } from "@/lib/site";
+import { submitOrder, type OrderInput, type SubmitResult } from "@/app/actions";
+import { DESIGN_KEY, EMAIL, mailto, type DesignPrefill } from "@/lib/site";
 
 type Option = { v: string; content: React.ReactNode; className?: string };
 
@@ -138,13 +139,27 @@ export default function OrderWizard() {
 
   function show(i: number) { setErr({ msg: "" }); setCur(i); }
 
+  // the same answers as the review summary, as named fields for the database
+  function orderInput(): OrderInput {
+    const finished = pick.deliver === "Finished piece";
+    return {
+      piece: pick.piece ?? "", deliver: pick.deliver ?? "", startFrom: pick.start ?? "",
+      nameText: pick.piece === "Name pendant" ? f.nametext : "", description: f.desc, photosLink: f.link,
+      metal: finished ? pick.metal : "", karat: finished && pick.metal !== "Sterling silver" ? f.karat : "",
+      stones: f.stones, sizeLabel: sizeHidden ? "" : size.label, size: sizeHidden ? "" : (f.size || size.opts[0]),
+      pieceSize: f.dim, finish: f.finish, engraving: f.engrave, budget: pick.budget ?? "", needBy: f.date,
+      customerName: f.name, email: f.email, phone: f.phone, instagram: f.ig,
+      contactBy: pick.contactby ?? "", delivery: pick.delivery, location: f.city,
+    };
+  }
+
   async function submit() {
     setSending(true);
-    const data = rows(), obj: Record<string, string> = {};
-    data.forEach(([k, v]) => { obj[k] = v; });
-    const ok = await sendRequest("order", obj);
+    const data = rows();
+    const res = await submitOrder(orderInput()).catch((): SubmitResult => ({ ok: false, error: "", fallback: true }));
     setSending(false);
-    if (ok) { setDone(true); window.scrollTo(0, 0); return; }
+    if (res.ok) { setDone(true); window.scrollTo(0, 0); return; }
+    if (!res.fallback) { setErr({ msg: res.error }); return; }
     const body = data.map(([k, v]) => `${k}: ${v}`).join("\n");
     setErr({ msg: "The form couldn’t send from here. ", href: mailto("Order request — " + f.name.trim(), body) });
   }

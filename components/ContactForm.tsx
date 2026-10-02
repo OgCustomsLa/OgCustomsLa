@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { mailto, sendRequest } from "@/lib/site";
+import { submitInquiry, type SubmitResult } from "@/app/actions";
+import { mailto } from "@/lib/site";
 
 type Status = { msg: string; cls?: "ok" | "err"; href?: string };
 
@@ -16,9 +17,11 @@ export default function ContactForm() {
     if (!d.name.trim() || !d.email.trim() || !d.message.trim()) { setStatus({ msg: "Add your name, email and a short description to send.", cls: "err" }); return; }
     if (!/^\S+@\S+\.\S+$/.test(d.email.trim())) { setStatus({ msg: "Check the email address — it looks incomplete.", cls: "err" }); return; }
     setSending(true); setStatus({ msg: "Sending…" });
-    const saved = await sendRequest("inquiry", d);
+    const res = await submitInquiry({ name: d.name, email: d.email, phone: d.phone, type: d.type, metal: d.metal, message: d.message })
+      .catch((): SubmitResult => ({ ok: false, error: "", fallback: true }));
     setSending(false);
-    if (saved) { form.reset(); setStatus({ msg: "Request sent. We’ll reply within 1–2 business days.", cls: "ok" }); return; }
+    if (res.ok) { form.reset(); setStatus({ msg: "Request sent. We’ll reply within 1–2 business days.", cls: "ok" }); return; }
+    if (!res.fallback) { setStatus({ msg: res.error, cls: "err" }); return; }
     const body = `Name: ${d.name}\nPhone: ${d.phone || "-"}\nEmail: ${d.email}\nPiece: ${d.type}\nMetal: ${d.metal}\n\n${d.message}`;
     setStatus({ msg: "The form couldn’t send from here. ", cls: "err", href: mailto("Order request from " + d.name, body) });
   }
