@@ -301,7 +301,8 @@ export default function NameDesigner() {
             <PavePattern id="pave-gold" base="#C9A24E" edge="#8A6A2A" />
             <PavePattern id="pave-silver" base="#B9BDBF" edge="#6E7274" />
             <PavePattern id="pave-rose" base="#D29A82" edge="#8E5642" />
-            <filter id="np-shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity=".2" /></filter>
+            {/* Fixed region in user space: a %-of-bbox region clips script letters on iOS Safari, whose text bbox is narrower than the ink */}
+            <filter id="np-shadow" filterUnits="userSpaceOnUse" x="-1500" y="-1000" width="6000" height="2500"><feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity=".2" /></filter>
           </defs>
           <g id="np-piece" filter="url(#np-shadow)">
             <path id="np-swash" fill="none" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
