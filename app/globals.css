@@ -125,9 +125,9 @@ nav.main a,.top .btn{white-space:nowrap}
 .strip-intro{margin-top:clamp(1.75rem,3.5vw,2.75rem);text-align:center;max-width:720px;margin-inline:auto}
 .strip-intro h2{max-width:none;font-size:clamp(1.8rem,3.6vw,2.9rem)}
 .strip-intro h2 .g{display:block}
-.hero .wrap > .strip{border-bottom:0}
-.hero .wrap > .strip,#make,#process,#work,#sizes{position:relative}
-.hero .wrap > .strip::before,#make::before,#process::before,#work::before,#sizes::before{content:"";position:absolute;top:-1px;left:50%;width:9px;height:9px;background:#A8854F;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 0 10px var(--bg)}
+#make,#work,#sizes{position:relative}
+
+#make::before,#work::before,#sizes::before{content:"";position:absolute;top:-1px;left:50%;width:9px;height:9px;background:#A8854F;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 0 10px var(--bg)}
 .strip + .divider{margin-top:0}
 .divider + .strip-intro:not(.second) + .strip::before{display:none}
 .strip-intro.second + .strip::before{display:none}
@@ -242,48 +242,8 @@ h2 .g{color:var(--gold)}
 #work h2{margin-top:.5rem}
 #work .head{margin-bottom:1.75rem;flex-direction:column;align-items:center;text-align:center;gap:.6rem}
 #work .head p.sub{max-width:72ch}
-/* how it works */
-#process{padding-top:clamp(1.75rem,3vw,2.25rem)}
-#process h2{margin-top:.5rem}
-#process .head{margin-bottom:1.75rem;flex-direction:column;align-items:center;text-align:center;gap:.6rem}
-#process .head p.sub{max-width:72ch}
-.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative}
-.flow::before{content:"";position:absolute;left:12.5%;right:12.5%;top:calc(var(--pich) + 1.1rem + 30px);border-top:1.5px dashed #A8854F;z-index:0}
-.flow{--pich:190px}
-.flow li{position:relative;z-index:1;text-align:center}
-.flow .pic{height:var(--pich);background:#F1F1EC;border:1px solid var(--line);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.flow .pic img{max-width:88%;max-height:80%;object-fit:contain}
-.flow .tag{position:absolute;left:10px;top:10px;font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:#141414;color:#F1F1EC;padding:.25rem .5rem}
-.flow .badge{width:60px;height:60px;margin:1.1rem auto 0;position:relative;border-radius:50%;background:var(--bg);border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;color:var(--ink)}
-.flow .badge svg{width:32px;height:32px}
-.flow .badge b{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#A8854F;color:#fff;font-size:.75rem;font-weight:600;display:flex;align-items:center;justify-content:center}
-.flow h3{margin:1rem 0 .4rem;font-size:.85rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase}
-.flow p{margin:0 auto;font-size:.95rem;color:var(--muted);max-width:26ch}
-.flow .chat{flex-direction:column;align-items:stretch;justify-content:center;gap:.45rem;padding:1rem}
-.flow .msg{max-width:82%;font-size:.8rem;line-height:1.35;padding:.5rem .7rem;text-align:left;border-radius:12px}
-.flow .msg.them{align-self:flex-start;background:#fff;color:#141414;border:1px solid #E2E1D9;border-bottom-left-radius:3px}
-.flow .msg.us{align-self:flex-end;background:#141414;color:#F1F1EC;border-bottom-right-radius:3px}
-.flow .msg.small{padding:.35rem .6rem}
-.flow .render{background:#F1F1EC linear-gradient(#0000 23px,#DAD9D0 24px) 0 0/24px 24px,linear-gradient(90deg,#0000 23px,#DAD9D0 24px) 0 0/24px 24px}
-.flow .render .ui{position:absolute;left:10px;top:10px;display:flex;gap:.35rem}
-.flow .render .ui span{font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .5rem;border:1px solid #141414;background:#F1F1EC;color:#141414}
-.flow .render .ui span:first-child{background:#141414;color:#F1F1EC}
-.flow .render .spin{position:absolute;top:10px;right:10px;width:20px;height:20px;color:#141414}
-.flow .choice{display:grid;grid-template-columns:1fr 1fr}
-.flow .choice .half{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
-.flow .choice .half + .half{border-left:1px solid var(--line)}
-.flow .choice img{max-width:92%;max-height:70%}
-.flow .choice .file svg{width:46px;height:54px;margin-bottom:12px}
-@media (prefers-reduced-motion:no-preference){
-  .flow .msg{opacity:0;transform:translateY(6px);transition:opacity .4s ease,transform .4s ease}
-  .flow.in .msg{opacity:1;transform:none}
-  .flow.in .msg:nth-child(2){transition-delay:.6s}
-  .flow.in .msg:nth-child(3){transition-delay:1.2s}
-}
-@media (max-width:960px){.flow{grid-template-columns:repeat(2,1fr);row-gap:2.5rem}.flow::before{display:none}}
-@media (max-width:520px){.flow{grid-template-columns:1fr}}
-/* phones (upright or turned sideways): skip the How it works and FAQ sections, and the hero button that jumps to How it works */
-@media (max-width:600px),(orientation:landscape) and (max-height:500px) and (pointer:coarse){#process,#faq,.hero .ctas a[href="#process"]{display:none}}
+/* phones (upright or turned sideways): skip the FAQ section */
+@media (max-width:600px),(orientation:landscape) and (max-height:500px) and (pointer:coarse){#faq{display:none}}
 
 /* case study */
 .case{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:clamp(1.5rem,4vw,3.5rem);padding:clamp(1.5rem,4vw,3rem) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -513,10 +473,10 @@ footer small{color:var(--muted);font-size:.85rem}
 .reveal-on [data-reveal="left"]:not(.is-in){transform:translateX(-44px)}
 .reveal-on [data-reveal="right"]:not(.is-in){transform:translateX(44px)}
 .reveal-on [data-reveal="zoom"]:not(.is-in){transform:scale(.88) translateY(18px)}
-/* the photo strips animate on scroll instead of on page load */
 /* blocks waiting to slide in from the side must not make the page scroll sideways */
 #main{overflow-x:clip}
-.reveal-on .strip > *{animation:none;opacity:1}
+/* the photo strips animate on scroll instead of on page load */
+.reveal-on .strip > *{animation:none;opacity:1;transform:none} /* the scroll reveal handles the motion; no leftover 8px shift */
 @media (max-width:760px){.reveal-on .strip .arrow{transform:rotate(90deg)}}
 
 /* footer */
@@ -740,3 +700,10 @@ html.offer-open,html.offer-open body{overflow:hidden}
 .np svg.np-hide{opacity:0!important;transition:none!important}
 .np svg.np-fadein{transition:opacity .45s cubic-bezier(.4,0,.2,1) .25s}
 @media (prefers-reduced-motion:reduce){.np svg.np-fadein{transition:none}}
+/* strips: every picture sits in the same-height slot (so a two-line caption can't push it up),
+   and each arrow sits on the middle of the pictures as a clear gold button */
+.strip{--sh:clamp(200px,24vw,300px);align-items:start}
+.strip figure{display:grid;grid-template-rows:var(--sh) auto;justify-items:center}
+.strip img{height:auto;max-height:var(--sh);align-self:center}
+.strip > .arrow{align-self:start;margin-top:calc(var(--sh) / 2 - 23px);width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);background:#fff;display:grid;place-items:center;color:var(--gold-ink);font-size:1.3rem;font-weight:600;line-height:1;box-shadow:0 8px 18px -10px rgba(120,90,30,.55)}
+@media (max-width:760px){.strip > .arrow{margin-top:0;justify-self:center}}

@@ -87,7 +87,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
     // showcase: until the visitor types or picks an option, rotate through example pieces
     // alternates pendant / earrings
     const DEMOS = [
-      { kind: "pendant", name: "Sofia", font: "signature", metal: "gold", ice: "none" },
+      { kind: "pendant", name: "Angel", font: "signature", metal: "gold", ice: "none" },
       { kind: "earrings", name: "OG", font: "block", metal: "gold", ice: "all" },
       { kind: "pendant", name: "Marco", font: "graffiti", metal: "silver", ice: "line" },
       { kind: "earrings", name: "Mia", font: "elegant", metal: "rose", ice: "none" },
@@ -217,7 +217,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       if (!alive) return;
       // nothing typed yet: show a faded sample name so the preview is never just a line
       const sample = !input.value.trim();
-      let name = sample ? (showing ? showing.name : kind === "earrings" ? "OG" : "Sofia") : input.value.trim();
+      let name = sample ? (showing ? showing.name : kind === "earrings" ? "OG" : "Angel") : input.value.trim();
       const empty = false;
       svg.classList.toggle("sample", sample && !showing);
       name = name.charAt(0).toUpperCase() + name.slice(1);
@@ -321,7 +321,9 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       let w = right - left, hgt = bt - tp + 40;
       if (w / hgt < 2) w = hgt * 2; else hgt = w / 2;
       const cx = (left + right) / 2, cy = (tp + bt) / 2;
-      svg.setAttribute("viewBox", `${(cx - w * 0.58).toFixed(1)} ${(cy - hgt * 0.58).toFixed(1)} ${(w * 1.16).toFixed(1)} ${(hgt * 1.16).toFixed(1)}`);
+      // earrings get more room around them, so a pair reads smaller than a pendant
+      const z = kind === "earrings" ? 1.55 : 1.16;
+      svg.setAttribute("viewBox", `${(cx - w * z / 2).toFixed(1)} ${(cy - hgt * z / 2).toFixed(1)} ${(w * z).toFixed(1)} ${(hgt * z).toFixed(1)}`);
       paint();
       svg.classList.add("ready");
     }
@@ -474,8 +476,8 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
             <path id="np-swash" filter="url(#np-bevel)" fill="none" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
             <g id="np-beads"></g>
             <g filter="url(#np-bevel)">
-            <text id="np-text-edge" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeLinejoin="round" aria-hidden="true">Sofia</text>
-            <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400">Sofia</text>
+            <text id="np-text-edge" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeLinejoin="round" aria-hidden="true">Angel</text>
+            <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400">Angel</text>
             </g>
           </g>
           <use id="np-clone" href="#np-piece" style={{ display: "none" }} />

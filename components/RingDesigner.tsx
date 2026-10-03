@@ -40,17 +40,16 @@ const FACES: Record<Face, string> = { oval: "Oval", square: "Square", round: "Ro
 const STONES: Record<Stones, string> = { none: "No stones", halo: "Diamond halo", iced: "Iced band" };
 const CUTS: Record<Cut, string> = { round: "Round", oval: "Oval", princess: "Princess", pear: "Pear" };
 const SETTINGS: Record<Setting, string> = { solitaire: "Solitaire", halo: "Halo", pave: "Pavé band" };
-const BASE: RingOpts = { style: "signet", initials: "", metal: "gold", face: "oval", stones: "none", font: "old", cut: "round", setting: "solitaire" };
+const BASE: RingOpts = { style: "engagement", initials: "", metal: "gold", face: "oval", stones: "none", font: "old", cut: "round", setting: "halo" };
 
+// showcase: engagement rings only (no initials to show until the visitor types some)
 export const RING_DEMOS: RingOpts[] = [
-  { ...BASE, initials: "OG", metal: "gold", face: "oval", stones: "halo", font: "old" },
-  { ...BASE, style: "engagement", metal: "white", cut: "round", setting: "halo" },
-  { ...BASE, initials: "LA", metal: "white", face: "square", stones: "iced", font: "gothic" },
-  { ...BASE, style: "engagement", metal: "rose", cut: "oval", setting: "pave" },
-  { ...BASE, initials: "JR", metal: "rose", face: "round", stones: "iced", font: "elegant" },
-  { ...BASE, style: "engagement", metal: "gold", cut: "pear", setting: "solitaire" },
-  { ...BASE, initials: "MV", metal: "gold", face: "square", stones: "none", font: "block" },
-  { ...BASE, style: "engagement", metal: "white", cut: "princess", setting: "pave" },
+  { ...BASE, metal: "white", cut: "round", setting: "halo" },
+  { ...BASE, metal: "gold", cut: "oval", setting: "pave" },
+  { ...BASE, metal: "rose", cut: "pear", setting: "halo" },
+  { ...BASE, metal: "white", cut: "princess", setting: "solitaire" },
+  { ...BASE, metal: "gold", cut: "round", setting: "solitaire" },
+  { ...BASE, metal: "rose", cut: "oval", setting: "halo" },
 ];
 
 /** Load the showcase rings' lettering up front, so their initials are sized right the moment they appear. */
@@ -348,11 +347,11 @@ function Engagement({ o }: { o: RingOpts }) {
 export function RingSvg({ o }: { o: RingOpts }) {
   const m = METALS[o.metal];
   const what = o.style === "engagement"
-    ? `${m.label.toLowerCase()} engagement ring with a ${CUTS[o.cut].toLowerCase()} diamond`
+    ? `${m.label.toLowerCase()} engagement ring with a${o.cut === "oval" ? "n" : ""} ${CUTS[o.cut].toLowerCase()} diamond`
     : `${m.label.toLowerCase()} signet ring engraved ${o.initials || "OG"}`;
   return (
     // zoomed out so a ring appears about as big as the pendants and earrings in the same preview
-    <svg viewBox="-170 -45 940 470" role="img" aria-label={`Preview of a ${what}`}>
+    <svg viewBox="-310 -115 1220 610" role="img" aria-label={`Preview of a ${what}`}>
       <MetalDefs m={m} />
       {o.style === "engagement" ? <Engagement o={o} /> : <Signet o={o} />}
     </svg>

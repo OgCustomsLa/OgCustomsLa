@@ -56,7 +56,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="main" aria-label="Main">
               <Link href="/available" className="nav-avail"><span className="live-dot" aria-hidden="true" />Available</Link>
               <Link href="/#make">What we make</Link>
-              <Link href="/#process">How it works</Link>
               <Link href="/#sizes">Size guide</Link>
               <Link href="/#contact">Contact</Link>
             </nav>

@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const LINKS: { href: string; label: string; hidePhone?: boolean; live?: boolean }[] = [
   { href: "/available", label: "Available now", live: true },
   { href: "/#make", label: "What we make" },
-  { href: "/#process", label: "How it works", hidePhone: true },
   { href: "/#work", label: "Our work" },
   { href: "/#sizes", label: "Size guide" },
   { href: "/#faq", label: "FAQ", hidePhone: true },

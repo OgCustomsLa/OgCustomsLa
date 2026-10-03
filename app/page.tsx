@@ -3,13 +3,11 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import Ticker from "@/components/Ticker";
 import JewelryDesigner from "@/components/JewelryDesigner";
-import RevealList from "@/components/RevealList";
 import SizeFinder from "@/components/SizeFinder";
 import { EMAIL } from "@/lib/site";
 
 const strokeIcon = { fill: "none", strokeWidth: 1.4 } as const;
 const roundIcon = { ...strokeIcon, strokeLinecap: "round", strokeLinejoin: "round" } as const;
-const badgeIcon = { fill: "none", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 
 const MAKE = [
   { t: "Rings", p: "Signet, engagement, statement and band rings, sized to your finger.", icon: <svg viewBox="0 0 56 56" {...strokeIcon} aria-hidden="true"><circle cx="28" cy="34" r="15" stroke="currentColor" /><circle cx="28" cy="34" r="11.5" stroke="currentColor" /><path d="M21 12h14l4 5-11 9-11-9z" stroke="#A8854F" /><path d="M17 17h22M24 12l4 14 4-14" stroke="#A8854F" /></svg> },
@@ -59,6 +57,7 @@ const BUSINESS_LD = {
   sameAs: ["https://www.instagram.com/ogcustomsla", "https://www.facebook.com/ogcustomsla"],
 };
 
+
 function Strip({ label, images }: { label: string; images: [string, string, string][] }) {
   return (
     <div className="strip" aria-label={label} data-stagger="zoom">
@@ -94,13 +93,13 @@ export default function Home() {
       <section className="block" id="work">
         <div className="wrap">
           <div className="head" data-reveal>
-            <div><p className="label">Real client pieces</p><h2>From idea <span className="g">to metal</span></h2></div>
-            <p className="sub">Every piece starts with something you send us — a drawing, a photo or just an idea. Here&apos;s what that turns into.</p>
+            <div><p className="label">Real orders, real results</p><h2>Sketch it. <span className="g">Wear it.</span></h2></div>
+            <p className="sub">Each of these started as something a client sent us. Here&apos;s exactly what it became.</p>
           </div>
           <div className="strip-intro" data-reveal>
-            <p className="label">Your drawing or from scratch</p>
-            <h2>Already drew it? <span className="g">We&apos;ll make it real.</span></h2>
-            <p>Send your sketch, or just an idea, and we&apos;ll design it from scratch.</p>
+            <p className="label">From your drawing</p>
+            <h2>Drew it on paper? <span className="g">We&apos;ll cast it in gold.</span></h2>
+            <p>Send a sketch, even a rough one, or just describe it. We design the rest.</p>
           </div>
           <Strip
             label="A portrait pendant from sketch to finished gold"
@@ -175,45 +174,6 @@ export default function Home() {
               <p>Just the design: a precise 3D model or castable print, ready to send to your own caster.</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="block" id="process">
-        <div className="wrap">
-          <div className="head" data-reveal>
-            <div><p className="label">How it works</p><h2>From idea <span className="g">to your hands</span></h2></div>
-            <p className="sub">Four steps. You see and approve the design before anything is made.</p>
-          </div>
-          <RevealList className="flow">
-            <li>
-              <div className="pic"><img src="/images/elena-sketch.jpg" alt="A customer's colored pencil sketch of a name pendant" loading="lazy" decoding="async" /></div>
-              <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M11 19a7 7 0 1 1 10 0c-1 1-1.5 2-1.5 3.5h-7C12.5 21 12 20 11 19z" stroke="currentColor" /><path d="M13 25.5h6M14 28.5h4" stroke="#A8854F" /><path d="M16 2v2M5 7l1.5 1.5M27 7l-1.5 1.5" stroke="#A8854F" /></svg><b>1</b></div>
-              <h3>Share your idea</h3>
-              <p>A sketch, a photo, or just a few words. Anything works.</p>
-            </li>
-            <li>
-              <div className="pic chat" aria-hidden="true">
-                <div className="msg them">Here&apos;s my sketch — can you make it in gold?</div>
-                <div className="msg us">Love it. Here are a few questions and your quote.</div>
-                <div className="msg them small">Sounds good!</div>
-              </div>
-              <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M4 7h24v15H13l-6 5v-5H4z" stroke="currentColor" /><circle cx="11" cy="14.5" r="1.2" fill="#A8854F" stroke="none" /><circle cx="16" cy="14.5" r="1.2" fill="#A8854F" stroke="none" /><circle cx="21" cy="14.5" r="1.2" fill="#A8854F" stroke="none" /></svg><b>2</b></div>
-              <h3>We talk it through</h3>
-              <p>We message you with questions, a quote and a timeline.</p>
-            </li>
-            <li>
-              <div className="pic render"><img src="/images/elena-3d-print.jpg" alt="The pendant as a detailed 3D model" loading="lazy" decoding="async" /></div>
-              <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M16 6l9 5v10l-9 5-9-5V11z" stroke="currentColor" /><path d="M7 11l9 5 9-5M16 16v10" stroke="currentColor" /><path d="M28 13a13 13 0 0 1-3 12M4 19a13 13 0 0 1 3-12" stroke="#A8854F" /></svg><b>3</b></div>
-              <h3>See it in 3D</h3>
-              <p>We build your piece in 3D. Change anything until it&apos;s right.</p>
-            </li>
-            <li>
-              <div className="pic"><img src="/images/elena-gold.jpg" alt="The finished pendant in gold" loading="lazy" decoding="async" /></div>
-              <div className="badge"><svg viewBox="0 0 32 32" {...badgeIcon} aria-hidden="true"><path d="M9 5h14l5 7-12 15L4 12z" stroke="currentColor" /><path d="M4 12h24M12 5l-3 7 7 15 7-15-3-7" stroke="#A8854F" /></svg><b>4</b></div>
-              <h3>Get your piece</h3>
-              <p>Cast in gold or silver and polished, or just the cast-ready 3D file.</p>
-            </li>
-          </RevealList>
         </div>
       </section>
 
