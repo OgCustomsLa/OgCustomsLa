@@ -409,6 +409,18 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       box.querySelectorAll(".np-ghost").forEach(g => g.remove());
       const ghost = svg.cloneNode(true) as SVGSVGElement;
       ghost.removeAttribute("id"); ghost.setAttribute("aria-hidden", "true"); ghost.classList.remove("np-hide", "np-fadein"); ghost.classList.add("np-ghost");
+      // the second earring is a <use> of the live piece, which is about to change: give the copy its own frozen one
+      const use = ghost.querySelector("use"), piece = ghost.querySelector("#np-piece");
+      if (use && piece) {
+        const g = document.createElementNS(NS, "g");
+        if (use.getAttribute("transform")) g.setAttribute("transform", use.getAttribute("transform")!);
+        if (use.style.display === "none") g.style.display = "none";
+        g.appendChild(piece.cloneNode(true));
+        use.replaceWith(g);
+      }
+      // no duplicate ids in the document (Safari mixes them up); the copy uses the live picture's gradients and filters
+      ghost.querySelector("defs")?.remove();
+      ghost.querySelectorAll("[id]").forEach(e => e.removeAttribute("id"));
       svg.after(ghost);
       svg.classList.remove("np-fadein"); svg.classList.add("np-hide");
       update();
@@ -458,7 +470,8 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
             <PavePattern id="pave-silver" base="#B9BDBF" edge="#6E7274" />
             <PavePattern id="pave-rose" base="#D29A82" edge="#8E5642" />
             {/* Fixed region in user space: a %-of-bbox region clips script letters on iOS Safari, whose text bbox is narrower than the ink */}
-            <filter id="np-bevel" filterUnits="userSpaceOnUse" x="-1500" y="-1000" width="6000" height="2500">
+            {/* region sized to the lettering (24 wide block capitals reach ~3000), kept small so phones can draw it */}
+            <filter id="np-bevel" filterUnits="userSpaceOnUse" x="-300" y="-360" width="3700" height="640">
               <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b" />
               <feSpecularLighting in="b" surfaceScale="3" specularConstant="1" specularExponent="22" lightingColor="#fff" result="s"><feDistantLight azimuth="225" elevation="40" /></feSpecularLighting>
               <feComposite in="s" in2="SourceAlpha" operator="in" result="s2" />

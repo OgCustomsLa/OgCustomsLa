@@ -601,7 +601,8 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 .offer-card{position:relative;width:min(780px,94vw);height:min(640px,90vh);display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
 .offer-photo{position:relative;background:radial-gradient(ellipse 85% 70% at 50% 42%,#1F4A35 0%,#0D2419 45%,#050B08 100%);display:grid;place-items:center;overflow:hidden}
 .offer-photo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(243,220,147,.18),transparent 45%)}
-.offer-photo img{position:relative;align-self:center;width:auto;height:84%;max-width:86%;object-fit:contain;object-position:top;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(243,220,147,.2))}
+/* pinned to the top so the angel's chain runs off the top edge (the photo cuts it there) */
+.offer-photo img{position:relative;align-self:start;width:auto;height:78%;max-width:80%;object-fit:contain;object-position:top;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(243,220,147,.2))}
 .offer-body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,3vw,1.75rem);overflow-y:auto}
 .offer-mark{width:clamp(80px,9vw,104px);height:clamp(80px,9vw,104px)}
 .offer-title{margin:1.1rem 0 0;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(2.1rem,4vw,2.7rem);letter-spacing:.01em;text-transform:none;line-height:1;color:#111}
@@ -618,7 +619,7 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 .offer-close{position:absolute;top:14px;right:14px;z-index:2;width:46px;height:46px;border-radius:50%;border:2px solid #0B5634;background:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .2s ease}
 .offer-close:hover{transform:rotate(90deg)}
 .offer-close svg{width:24px;height:24px;stroke:#111;stroke-width:3;stroke-linecap:round;fill:none}
-@media (max-width:700px){.offer-card{height:auto;max-height:92vh;grid-template-columns:1fr;grid-template-rows:200px auto}.offer-photo img{height:190px;max-height:none;max-width:none;width:auto}.offer-close{top:10px;right:10px}}
+@media (max-width:700px){.offer-card{height:auto;max-height:92vh;grid-template-columns:1fr;grid-template-rows:200px auto}.offer-photo img{height:170px;max-height:none;max-width:none;width:auto}.offer-close{top:10px;right:10px}}
 
 /* phones: top bar is logo + menu button only (Start an order is inside the menu) */
 @media (max-width:600px){.top .top-actions > .btn{display:none}}
@@ -707,3 +708,33 @@ html.offer-open,html.offer-open body{overflow:hidden}
 .strip img{height:auto;max-height:var(--sh);align-self:center}
 .strip > .arrow{align-self:start;margin-top:calc(var(--sh) / 2 - 23px);width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);background:#fff;display:grid;place-items:center;color:var(--gold-ink);font-size:1.3rem;font-weight:600;line-height:1;box-shadow:0 8px 18px -10px rgba(120,90,30,.55)}
 @media (max-width:760px){.strip > .arrow{margin-top:0;justify-self:center}}
+/* welcome offer: a little more life */
+.offer-title{display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.offer-unlock{font:500 .78rem var(--font);letter-spacing:.32em;text-transform:uppercase;color:#7A6233}
+.offer-big{font:800 clamp(2.6rem,5vw,3.4rem)/1 "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:-.01em;text-transform:uppercase;background:linear-gradient(100deg,#8A6A2A 0%,#D9B158 30%,#FFF1C4 45%,#D9B158 60%,#8A6A2A 100%);background-size:250% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
+.offer-list{list-style:none;margin:1rem 0 1.4rem;padding:0;display:grid;gap:.55rem;text-align:left}
+.offer-list li{display:flex;align-items:center;gap:.65rem;font-size:.92rem;color:#222}
+.offer-list svg{width:22px;height:22px;flex:none;padding:5px;box-sizing:content-box;border-radius:50%;background:#F6EFDD;fill:none;stroke:#8A6A2A;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.offer-spark{position:absolute;fill:#FFF4CF;opacity:0;pointer-events:none;filter:drop-shadow(0 0 6px rgba(255,231,160,.9))}
+.offer-body .btn{position:relative;overflow:hidden}
+.offer-body .btn::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);pointer-events:none}
+.offer-copy{margin-top:.6rem;border:1.5px solid #127548;background:#fff;color:#0B5634;border-radius:999px;padding:.45rem 1.1rem;font:700 .72rem "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.offer-copy:hover{background:#EEF7F1}
+@media (prefers-reduced-motion:no-preference){
+  .offer-photo img{animation:offerFloat 5s ease-in-out infinite}
+  .offer-spark{animation:offerTwinkle 3.2s ease-in-out infinite}
+  .offer-big{animation:offerShine 4s ease-in-out .6s infinite}
+  .offer-body .btn::after{animation:offerSweep 3.6s ease-in-out 1.2s infinite}
+}
+@keyframes offerFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes offerTwinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%,55%{opacity:1;transform:scale(1) rotate(45deg)}}
+@keyframes offerShine{0%{background-position:100% 0}45%,100%{background-position:0 0}}
+@keyframes offerSweep{0%{left:-60%}35%,100%{left:130%}}
+@media (max-width:700px){.offer-list{margin:.8rem auto 1.1rem;width:max-content;max-width:100%}.offer-big{font-size:2.4rem}}
+/* start the angel a little above the top edge so its chain still runs off it while it floats */
+.offer-photo img{margin-top:-14px}
+/* iPhone / iPad Safari can't draw SVG lighting filters this large and then draws nothing at all
+   (letters vanished, only the chain showed): skip the polished-metal lighting there */
+@supports (-webkit-touch-callout: none){
+  .np [filter="url(#np-bevel)"],.np [filter="url(#rd-bevel)"]{filter:none}
+}
