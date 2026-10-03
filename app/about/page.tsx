@@ -18,7 +18,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="ab-values" data-reveal>
+        <div className="ab-values" data-stagger="">
           <div>
             <svg viewBox="0 0 32 32" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M7 25l3-1 13-13-2-2L8 22z" stroke="#141414" /><path d="M6 28h20" stroke="#A8854F" /></svg>
             <h3>Made for one person</h3>
@@ -41,7 +41,7 @@ export default function AboutPage() {
             <p className="label">Who we work with</p>
             <h2>People <span className="g">and jewelers</span></h2>
           </div>
-          <div className="ab-list">
+          <div className="ab-list" data-stagger="right">
             <p><b>For you.</b> Name pendants, portraits, rings, earrings and bracelets — gifts, memorials, or something just for yourself.</p>
             <p><b>For jewelers.</b> Cast-ready 3D files and castable prints, so you can offer custom work without designing it yourself.</p>
             <p><b>From anywhere.</b> Based in Los Angeles, shipping across the US and worldwide.</p>

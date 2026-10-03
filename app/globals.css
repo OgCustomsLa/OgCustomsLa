@@ -65,7 +65,7 @@ nav.main a,.top .btn{white-space:nowrap}
 @media (max-width:420px){.top .btn{display:none}}
 
 /* hero */
-.hero{padding:clamp(1.75rem,3vw,2.75rem) 0 0}
+.hero{padding:clamp(1.75rem,3vw,2.75rem) 0 clamp(2.5rem,5vw,4rem)}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,3vw,2.5rem);align-items:start}
 .hero h1{font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;letter-spacing:-.02em;font-size:clamp(2.8rem,6.6vw,5.8rem);line-height:.9;letter-spacing:-.03em;text-transform:uppercase;margin:1.25rem 0 0}
 .hero h1 .g{display:block;color:var(--gold)}
@@ -514,17 +514,31 @@ footer small{color:var(--muted);font-size:.85rem}
 /* scrolling materials band */
 .ticker{background:var(--ink);color:#EDEAE0;overflow:hidden;border-block:1px solid #2A2A2A}
 .ticker-track{display:flex;width:max-content}
+/* soft fade at both edges so words slide in and out instead of being cut off */
+
+.ticker{position:relative}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:clamp(28px,8vw,90px);z-index:1;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--ink),transparent)}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--ink),transparent)}
 .ticker-row{display:flex;list-style:none;margin:0;padding:0}
 .ticker-row li{display:flex;align-items:center;white-space:nowrap;font:600 .82rem "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;padding:1.05rem 0}
 .ticker-row li::after{content:"";width:7px;height:7px;background:#C9A24E;transform:rotate(45deg);margin:0 2.4rem}
 @media (prefers-reduced-motion:no-preference){.ticker-track{animation:tick 42s linear infinite}.ticker:hover .ticker-track{animation-play-state:paused}}
 @keyframes tick{to{transform:translateX(-50%)}}
-.ticker + #make{border-top:0}
-.ticker + #make::before{display:none}
+.ticker + .block{border-top:0}
+.ticker + .block::before{display:none}
 
 /* fade sections up as they scroll in (only when JS turned it on) */
-.reveal-on [data-reveal]{transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--rd,0) * 90ms)}
-.reveal-on [data-reveal]:not(.is-in){opacity:0;transform:translateY(22px)}
+.reveal-on [data-reveal]{transition:opacity .75s ease,transform .85s cubic-bezier(.2,.75,.2,1);transition-delay:calc(var(--rd,0) * 110ms)}
+.reveal-on [data-reveal]:not(.is-in){opacity:0;transform:translateY(34px)}
+.reveal-on [data-reveal="left"]:not(.is-in){transform:translateX(-44px)}
+.reveal-on [data-reveal="right"]:not(.is-in){transform:translateX(44px)}
+.reveal-on [data-reveal="zoom"]:not(.is-in){transform:scale(.88) translateY(18px)}
+/* the photo strips animate on scroll instead of on page load */
+/* blocks waiting to slide in from the side must not make the page scroll sideways */
+#main{overflow-x:clip}
+.reveal-on .strip > *{animation:none;opacity:1}
+@media (max-width:760px){.reveal-on .strip .arrow{transform:rotate(90deg)}}
 
 /* footer */
 footer.site-foot{background:#141414;color:#CFCBBF;border-top:0;padding:clamp(3rem,6vw,4.5rem) 0 1.75rem}
@@ -549,3 +563,7 @@ footer.site-foot{background:#141414;color:#CFCBBF;border-top:0;padding:clamp(3re
 .nf .op-title .g{display:block}
 .nf-sub{color:var(--muted);max-width:44ch;margin:0 auto 2rem}
 .nf-ctas{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+
+/* Our work: the three before/after strips */
+#work .head + .strip-intro{margin-top:.5rem}
+#work .strip{border-bottom:0}

@@ -63,7 +63,7 @@ const BUSINESS_LD = {
 
 function Strip({ label, images }: { label: string; images: [string, string, string][] }) {
   return (
-    <div className="strip" aria-label={label}>
+    <div className="strip" aria-label={label} data-stagger="zoom">
       {images.map(([src, alt, cap], i) => (
         <Fragment key={src}>
           {i > 0 && <div className="arrow" aria-hidden="true">→</div>}
@@ -89,7 +89,7 @@ export default function Home() {
                 <Link href="/order" className="btn">Start an order</Link>
                 <a href="#process" className="btn ghost">How it works</a>
               </div>
-              <ul className="facts">
+              <ul className="facts" data-stagger="">
                 <li><b>Gold &amp; silver</b><span>Diamonds and stones on request</span></li>
                 <li><b>See it first</b><span>3D renders before anything is cast</span></li>
                 <li><b>Ships worldwide</b><span>Or pick up in Los Angeles</span></li>
@@ -98,8 +98,16 @@ export default function Home() {
             <NameDesigner />
           </div>
         </div>
+      </section>
+
+      <Ticker />
+
+      <section className="block" id="work">
         <div className="wrap">
-          <div className="divider" aria-hidden="true"><span></span></div>
+          <div className="head" data-reveal>
+            <div><p className="label">Real client pieces</p><h2>From idea <span className="g">to metal</span></h2></div>
+            <p className="sub">Every piece starts with something you send us — a drawing, a photo or just an idea. Here&apos;s what that turns into.</p>
+          </div>
           <div className="strip-intro" data-reveal>
             <p className="label">Your drawing or from scratch</p>
             <h2>Already drew it? <span className="g">We&apos;ll make it real.</span></h2>
@@ -127,10 +135,22 @@ export default function Home() {
               ["/images/coin-silver.jpg", "The finished coin piece in polished silver", "Finished in silver"],
             ]}
           />
+          <div className="divider" aria-hidden="true"><span></span></div>
+          <div className="strip-intro second" data-reveal>
+            <p className="label">From your handwriting</p>
+            <h2>Wrote a name? <span className="g">We&apos;ll cast it in gold.</span></h2>
+            <p>Every curve of the letters and every bead carried from the sketch into the finished pendant.</p>
+          </div>
+          <Strip
+            label="A name pendant from a pencil sketch to finished gold"
+            images={[
+              ["/images/elena-sketch.jpg", "Pencil sketch of a script name pendant reading Elena", "Your sketch"],
+              ["/images/elena-3d-print.jpg", "The Elena pendant as a blue 3D printed model", "3D model & print"],
+              ["/images/elena-gold.jpg", "The finished Elena pendant in polished gold", "Finished in gold"],
+            ]}
+          />
         </div>
       </section>
-
-      <Ticker />
 
       <section className="block" id="make">
         <div className="wrap">
@@ -138,12 +158,12 @@ export default function Home() {
             <div><p className="label">Bespoke design</p><h2>What we <span className="g">make</span></h2></div>
             <p className="sub">Made one at a time, for one person. Your idea, your size, your piece.</p>
           </div>
-          <div className="make">
-            {MAKE.map((m, i) => (
-              <article key={m.t} data-reveal style={{ "--rd": i % 4 } as React.CSSProperties}>{m.icon}<h3>{m.t}</h3><p>{m.p}</p></article>
+          <div className="make" data-stagger="zoom">
+            {MAKE.map(m => (
+              <article key={m.t}>{m.icon}<h3>{m.t}</h3><p>{m.p}</p></article>
             ))}
           </div>
-          <div className="choose" data-reveal>
+          <div className="choose" data-stagger="alt">
             <div>
               <p className="label">For you</p>
               <h3>The finished piece</h3>
@@ -197,22 +217,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="block" id="work">
-        <div className="wrap">
-          <div className="head" data-reveal>
-            <div><p className="label">A real client piece</p><h2>From sketch <span className="g">to gold</span></h2></div>
-            <p className="sub">This name pendant started as a colored pencil sketch. Every curve of the letters and every bead was carried into gold.</p>
-          </div>
-          <div className="case" data-reveal>
-            <figure><div className="ph"><img src="/images/elena-sketch.jpg" alt="Pencil sketch of a script name pendant reading Elena" loading="lazy" decoding="async" /></div><figcaption><h3><span>1</span>Your sketch</h3><p>You send a drawing, a photo or just an idea.</p></figcaption></figure>
-            <div className="arrow" aria-hidden="true">→</div>
-            <figure><div className="ph"><img src="/images/elena-3d-print.jpg" alt="The same Elena pendant as a blue 3D printed model" loading="lazy" decoding="async" /></div><figcaption><h3><span>2</span>3D model &amp; print</h3><p>We model every detail in 3D and print it, ready for casting.</p></figcaption></figure>
-            <div className="arrow" aria-hidden="true">→</div>
-            <figure><div className="ph"><img src="/images/elena-gold.jpg" alt="The finished Elena pendant in polished gold" loading="lazy" decoding="async" /></div><figcaption><h3><span>3</span>Cast in gold</h3><p>Cast in gold or silver and hand-polished into the finished piece.</p></figcaption></figure>
-          </div>
-        </div>
-      </section>
-
       <section className="block" id="sizes">
         <div className="wrap">
           <div className="head" data-reveal>
@@ -220,7 +224,7 @@ export default function Home() {
             <p className="sub">Three quick steps with a soft tape. The size finder does the rest.</p>
           </div>
 
-          <ol className="how" data-reveal>
+          <ol className="how" data-stagger="">
             <li>
               <svg viewBox="0 0 160 110" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path stroke="#141414" d="M58 108V70c-6-6-12-16-10-24 2-6 8-4 10 2l4 10V18c0-4 6-4 6 0v26M68 16c0-4 6-4 6 0v28M74 18c0-4 6-4 6 0v26M80 22c0-4 6-4 6 0v40c0 8-4 12-6 14v32" />
@@ -256,7 +260,7 @@ export default function Home() {
             </li>
           </ol>
 
-          <div className="fitrow" data-reveal>
+          <div className="fitrow" data-stagger="alt">
             <SizeFinder />
             <div className="card chart">
               <h3>Quick chart</h3>
@@ -288,7 +292,7 @@ export default function Home() {
               <Link href="/order" className="btn">Start an order</Link>
             </div>
           </aside>
-          <div className="faq-list" data-reveal>
+          <div className="faq-list" data-stagger="">
             {FAQ.map(g => (
               <Fragment key={g.group}>
                 <p className="faq-group">{g.group}</p>
@@ -305,8 +309,8 @@ export default function Home() {
       </section>
 
       <section className="block" id="contact">
-        <div className="wrap contact">
-          <div className="info" data-reveal>
+        <div className="wrap contact" data-stagger="alt">
+          <div className="info">
             <p className="label">Start an order</p>
             <h2>Tell us your <span className="g">idea</span></h2>
             <p style={{ color: "var(--muted)", maxWidth: "40ch", margin: "1.25rem 0 0" }}>We reply with questions, a quote and a timeline. No commitment until you approve the design.</p>

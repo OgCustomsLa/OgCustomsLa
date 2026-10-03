@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div id="main">{children}</div>
 
         <footer className="site-foot">
-          <div className="wrap foot-grid">
+          <div className="wrap foot-grid" data-stagger="">
             <div className="foot-brand">
               <Logo />
               <p className="label">Your vision. Our expertise.</p>
