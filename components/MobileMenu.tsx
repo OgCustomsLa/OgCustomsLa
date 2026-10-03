@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const LINKS = [
+const LINKS: { href: string; label: string; hidePhone?: boolean; live?: boolean }[] = [
+  { href: "/available", label: "Available now", live: true },
   { href: "/#make", label: "What we make" },
   { href: "/#process", label: "How it works", hidePhone: true },
   { href: "/#work", label: "Our work" },
@@ -45,7 +46,9 @@ export default function MobileMenu() {
       <div id="mobile-menu" className={"menu-panel" + (open ? " open" : "")} inert={!open}>
         <nav aria-label="Mobile">
           {LINKS.map(l => (
-            <Link key={l.href} href={l.href} onClick={close} className={l.hidePhone ? "hide-phone" : undefined}>{l.label}</Link>
+            <Link key={l.href} href={l.href} onClick={close} className={l.hidePhone ? "hide-phone" : l.live ? "nav-avail" : undefined}>
+              {l.live && <span className="live-dot" aria-hidden="true" />}{l.label}
+            </Link>
           ))}
         </nav>
         <Link href="/order" className="btn" onClick={close}>Start an order</Link>

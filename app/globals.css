@@ -19,33 +19,12 @@ b,strong{font-weight:500}
 .rule{width:72px;height:2px;background:var(--gold);border:0;margin:2rem 0}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 
-/* logo */
-.logo{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--ink)}
-.logo .og{font-weight:700;font-size:2.6rem;letter-spacing:-.04em;line-height:1}
-.logo .bar{width:1.5px;height:2.6rem;background:var(--ink)}
-.logo .cu{font-weight:400;font-size:1.45rem;line-height:1}
-.logo .la{font-weight:600;font-size:.75rem;letter-spacing:.08em;border:1.2px solid var(--ink);padding:.12rem .3rem;line-height:1}
-.logo .cu{position:relative;display:inline-block}
-.cu-pend{position:absolute;left:0;right:0;top:100%;height:30px;pointer-events:none}
-.cu-pend .chains{position:absolute;left:0;top:-7px;width:100%;height:15px;overflow:visible}
-.cu-pend .ak{position:absolute;left:50%;top:5px;width:48px;height:16px;transform:translateX(-50%);transform-origin:50% 0;overflow:visible}
-@media (prefers-reduced-motion:no-preference){.logo:hover .cu-pend .ak{animation:akswing 3.2s ease-in-out}}
-@keyframes akswing{0%,100%{transform:translateX(-50%) rotate(0)}12%{transform:translateX(-50%) rotate(-10deg)}28%{transform:translateX(-50%) rotate(8deg)}44%{transform:translateX(-50%) rotate(-6deg)}60%{transform:translateX(-50%) rotate(4deg)}76%{transform:translateX(-50%) rotate(-2deg)}90%{transform:translateX(-50%) rotate(1deg)}}
-.logo{transition:transform .25s ease}
-.logo .og{display:inline-block;transition:letter-spacing .3s ease,color .3s ease}
-.logo .bar{transition:background .3s ease,transform .3s ease}
-.logo .la{transition:background .3s ease,color .3s ease,border-color .3s ease}
-.logo:hover,.logo:focus-visible{transform:translateY(-3px)}
-.logo:hover .og,.logo:focus-visible .og{letter-spacing:.02em}
-.logo:hover .bar,.logo:focus-visible .bar{background:#A8854F;transform:scaleY(1.15)}
-.logo:hover .la,.logo:focus-visible .la{background:#A8854F;border-color:#A8854F;color:#fff}
-@media (prefers-reduced-motion:reduce){.logo:hover{transform:none}.logo:hover .og{letter-spacing:-.04em}}
 
 /* header */
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:92px;gap:1rem}
-nav.main{display:flex;gap:3.5rem}
-nav.main a{display:inline-block;text-decoration:none;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-size:1.08rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#A8854F;transition:transform .2s ease,color .2s ease}
+nav.main{display:flex;gap:1.6rem}
+nav.main a{display:inline-block;text-decoration:none;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-size:.98rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#A8854F;transition:transform .2s ease,color .2s ease}
 nav.main a:hover,nav.main a:focus-visible{color:#7E6233;transform:translateY(-3px)}
 @media (prefers-reduced-motion:reduce){nav.main a:hover{transform:none}}
 .btn{display:inline-flex;align-items:center;justify-content:center;font:500 .8rem var(--font);letter-spacing:.2em;text-transform:uppercase;padding:1rem 1.7rem;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer;border-radius:0}
@@ -61,7 +40,7 @@ nav.main a:hover,nav.main a:focus-visible{color:#7E6233;transform:translateY(-3p
 nav.main a,.top .btn{white-space:nowrap}
 @media (max-width:1200px){nav.main{gap:1.75rem}nav.main a{font-size:.95rem}}
 @media (max-width:1060px){nav.main{gap:1.25rem}nav.main a{font-size:.85rem;letter-spacing:.03em}.top .btn{padding:.7rem 1rem;font-size:.7rem}}
-@media (max-width:900px){nav.main{display:none}}
+@media (max-width:1199px){nav.main{display:none}}
 @media (max-width:420px){.top .btn{display:none}}
 
 /* hero */
@@ -507,8 +486,8 @@ footer small{color:var(--muted);font-size:.85rem}
 .menu-panel nav a{font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:600;font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;color:#A8854F;text-decoration:none;padding:.95rem 0;border-bottom:1px solid var(--line)}
 .menu-panel nav a:hover{color:#7E6233}
 .menu-panel .btn{width:100%}
-@media (max-width:900px){.menu-btn{display:flex}}
-@media (min-width:901px){.menu-panel{display:none}}
+@media (max-width:1199px){.menu-btn{display:flex}}
+@media (min-width:1200px){.menu-panel{display:none}}
 @media (max-width:600px),(orientation:landscape) and (max-height:500px) and (pointer:coarse){.menu-panel .hide-phone{display:none}}
 
 /* scrolling materials band */
@@ -543,9 +522,6 @@ footer small{color:var(--muted);font-size:.85rem}
 /* footer */
 footer.site-foot{background:#141414;color:#CFCBBF;border-top:0;padding:clamp(3rem,6vw,4.5rem) 0 1.75rem}
 .site-foot .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
-.site-foot .logo{color:#F1F1EC}
-.site-foot .logo .bar{background:#F1F1EC}
-.site-foot .logo .la{border-color:#F1F1EC}
 .site-foot .label{color:#C9A24E;margin-top:1.6rem}
 .foot-blurb{margin:.8rem 0 0;color:#A9A596;max-width:36ch;font-size:.95rem;line-height:1.6}
 .foot-h{margin:0 0 1rem;font-size:.72rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:#C9A24E}
@@ -567,3 +543,144 @@ footer.site-foot{background:#141414;color:#CFCBBF;border-top:0;padding:clamp(3re
 /* Our work: the three before/after strips */
 #work .head + .strip-intro{margin-top:.5rem}
 #work .strip{border-bottom:0}
+/* ============ Available now page ============ */
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4CAF6A;margin-right:.6rem;vertical-align:middle;box-shadow:0 0 0 0 rgba(76,175,106,.6)}
+@media (prefers-reduced-motion:no-preference){.live-dot{animation:livePulse 1.8s ease-out infinite}}
+@keyframes livePulse{to{box-shadow:0 0 0 8px rgba(76,175,106,0)}}
+
+.av{padding:clamp(2rem,4vw,3rem) 0 clamp(4rem,8vw,6rem)}
+.av-hero{text-align:center;max-width:720px;margin:0 auto 2rem}
+.av-hero .op-title{font-size:clamp(2.6rem,7vw,5rem)}
+.av-sub{color:var(--muted);max-width:46ch;margin:0 auto}
+
+.av-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin:0 auto clamp(2rem,4vw,3rem)}
+.av-filters button{font:500 .72rem var(--font);letter-spacing:.18em;text-transform:uppercase;padding:.65rem 1.1rem;border:1.5px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;border-radius:999px;transition:all .25s ease}
+.av-filters button:hover{border-color:var(--gold);color:var(--gold-ink)}
+.av-filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* shop shelves (layout inspired by jewelry e-commerce: compact cards, themed rows) */
+.av-filters.wrap{display:flex}
+.shelf{padding:clamp(1.75rem,4vw,2.75rem) 0}
+.shelf.dark{background:#141414;color:#EDEAE0;margin-top:clamp(1rem,3vw,2rem)}
+.shelf-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.1rem}
+.shelf-head h2{margin:0;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(1.35rem,3vw,1.9rem);letter-spacing:.01em;line-height:1.05}
+.shelf-head p{margin:.35rem 0 0;font-size:.88rem;color:var(--muted)}
+.shelf.dark .shelf-head p{color:#A9A596}
+.shelf-count{flex:none;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#A8854F;white-space:nowrap}
+.shelf-empty{color:var(--muted);margin:1rem 0}
+
+.sh-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(.6rem,1.4vw,.9rem)}
+.sh-card{display:flex;flex-direction:column;background:#fff;border:1px solid #E6E4DC;border-radius:12px;overflow:hidden;color:var(--ink);transition:transform .3s ease,box-shadow .3s ease}
+.sh-card:hover{transform:translateY(-4px);box-shadow:0 18px 30px -20px rgba(20,14,4,.45)}
+.shelf.dark .sh-card{border-color:#2A2A2A}
+@media (prefers-reduced-motion:no-preference){.sh-card{animation:avIn .6s cubic-bezier(.2,.75,.2,1) calc(var(--n,0) * 60ms) both}}
+@keyframes avIn{from{opacity:0;transform:translateY(20px) scale(.97)}}
+.sh-img{position:relative;aspect-ratio:1/1;background:#fff;overflow:hidden}
+.sh-img img{width:100%;height:100%;object-fit:contain;transition:transform .5s ease}
+.sh-card:hover .sh-img img{transform:scale(1.06)}
+.sh-empty{position:absolute;inset:8px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:#C9A24E;background:radial-gradient(ellipse at 50% 35%,#FFFDF6,#F1EDE1)}
+.sh-empty svg{width:38%;max-width:56px;height:auto}
+.sh-empty span{font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#A9A596}
+@media (prefers-reduced-motion:no-preference){.sh-empty svg{animation:avFloat 3.2s ease-in-out infinite}}
+@keyframes avFloat{50%{transform:translateY(-5px)}}
+.sh-body{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;padding:.6rem .7rem .8rem;flex:1}
+.sh-body h3{margin:0;font-size:.82rem;font-weight:500;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.sh-price{margin:0;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:.98rem}
+.sh-offer{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.sh-offer:hover{color:var(--gold-ink)}
+.sh-tag{margin-top:auto;font-size:.56rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .5rem;border-radius:5px;background:#FBF5E6;color:#8A6A38}
+.sh-tag.available{background:#E6F4EA;color:#2E7D4F}
+.sh-tag.sold{background:#FBEDEA;color:#B4442F}
+.sh-card.is-sold .sh-img{opacity:.6}
+@media (max-width:1100px){.sh-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:800px){.sh-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.sh-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shelf-head{flex-direction:column;align-items:flex-start;gap:.4rem}}
+
+/* custom piece banner + trust bar */
+.custom-banner{display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:clamp(1rem,2.5vw,1.5rem);margin:clamp(2rem,5vw,3.5rem) 0}
+.cb-thumbs{display:flex;flex:none;background:#141414;border-radius:10px;padding:.5rem;gap:.35rem}
+.cb-thumbs img{width:clamp(48px,7vw,72px);height:clamp(48px,7vw,72px);object-fit:cover;border-radius:6px;background:#fff}
+.cb-text{flex:1}
+.cb-text h2{margin:0;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(1.1rem,2.4vw,1.5rem);text-transform:none;letter-spacing:0}
+.cb-text p{margin:.3rem 0 0;color:var(--muted);font-size:.88rem}
+@media (max-width:640px){.custom-banner{flex-direction:column;text-align:center}.custom-banner .btn{width:100%}}
+.trust-bar{border-top:1px solid var(--line);padding:1rem 0}
+.trust-bar .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem 1.5rem}
+.trust-bar p{margin:0;font-size:.85rem;color:var(--muted)}
+.trust-bar b{color:var(--gold-ink);font-weight:600}
+
+
+/* "Available" link in the header + teaser banner on the home page */
+nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items:center}
+.nav-avail .live-dot{margin-right:.45rem}
+.avail-teaser{background:var(--ink);color:#EDEAE0;padding:clamp(2.5rem,6vw,4rem) 0;position:relative;overflow:hidden}
+.avail-teaser::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 120% at 85% 50%,rgba(201,162,78,.22),transparent 70%);pointer-events:none}
+.avail-teaser .wrap{position:relative;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.avail-teaser .label{color:#C9A24E}
+.avail-teaser h2{color:#F1F1EC;margin-top:.6rem}
+.avail-teaser p.sub{color:#A9A596;margin:.9rem 0 0;max-width:46ch}
+.avail-teaser .btn{background:#C9A24E;border-color:#C9A24E;color:#141414}
+.avail-teaser .btn:hover{background:#F1F1EC;border-color:#F1F1EC;color:#141414}
+.avail-teaser + .block{border-top:0}
+.avail-teaser + .block::before{display:none}
+/* brand mark (emblem + wordmark) */
+.brand{display:inline-flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.brand-mark{width:54px;height:54px;flex:none}
+.brand:hover .mark img,.brand:focus-visible .mark img{transform:rotateY(360deg) scale(1.05)}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-name{font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:.12em;text-transform:uppercase}
+.brand-sub{margin-top:.38rem;font-size:.56rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-ink);white-space:nowrap}
+.site-foot .brand{color:#F1F1EC}
+.site-foot .brand-sub{color:#C9A24E}
+@media (max-width:420px){.brand-mark{width:40px;height:40px}.brand-name{font-size:1.15rem;letter-spacing:.1em}.brand-sub{font-size:.5rem;letter-spacing:.18em}}
+/* "Unlock 5% off" welcome window (opens a few seconds into a visit) */
+.offer-backdrop{position:fixed;inset:0;z-index:60;background:rgba(10,10,9,.55);display:grid;place-items:center;padding:1rem}
+@media (prefers-reduced-motion:no-preference){.offer-backdrop{animation:fadeIn .3s ease}.offer-card{animation:popIn .45s cubic-bezier(.2,.75,.2,1)}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes popIn{from{opacity:0;transform:translateY(20px) scale(.96)}}
+.offer-card{position:relative;width:min(780px,94vw);height:min(640px,90vh);display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
+.offer-photo{position:relative;background:radial-gradient(ellipse 85% 70% at 50% 42%,#1F4A35 0%,#0D2419 45%,#050B08 100%);display:grid;place-items:center;overflow:hidden}
+.offer-photo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(243,220,147,.18),transparent 45%)}
+.offer-photo img{position:relative;width:auto;max-width:78%;max-height:82%;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(243,220,147,.2))}
+.offer-body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,3vw,1.75rem);overflow-y:auto}
+.offer-mark{width:clamp(80px,9vw,104px);height:clamp(80px,9vw,104px)}
+.offer-title{margin:1.1rem 0 0;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(2.1rem,4vw,2.7rem);letter-spacing:.01em;text-transform:none;line-height:1;color:#111}
+.offer-kicker{margin:1rem 0 0;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(1.15rem,2vw,1.45rem);letter-spacing:.01em;text-transform:uppercase;color:#111}
+.offer-plus{margin:.7rem 0 0;font-size:1.3rem;line-height:1;color:#333}
+.offer-perks{margin:.7rem 0 1.4rem;font-family:Georgia,"Times New Roman",serif;font-size:.86rem;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;color:#222}
+.offer-body form{width:100%;display:grid;gap:1.1rem}
+.offer-body input{padding:1rem 1.1rem;border:1px solid #CFCFCF;border-radius:4px;background:#fff;font-size:1.02rem;letter-spacing:.06em}
+.offer-body .btn{width:100%;border:0;border-radius:14px;padding:1.15rem 1rem;background:linear-gradient(180deg,#127548,#0B5634);color:#fff;font:800 1.1rem "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.12em}
+.offer-body .btn:hover{background:linear-gradient(180deg,#169056,#0E6A40);letter-spacing:.14em}
+.offer-error{margin:0;color:#B4442F;font-size:.85rem}
+.offer-code{margin:1rem 0 0;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(1.8rem,3.5vw,2.4rem);letter-spacing:.2em;padding:.4rem 1.2rem;border:1.5px dashed #127548;background:#EEF7F1;color:#0B5634}
+.offer-later{margin-top:.9rem;border:0;background:none;color:#777;font:inherit;font-size:.8rem;text-decoration:underline;cursor:pointer}
+.offer-close{position:absolute;top:14px;right:14px;z-index:2;width:46px;height:46px;border-radius:50%;border:2px solid #0B5634;background:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .2s ease}
+.offer-close:hover{transform:rotate(90deg)}
+.offer-close svg{width:24px;height:24px;stroke:#111;stroke-width:3;stroke-linecap:round;fill:none}
+@media (max-width:700px){.offer-card{height:auto;max-height:92vh;grid-template-columns:1fr;grid-template-rows:200px auto}.offer-photo img{max-height:88%}.offer-close{top:10px;right:10px}}
+
+/* phones: top bar is logo + menu button only (Start an order is inside the menu) */
+@media (max-width:600px){.top .top-actions > .btn{display:none}}
+@media (max-width:360px){.brand{gap:.5rem}.brand-mark{width:34px;height:34px}.brand-name{font-size:1rem;letter-spacing:.08em}.brand-sub{font-size:.44rem;letter-spacing:.12em}}
+
+/* LA emblem: light sweep across the gold, soft glow, coin flip on hover */
+.mark{position:relative;display:inline-block;perspective:400px;isolation:isolate}
+.mark img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(60,40,10,.3));transition:transform .9s cubic-bezier(.3,.7,.2,1)}
+.mark::before{content:"";position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,rgba(243,220,147,.55),transparent 65%);opacity:0;z-index:-1}
+.mark::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 40%,rgba(255,252,236,.75) 50%,transparent 60%) 150% 0/260% 100% no-repeat;-webkit-mask:url(/images/logo-la-160.png) center/contain no-repeat;mask:url(/images/logo-la-160.png) center/contain no-repeat}
+@media (prefers-reduced-motion:no-preference){
+  .mark::after{animation:markShine 4.5s ease-in-out infinite}
+  .mark::before{animation:markGlow 4.5s ease-in-out infinite}
+}
+@keyframes markShine{0%,55%{background-position:150% 0}85%,100%{background-position:-60% 0}}
+@keyframes markGlow{0%,50%,100%{opacity:0;transform:scale(.9)}70%{opacity:1;transform:scale(1)}}
+/* ring designer (shares the name designer window) */
+.ring-np svg{opacity:1}
+.ring-art{width:100%;height:100%}
+@media (prefers-reduced-motion:no-preference){.ring-art.demo{animation:fadeIn .6s ease}}
+
+/* showcase: ring picture laid over the name designer preview */
+.np .stage{position:relative}
+.stage-overlay{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 45%,#FBFBF8 0%,#EDEDE6 100%)}
+.stage-overlay svg{opacity:1;width:100%;height:100%}

@@ -53,9 +53,16 @@ const FONTS: Record<string, Font> = {
   bold: ["Bungee", "normal", "400", "Bold", true],
 };
 
-export default function NameDesigner() {
+// demoIndex: when set, the parent drives the showcase (which example to show); onTouch fires on first interaction
+type Props = { onRing?: () => void; startKind?: "pendant" | "earrings"; demoIndex?: number; onTouch?: () => void; overlay?: React.ReactNode };
+
+export default function NameDesigner({ onRing, startKind = "pendant", demoIndex, onTouch, overlay }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const onRingRef = useRef(onRing), onTouchRef = useRef(onTouch), demoIndexRef = useRef(demoIndex);
+  onRingRef.current = onRing; onTouchRef.current = onTouch; demoIndexRef.current = demoIndex;
+  const showRef = useRef<((i: number) => void) | null>(null);
+  useEffect(() => { if (demoIndex !== undefined) showRef.current?.(demoIndex); }, [demoIndex]);
 
   useEffect(() => {
     const box = root.current!;
@@ -73,18 +80,21 @@ export default function NameDesigner() {
       edgeText = $<SVGTextElement>("#np-text-edge");
     let metal = "gold", font = "script", line = "line", ice = "none", kind = "pendant";
     // showcase: until the visitor types or picks an option, rotate through example pieces
+    // alternates pendant / earrings
     const DEMOS = [
-      { name: "Elena", font: "script", metal: "gold", ice: "none" },
-      { name: "Marco", font: "gothic", metal: "silver", ice: "line" },
-      { name: "Bella", font: "retro", metal: "rose", ice: "all" },
-      { name: "Jayden", font: "bold", metal: "gold", ice: "all" },
-      { name: "Sofia", font: "signature", metal: "gold", ice: "line" },
+      { kind: "pendant", name: "Sofia", font: "signature", metal: "gold", ice: "none" },
+      { kind: "earrings", name: "OG", font: "bold", metal: "gold", ice: "all" },
+      { kind: "pendant", name: "Marco", font: "gothic", metal: "silver", ice: "line" },
+      { kind: "earrings", name: "Mia", font: "script", metal: "rose", ice: "none" },
+      { kind: "pendant", name: "Jayden", font: "bold", metal: "gold", ice: "all" },
+      { kind: "earrings", name: "LA", font: "gothic", metal: "silver", ice: "all" },
     ];
-    let demo = true, demoI = 0, demoTimer = 0;
+    let demo = true, demoI = (demoIndexRef.current ?? 0) % DEMOS.length, demoTimer = 0;
     const demoOn = () => demo && !input.value.trim() && kind === "pendant";
     function stopDemo() {
       if (!demo) return;
       demo = false; clearInterval(demoTimer); svg.classList.remove("swap");
+      onTouchRef.current?.();
     }
     let bottomCanvas: HTMLCanvasElement | null = null, hookCtx: CanvasRenderingContext2D | null = null, hookCanvas: HTMLCanvasElement | null = null;
 
@@ -137,20 +147,23 @@ export default function NameDesigner() {
       fx(".st-light", "#F7FBFE"); fx(".st-dark", "#9FB3C0"); fx(".st-mid", "#D5E2EA"); fx(".st-fire", "url(#m-fire)"); fx(".st-table", "url(#m-table)");
       beads.querySelectorAll(".st-hi").forEach(c => { c.setAttribute("fill", "#fff"); });
     }
+    let showing: (typeof DEMOS)[number] | null = null; // showcase piece being drawn right now
     function layout() {
       if (!demoOn()) return drawLayout();
-      const d = DEMOS[demoI], saved = [metal, font, ice, line] as const;
-      metal = d.metal; font = d.font; ice = d.ice; line = "line";
+      const d = DEMOS[demoI], saved = [metal, font, ice, line, kind] as const;
+      metal = d.metal; font = d.font; ice = d.ice; kind = d.kind; line = d.kind === "earrings" ? "none" : "line";
+      showing = d;
       drawLayout();
-      [metal, font, ice, line] = saved;
+      showing = null;
+      [metal, font, ice, line, kind] = saved;
     }
     function drawLayout() {
       if (!alive) return;
       // nothing typed yet: show a faded sample name so the preview is never just a line
       const sample = !input.value.trim();
-      let name = sample ? (demoOn() ? DEMOS[demoI].name : kind === "earrings" ? "OG" : "Elena") : input.value.trim();
+      let name = sample ? (showing ? showing.name : kind === "earrings" ? "OG" : "Sofia") : input.value.trim();
       const empty = false;
-      svg.classList.toggle("sample", sample && !demoOn());
+      svg.classList.toggle("sample", sample && !showing);
       name = name.charAt(0).toUpperCase() + name.slice(1);
       const f = FONTS[font];
       if (f[4]) name = name.toUpperCase();
@@ -200,11 +213,12 @@ export default function NameDesigner() {
         const tx = -px0 * s, dx = pw + gap;
         piece.setAttribute("transform", `translate(${tx.toFixed(1)} 0) scale(${s})`);
         clone.setAttribute("transform", `translate(${dx.toFixed(1)} 0)`); clone.style.display = "";
-        // hang each earring from the top of its first letter (measured from the real font)
+        // where the wire attaches (measured from the real font): 1 letter → its top centre,
+        // 2 letters → the middle where they meet, 3 letters → the top of the middle one
         const ctx = hookCtx || (hookCtx = document.createElement("canvas").getContext("2d")!);
         ctx.font = `${f[1]} ${f[2]} ${FS}px "${f[0]}"`;
-        const txt = (text.textContent || "").trim(), ci = txt.length === 3 ? 1 : 0; // 3 letters: hang from the middle one
-        const ch = txt.charAt(ci) || "A", m = ctx.measureText(ch);
+        const txt = (text.textContent || "").trim(), ci = txt.length === 3 ? 1 : 0;
+        const ch = txt.length === 2 ? txt : txt.charAt(ci) || "A", m = ctx.measureText(ch);
         const cTop = -(m.actualBoundingBoxAscent || FS * 0.7);
         let cMid = bb.x + ((m.actualBoundingBoxRight || FS * 0.5) - (m.actualBoundingBoxLeft || 0)) / 2;
         try { if (txt) { const o = text.getStartPositionOfChar(ci).x; cMid = o + ((m.actualBoundingBoxRight || 0) - (m.actualBoundingBoxLeft || 0)) / 2; } } catch {}
@@ -217,9 +231,10 @@ export default function NameDesigner() {
           const ox = Math.round(FS * 0.3), oy = Math.round(FS * 1.1); g.clearRect(0, 0, W2, H2); g.fillText(ch, ox, oy);
           const colX = Math.round(ox + ((m.actualBoundingBoxRight || 0) - (m.actualBoundingBoxLeft || 0)) / 2);
           const col = g.getImageData(colX - 1, 0, 3, H2).data;
-          for (let y = 0; y < H2; y++) { const k = y * 12; if (col[k + 3] > 110 || col[k + 7] > 110 || col[k + 11] > 110) { inkTop = y - oy; break; } }
-          // open-top letters (V, W, Y, U…): bridge the arms with a small bar near the top instead of dropping into the gap
-          if (inkTop - cTop > FS * 0.12) {
+          let found = false;
+          for (let y = 0; y < H2; y++) { const k = y * 12; if (col[k + 3] > 110 || col[k + 7] > 110 || col[k + 11] > 110) { inkTop = y - oy; found = true; break; } }
+          // open tops (V, W, Y, U…) or the gap between two letters: bridge them with a small bar near the top
+          if (!found || inkTop - cTop > FS * 0.12) {
             const ry = Math.round(oy + cTop + FS * 0.05), row = g.getImageData(0, ry, W2, 1).data;
             let lx = -1, rx = -1;
             for (let x = colX; x >= 0; x--) { if (row[x * 4 + 3] > 110) { lx = x; break; } }
@@ -227,13 +242,19 @@ export default function NameDesigner() {
             if (lx >= 0 && rx >= 0) { bar = { y: ry - oy, x1: lx - ox, x2: rx - ox }; inkTop = ry - oy; }
           }
         } catch {}
-        const r0 = 5, hx = tx + cMid * s, hy = inkTop * s - r0 + 3.5;
+        const hx = tx + cMid * s, y0 = inkTop * s + 2; // wire starts just inside the top of the letters
         const org = (() => { try { return text.getStartPositionOfChar(ci).x; } catch { return bb.x; } })();
         const barD = (off: number) => bar ? ` M${(off + (org + bar.x1) * s).toFixed(1)} ${(bar.y * s).toFixed(1)} H${(off + (org + bar.x2) * s).toFixed(1)}` : "";
-        const hook = (x: number, off: number) => `M${x.toFixed(1)} ${(hy + r0).toFixed(1)} a${r0} ${r0} 0 1 1 0.01 0 M${x.toFixed(1)} ${(hy - r0).toFixed(1)} v-12 c0-30 36-30 36-6` + barD(off);
-        $("#np-h1").setAttribute("d", hook(hx, tx)); $("#np-h2").setAttribute("d", hook(hx + dx, tx + dx));
+        // French wire: straight up, sweeping back over the ear, finished with a small ball tip.
+        // dir mirrors it so the two wires of the pair curl toward each other.
+        const hook = (x: number, off: number, dir: -1 | 1) => {
+          const top = y0 - 18, ex = x + dir * 30, ey = y0 - 20;
+          return `M${x.toFixed(1)} ${y0.toFixed(1)} V${top.toFixed(1)} C${x.toFixed(1)} ${(top - 30).toFixed(1)} ${(x + dir * 34).toFixed(1)} ${(top - 30).toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`
+            + ` M${(ex - 2).toFixed(1)} ${ey.toFixed(1)} a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0` + barD(off);
+        };
+        $("#np-h1").setAttribute("d", hook(hx, tx, 1)); $("#np-h2").setAttribute("d", hook(hx + dx, tx + dx, -1));
         hooks.style.display = "";
-        left = -24; right = pw * 2 + gap + 24; tp = hy - 42; bt = bottom * s;
+        left = -24; right = pw * 2 + gap + 24; tp = y0 - 52; bt = bottom * s;
       } else {
         piece.removeAttribute("transform"); clone.style.display = "none"; hooks.style.display = "none";
       }
@@ -278,7 +299,9 @@ export default function NameDesigner() {
     group("np-ice", b => { ice = b.dataset.i!; layout(); });
     let savedLine = "line", savedIce = "none", savedName = "";
     group("np-kind", b => {
-      const k = b.dataset.k!; if (k === kind) return;
+      const k = b.dataset.k!;
+      if (k === "ring") { onRingRef.current?.(); return; }
+      if (k === kind) return;
       if (k === "earrings") {
         savedLine = line; savedIce = ice;
         savedName = input.value; input.maxLength = 3; input.value = input.value.slice(0, 3);
@@ -315,7 +338,13 @@ export default function NameDesigner() {
 
     // load the showcase fonts, then start rotating (not for visitors who prefer reduced motion)
     if (document.fonts) DEMOS.forEach(d => { const f = FONTS[d.font]; document.fonts.load(`${f[1]} ${f[2]} 150px "${f[0]}"`).then(layout, () => {}); });
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // parent-driven showcase: jump to the requested example with the same fade
+    showRef.current = (i: number) => {
+      if (!demoOn()) return;
+      svg.classList.add("swap");
+      setTimeout(() => { if (!alive || !demoOn()) return; demoI = i % DEMOS.length; layout(); svg.classList.remove("swap"); }, 380);
+    };
+    if (demoIndexRef.current === undefined && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
       demoTimer = window.setInterval(() => {
         if (!demoOn()) return;
         svg.classList.add("swap");
@@ -323,7 +352,11 @@ export default function NameDesigner() {
       }, 2800);
     }
 
+    // coming back from the ring designer with earrings picked
+    if (startKind === "earrings") $<HTMLButtonElement>('#np-kind [data-k="earrings"]').click();
+
     return () => { alive = false; clearInterval(demoTimer); ac.abort(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
@@ -345,20 +378,23 @@ export default function NameDesigner() {
             {/* Fixed region in user space: a %-of-bbox region clips script letters on iOS Safari, whose text bbox is narrower than the ink */}
             <filter id="np-shadow" filterUnits="userSpaceOnUse" x="-1500" y="-1000" width="6000" height="2500"><feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity=".2" /></filter>
           </defs>
+          {/* earring wires first, so the letters sit on top of them */}
+          <g id="np-hooks" fill="none" strokeWidth="4" strokeLinecap="round" style={{ display: "none" }}><path id="np-h1" /><path id="np-h2" /></g>
           <g id="np-piece" filter="url(#np-shadow)">
             <path id="np-swash" fill="none" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
             <g id="np-beads"></g>
-            <text id="np-text-edge" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeLinejoin="round" aria-hidden="true">Elena</text>
-            <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400">Elena</text>
+            <text id="np-text-edge" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeLinejoin="round" aria-hidden="true">Sofia</text>
+            <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400">Sofia</text>
           </g>
           <use id="np-clone" href="#np-piece" style={{ display: "none" }} />
-          <g id="np-hooks" fill="none" strokeWidth="4" strokeLinecap="round" style={{ display: "none" }}><path id="np-h1" /><path id="np-h2" /></g>
         </svg>
+        {overlay && <div className="stage-overlay" aria-hidden="true">{overlay}</div>}
       </div>
       <div className="np-body">
-        <div className="seg c2 kind" role="group" aria-label="Piece" id="np-kind">
+        <div className="seg kind" role="group" aria-label="Piece" id="np-kind">
           <button type="button" data-k="pendant" aria-pressed="true">Pendant</button>
           <button type="button" data-k="earrings" aria-pressed="false">Earrings</button>
+          <button type="button" data-k="ring" aria-pressed="false">Ring</button>
         </div>
         <div className="np-field">
           <label htmlFor="np-name">Name <span id="np-count">0 / 24</span></label>

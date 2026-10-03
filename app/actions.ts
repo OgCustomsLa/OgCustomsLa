@@ -110,3 +110,18 @@ export async function submitOrder(input: OrderInput): Promise<SubmitResult> {
   const { error } = await supabase.from("orders").insert(row);
   return result("orders", error);
 }
+
+/** Email sign-up from the 5% off popup. An email that's already signed up counts as success. */
+export async function subscribe(emailInput: string): Promise<SubmitResult> {
+  let email: string;
+  try {
+    email = required(emailInput, "Email", 320).toLowerCase();
+    if (!EMAIL_RE.test(email)) throw new Error("Check the email address — it looks incomplete.");
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+  const supabase = await createClient();
+  const { error } = await supabase.from("subscribers").insert({ email });
+  if (error?.code === "23505") return { ok: true };
+  return result("subscribers", error);
+}

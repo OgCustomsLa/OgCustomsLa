@@ -4,7 +4,7 @@ import ContactForm from "@/components/ContactForm";
 import HeroTitle from "@/components/HeroTitle";
 import Morph from "@/components/Morph";
 import Ticker from "@/components/Ticker";
-import NameDesigner from "@/components/NameDesigner";
+import JewelryDesigner from "@/components/JewelryDesigner";
 import RevealList from "@/components/RevealList";
 import SizeFinder from "@/components/SizeFinder";
 import { EMAIL } from "@/lib/site";
@@ -95,7 +95,7 @@ export default function Home() {
                 <li><b>Ships worldwide</b><span>Or pick up in Los Angeles</span></li>
               </ul>
             </div>
-            <NameDesigner />
+            <JewelryDesigner />
           </div>
         </div>
       </section>
@@ -149,6 +149,17 @@ export default function Home() {
               ["/images/elena-gold.jpg", "The finished Elena pendant in polished gold", "Finished in gold"],
             ]}
           />
+        </div>
+      </section>
+
+      <section className="avail-teaser" data-reveal>
+        <div className="wrap">
+          <div>
+            <p className="label"><span className="live-dot" aria-hidden="true" />Available now</p>
+            <h2>Ready to wear. <span className="g">One of one.</span></h2>
+            <p className="sub">Finished pieces from our studio, ready to ship. When it&apos;s gone, it&apos;s gone.</p>
+          </div>
+          <Link href="/available" className="btn">Shop available pieces</Link>
         </div>
       </section>
 

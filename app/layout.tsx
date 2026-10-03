@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import DiscountOffer from "@/components/DiscountOffer";
 import HeaderBills from "@/components/HeaderBills";
 import Logo from "@/components/Logo";
 import MobileMenu from "@/components/MobileMenu";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="wrap">
             <Logo />
             <nav className="main" aria-label="Main">
+              <Link href="/available" className="nav-avail"><span className="live-dot" aria-hidden="true" />Available</Link>
               <Link href="/#make">What we make</Link>
               <Link href="/#process">How it works</Link>
               <Link href="/#sizes">Size guide</Link>
@@ -76,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
             <nav className="foot-col" aria-label="Footer">
               <p className="foot-h">Explore</p>
+              <Link href="/available">Available now</Link>
               <Link href="/#make">What we make</Link>
               <Link href="/#work">Our work</Link>
               <Link href="/#sizes">Size guide</Link>
@@ -96,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <RevealOnScroll />
+        <DiscountOffer />
       </body>
     </html>
   );
