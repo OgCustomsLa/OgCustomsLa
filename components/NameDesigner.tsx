@@ -39,6 +39,7 @@ function PavePattern({ id, base, edge }: { id: string; base: string; edge: strin
 }
 
 type Font = [family: string, style: string, weight: string, label: string, upper: boolean];
+export const FADE_MS = 700; // every showcase change uses this one crossfade
 
 const METALS: Record<string, [string, string]> = {
   gold: ["url(#m-gold)", "#8A6A2A"],
@@ -93,11 +94,14 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       { kind: "pendant", name: "Jayden", font: "brush", metal: "gold", ice: "all" },
       { kind: "earrings", name: "LA", font: "old", metal: "silver", ice: "all" },
     ];
-    let demo = true, demoI = (demoIndexRef.current ?? 0) % DEMOS.length, demoTimer = 0;
+    // the showcase is driven by the parent (demoIndex); opened without one, it shows the visitor's own design
+    let demo = demoIndexRef.current !== undefined, demoI = (demoIndexRef.current ?? 0) % DEMOS.length, demoTimer = 0;
     const demoOn = () => demo && !input.value.trim() && kind === "pendant";
     function stopDemo() {
       if (!demo) return;
       demo = false; clearInterval(demoTimer); svg.classList.remove("swap");
+      // leave the showcase piece and show the visitor's own design (same crossfade)
+      crossfade(() => layout());
       onTouchRef.current?.();
     }
     let bottomCanvas: HTMLCanvasElement | null = null, hookCtx: CanvasRenderingContext2D | null = null, hookCanvas: HTMLCanvasElement | null = null;
@@ -394,19 +398,39 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
 
     // load the showcase fonts, then start rotating (not for visitors who prefer reduced motion)
     if (document.fonts) DEMOS.forEach(d => { const f = FONTS[d.font]; document.fonts.load(`${f[1]} ${f[2]} 150px "${f[0]}"`).then(layout, () => {}); });
-    // parent-driven showcase: jump to the requested example with the same fade
-    showRef.current = (i: number) => {
-      if (!demoOn()) return;
-      svg.classList.add("swap");
-      setTimeout(() => { if (!alive || !demoOn()) return; demoI = i % DEMOS.length; layout(); svg.classList.remove("swap"); }, 380);
-    };
-    if (demoIndexRef.current === undefined && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      demoTimer = window.setInterval(() => {
-        if (!demoOn()) return;
-        svg.classList.add("swap");
-        setTimeout(() => { if (!alive || !demoOn()) return; demoI = (demoI + 1) % DEMOS.length; layout(); svg.classList.remove("swap"); }, 380);
-      }, 2800);
+    // showcase change: a copy of the current picture sits on top and fades out while the new one is
+    // already drawn underneath, so every change is the same smooth crossfade with no empty frame
+    // The old one starts fading first and the new one follows just behind, so the new name never
+    // shows up at full strength while the old one is still there.
+    let fadeT = 0;
+    function crossfade(update: () => void) {
+      box.querySelectorAll(".np-ghost").forEach(g => g.remove());
+      const ghost = svg.cloneNode(true) as SVGSVGElement;
+      ghost.removeAttribute("id"); ghost.setAttribute("aria-hidden", "true"); ghost.classList.remove("np-hide", "np-fadein"); ghost.classList.add("np-ghost");
+      svg.after(ghost);
+      svg.classList.remove("np-fadein"); svg.classList.add("np-hide");
+      update();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        ghost.classList.add("out");
+        svg.classList.add("np-fadein"); svg.classList.remove("np-hide");
+      }));
+      clearTimeout(fadeT);
+      fadeT = window.setTimeout(() => { ghost.remove(); svg.classList.remove("np-fadein"); }, FADE_MS + 100);
     }
+    // parent-driven showcase: jump to the requested example
+    showRef.current = (i: number) => {
+      if (!demo) {
+        // the parent restarted the showcase (visitor idle, nothing typed): back to the pendant view
+        if (input.value.trim()) return;
+        crossfade(() => {
+          if (kind !== "pendant") $<HTMLButtonElement>('#np-kind [data-k="pendant"]').click();
+          demo = true; demoI = i % DEMOS.length; layout();
+        });
+        return;
+      }
+      if (!demoOn() || demoI === i % DEMOS.length) return;
+      crossfade(() => { demoI = i % DEMOS.length; layout(); });
+    };
 
     // coming back from the ring designer with earrings picked
     if (startKind === "earrings") $<HTMLButtonElement>('#np-kind [data-k="earrings"]').click();
@@ -456,7 +480,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           </g>
           <use id="np-clone" href="#np-piece" style={{ display: "none" }} />
         </svg>
-        {overlay && <div className="stage-overlay" aria-hidden="true">{overlay}</div>}
+        {overlay}
       </div>
       <div className="np-body">
         <div>

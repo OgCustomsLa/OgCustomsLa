@@ -682,7 +682,7 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 
 /* showcase: ring picture laid over the name designer preview */
 .np .stage{position:relative}
-.stage-overlay{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 45%,#FBFBF8 0%,#EDEDE6 100%)}
+.stage-overlay{position:absolute;inset:0;z-index:2;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .7s cubic-bezier(.4,0,.2,1);background:radial-gradient(ellipse at 50% 45%,#FBFBF8 0%,#EDEDE6 100%)}
 .stage-overlay svg{opacity:1;width:100%;height:100%}
 
 /* hero is just the designer window now: centred and a little larger */
@@ -731,3 +731,12 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 html.offer-open,html.offer-open body{overflow:hidden}
+/* showcase crossfade (same .7s curve as the ring layer) */
+.stage-overlay.on{opacity:1}
+.np svg.np-ghost{position:absolute;inset:0;z-index:1;opacity:1;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1)}
+.np svg.np-ghost.out{opacity:0}
+@media (prefers-reduced-motion:reduce){.stage-overlay,.np svg.np-ghost{transition:none}}
+/* the new picture: hidden while the old one starts to go, then fades in just behind it (.25s + .45s = the .7s showcase fade) */
+.np svg.np-hide{opacity:0!important;transition:none!important}
+.np svg.np-fadein{transition:opacity .45s cubic-bezier(.4,0,.2,1) .25s}
+@media (prefers-reduced-motion:reduce){.np svg.np-fadein{transition:none}}
