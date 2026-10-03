@@ -73,7 +73,7 @@ nav.main a,.top .btn{white-space:nowrap}
 .seg.fonts{grid-template-columns:repeat(3,1fr)}
 .seg.fonts button{border-bottom:1px solid var(--line);text-transform:none;letter-spacing:0;font-size:1rem;font-weight:400;padding:.4rem .3rem;color:var(--ink)}
 .seg.fonts button:nth-child(3n){border-right:0}
-.seg.fonts button:nth-child(n+4){border-bottom:0}
+.seg.fonts button:nth-last-child(-n+3){border-bottom:0}
 .seg.fonts button small{display:block;font:500 .58rem var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.15rem}
 .seg.fonts button[aria-pressed="true"] small{color:#C9C7BE}
 .seg.fonts button{flex-direction:column;gap:0;min-height:52px;justify-content:center}
@@ -634,14 +634,14 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 .site-foot .brand-sub{color:#C9A24E}
 @media (max-width:420px){.brand-mark{width:40px;height:40px}.brand-name{font-size:1.15rem;letter-spacing:.1em}.brand-sub{font-size:.5rem;letter-spacing:.18em}}
 /* "Unlock 5% off" welcome window (opens a few seconds into a visit) */
-.offer-backdrop{position:fixed;inset:0;z-index:60;background:rgba(10,10,9,.55);display:grid;place-items:center;padding:1rem}
-@media (prefers-reduced-motion:no-preference){.offer-backdrop{animation:fadeIn .3s ease}.offer-card{animation:popIn .45s cubic-bezier(.2,.75,.2,1)}}
+.offer-backdrop{position:fixed;inset:0;z-index:100;overscroll-behavior:contain;background:rgba(10,10,9,.55);display:grid;place-items:center;padding:1rem}
+@media (prefers-reduced-motion:no-preference){.offer-backdrop{animation:fadeIn .2s ease}.offer-card{animation:popIn .45s cubic-bezier(.2,.75,.2,1)}}
 @keyframes fadeIn{from{opacity:0}}
-@keyframes popIn{from{opacity:0;transform:translateY(20px) scale(.96)}}
+@keyframes popIn{from{transform:translateY(24px) scale(.96)}}
 .offer-card{position:relative;width:min(780px,94vw);height:min(640px,90vh);display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
 .offer-photo{position:relative;background:radial-gradient(ellipse 85% 70% at 50% 42%,#1F4A35 0%,#0D2419 45%,#050B08 100%);display:grid;place-items:center;overflow:hidden}
 .offer-photo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(243,220,147,.18),transparent 45%)}
-.offer-photo img{position:relative;width:auto;max-width:78%;max-height:82%;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(243,220,147,.2))}
+.offer-photo img{position:relative;align-self:center;width:auto;height:84%;max-width:86%;object-fit:contain;object-position:top;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(243,220,147,.2))}
 .offer-body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,3vw,1.75rem);overflow-y:auto}
 .offer-mark{width:clamp(80px,9vw,104px);height:clamp(80px,9vw,104px)}
 .offer-title{margin:1.1rem 0 0;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(2.1rem,4vw,2.7rem);letter-spacing:.01em;text-transform:none;line-height:1;color:#111}
@@ -658,7 +658,7 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 .offer-close{position:absolute;top:14px;right:14px;z-index:2;width:46px;height:46px;border-radius:50%;border:2px solid #0B5634;background:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .2s ease}
 .offer-close:hover{transform:rotate(90deg)}
 .offer-close svg{width:24px;height:24px;stroke:#111;stroke-width:3;stroke-linecap:round;fill:none}
-@media (max-width:700px){.offer-card{height:auto;max-height:92vh;grid-template-columns:1fr;grid-template-rows:200px auto}.offer-photo img{max-height:88%}.offer-close{top:10px;right:10px}}
+@media (max-width:700px){.offer-card{height:auto;max-height:92vh;grid-template-columns:1fr;grid-template-rows:200px auto}.offer-photo img{height:190px;max-height:none;max-width:none;width:auto}.offer-close{top:10px;right:10px}}
 
 /* phones: top bar is logo + menu button only (Start an order is inside the menu) */
 @media (max-width:600px){.top .top-actions > .btn{display:none}}
@@ -684,3 +684,50 @@ nav.main a.nav-avail,.menu-panel nav a.nav-avail{display:inline-flex;align-items
 .np .stage{position:relative}
 .stage-overlay{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 45%,#FBFBF8 0%,#EDEDE6 100%)}
 .stage-overlay svg{opacity:1;width:100%;height:100%}
+
+/* hero is just the designer window now: centred and a little larger */
+.hero-grid.solo{grid-template-columns:minmax(0,1fr);justify-items:center}
+.hero-grid.solo .np{justify-self:center;max-width:600px;margin-top:0;zoom:.9}
+/* ===== main designer window: headline, dark header, piece tabs with icons, numbered steps ===== */
+.hero-intro{text-align:center;max-width:680px;margin:0 auto clamp(1.25rem,3vw,2rem)}
+.hero-intro .op-title{font-size:clamp(2.1rem,5.2vw,3.6rem);margin:.7rem 0 .8rem}
+.hero-intro .op-title .g{display:block}
+.hero-sub{margin:0 auto;max-width:52ch;color:var(--muted);font-size:clamp(.98rem,1.4vw,1.08rem)}
+
+.np{border-radius:16px;overflow:hidden;border-color:#E2DCC9;box-shadow:0 2px 0 rgba(20,20,20,.03),0 30px 60px -34px rgba(60,40,10,.5)}
+.np .np-head{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:linear-gradient(90deg,#141414,#22201B);border-bottom:1px solid #2E2A22}
+.np .np-mark{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:50%;border:1px solid #6E5A2E;color:#E7C977}
+.np .np-mark svg{width:20px;height:20px}
+/* icons are always visible (the fade-in rule is only for the name preview) */
+.np .np-mark svg,.np .seg svg{opacity:1;transition:none}
+.np-title{margin:0;flex:1;font-family:"Outfit","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;color:#F1F1EC;line-height:1.1}
+.np-title span{display:block;margin-top:.2rem;font-family:var(--font);font-weight:400;font-size:.68rem;letter-spacing:.12em;text-transform:none;color:#C9A24E}
+.np .np-head .live{color:#A9A596}
+
+/* numbered steps */
+.np .np-body{counter-reset:step;gap:.9rem;padding:1.1rem 1.1rem 1.2rem}
+.np .np-body .opt-label,.np .np-field > label{display:flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:600;letter-spacing:.16em;color:var(--ink)}
+.np .np-body .opt-label::before,.np .np-field > label::before{counter-increment:step;content:counter(step);flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:linear-gradient(160deg,#E7C977,#A8854F);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:0}
+.np .np-field > label span{margin-left:auto}
+
+/* big piece tabs with icons */
+.np .seg.kind{border-radius:12px;overflow:hidden}
+.np .seg.kind button{flex-direction:column;gap:.35rem;padding:.75rem .4rem;font-size:.66rem;font-weight:600;letter-spacing:.14em;color:var(--ink);background:var(--bg)}
+.np .seg.kind button svg{width:28px;height:28px;color:#A8854F;transition:transform .3s ease}
+.np .seg.kind button:hover svg{transform:translateY(-2px) scale(1.08)}
+.np .seg.kind button[aria-pressed="true"]{background:#141414;color:#F1F1EC}
+.np .seg.kind button[aria-pressed="true"] svg{color:#E7C977}
+
+/* rounder option buttons, icons in the diamond choices */
+.np .seg{border-radius:10px;overflow:hidden}
+.np .seg button svg{width:18px;height:18px;flex:none}
+.np #np-ice button{gap:.4rem}
+
+/* gold order button */
+.np .np-foot{padding-top:.4rem;border-top:1px solid var(--line)}
+.np .np-foot .btn{background:linear-gradient(180deg,#E2C16F,#B08D46);border-color:#9C7A2C;color:#141414;font-weight:700;padding:.85rem 1.3rem;font-size:.72rem;border-radius:10px}
+.np .np-foot .btn:hover{background:#141414;border-color:#141414;color:#F3DC93}
+@media (max-width:560px){.np .np-foot{flex-direction:column;align-items:stretch}.np .np-foot .btn{width:100%}}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+html.offer-open,html.offer-open body{overflow:hidden}

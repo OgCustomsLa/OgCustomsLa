@@ -1,8 +1,6 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
-import HeroTitle from "@/components/HeroTitle";
-import Morph from "@/components/Morph";
 import Ticker from "@/components/Ticker";
 import JewelryDesigner from "@/components/JewelryDesigner";
 import RevealList from "@/components/RevealList";
@@ -80,21 +78,12 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_LD) }} />
       <section className="hero">
         <div className="wrap">
-          <div className="hero-grid">
-            <div>
-              <HeroTitle />
-              <Morph />
-              <p className="lede"><b>If you can imagine it, we can make it.</b> Send a sketch, a photo or an idea — we design it in 3D and make it yours.</p>
-              <div className="ctas">
-                <Link href="/order" className="btn">Start an order</Link>
-                <a href="#process" className="btn ghost">How it works</a>
-              </div>
-              <ul className="facts" data-stagger="">
-                <li><b>Gold &amp; silver</b><span>Diamonds and stones on request</span></li>
-                <li><b>See it first</b><span>3D renders before anything is cast</span></li>
-                <li><b>Ships worldwide</b><span>Or pick up in Los Angeles</span></li>
-              </ul>
-            </div>
+          <div className="hero-intro" data-reveal>
+            <p className="label"><span className="live-dot" aria-hidden="true" />Live jewelry designer</p>
+            <h1 className="sr-only">OG Customs LA — custom name pendants, earrings and rings, handmade in Los Angeles</h1>
+            <p className="hero-sub">Pick a piece, add your name or initials and choose your diamonds. Our professional team will make it by hand in Los Angeles.</p>
+          </div>
+          <div className="hero-grid solo">
             <JewelryDesigner />
           </div>
         </div>

@@ -8,7 +8,8 @@ import { BrandMark } from "./Logo";
 
 const JOINED_KEY = "og-offer-joined"; // localStorage: signed up, never show again
 const SEEN_KEY = "og-offer-seen"; // sessionStorage: already shown during this visit
-const DELAY_MS = 4000;
+const DELAY_MS = 5000;
+const IDLE_MS = 2500;
 
 /**
  * "Unlock 5% off" window (about 70% of the screen) that opens a few seconds into each visit.
@@ -23,18 +24,28 @@ export default function DiscountOffer() {
     let skip = false;
     try { skip = localStorage.getItem(JOINED_KEY) === "1" || sessionStorage.getItem(SEEN_KEY) === "1"; } catch {}
     if (skip) return;
-    const t = setTimeout(() => {
+    // don't cut in while someone is typing or tapping (e.g. building a piece in the designer):
+    // wait until they've been idle for a moment
+    let last = 0, t = 0;
+    const busy = () => { last = Date.now(); };
+    const evs = ["keydown", "pointerdown", "input"] as const;
+    evs.forEach(e => document.addEventListener(e, busy, true));
+    const tryOpen = () => {
+      const typing = document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement;
+      if (typing || Date.now() - last < IDLE_MS) { t = window.setTimeout(tryOpen, 1500); return; }
       setOpen(true);
       try { sessionStorage.setItem(SEEN_KEY, "1"); } catch {}
-    }, DELAY_MS);
-    return () => clearTimeout(t);
+    };
+    t = window.setTimeout(tryOpen, DELAY_MS);
+    return () => { clearTimeout(t); evs.forEach(e => document.removeEventListener(e, busy, true)); };
   }, []);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    document.documentElement.classList.add("offer-open"); // stop the page scrolling behind the window
+    return () => { document.removeEventListener("keydown", onKey); document.documentElement.classList.remove("offer-open"); };
   }, [open]);
 
   async function onSubmit(e: React.FormEvent) {
@@ -58,7 +69,7 @@ export default function DiscountOffer() {
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" /></svg>
         </button>
         <div className="offer-photo" aria-hidden="true">
-          <img src="/images/jesus-gold-cut.png" alt="" />
+          <img src="/images/angel-gold-cut.png" alt="" />
         </div>
         <div className="offer-body">
           <BrandMark className="offer-mark" />

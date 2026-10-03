@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { DESIGN_KEY, type DesignPrefill } from "@/lib/site";
+import { DesignerHead, IceIcon, PieceIcon } from "./DesignerParts";
 
 /*
  * Live name pendant / earrings preview.
@@ -46,11 +47,14 @@ const METALS: Record<string, [string, string]> = {
 };
 const FONTS: Record<string, Font> = {
   script: ["Yellowtail", "normal", "400", "Script", false],
-  gothic: ["Pirata One", "normal", "400", "Gothic", false],
-  retro: ["Lobster", "normal", "400", "Retro", false],
   signature: ["Satisfy", "normal", "400", "Signature", false],
-  roman: ["Cinzel", "normal", "700", "Roman", true],
-  bold: ["Bungee", "normal", "400", "Bold", true],
+  retro: ["Lobster", "normal", "400", "Retro", false],
+  elegant: ["Great Vibes", "normal", "400", "Elegant", false],
+  brush: ["Kaushan Script", "normal", "400", "Brush", false],
+  old: ["UnifrakturMaguntia", "normal", "400", "Old English", false],
+  gothic: ["Pirata One", "normal", "400", "Gothic", false],
+  graffiti: ["Sedgwick Ave Display", "normal", "400", "Graffiti", false],
+  block: ["Bungee", "normal", "400", "Block", true],
 };
 
 // demoIndex: when set, the parent drives the showcase (which example to show); onTouch fires on first interaction
@@ -83,11 +87,11 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
     // alternates pendant / earrings
     const DEMOS = [
       { kind: "pendant", name: "Sofia", font: "signature", metal: "gold", ice: "none" },
-      { kind: "earrings", name: "OG", font: "bold", metal: "gold", ice: "all" },
-      { kind: "pendant", name: "Marco", font: "gothic", metal: "silver", ice: "line" },
-      { kind: "earrings", name: "Mia", font: "script", metal: "rose", ice: "none" },
-      { kind: "pendant", name: "Jayden", font: "bold", metal: "gold", ice: "all" },
-      { kind: "earrings", name: "LA", font: "gothic", metal: "silver", ice: "all" },
+      { kind: "earrings", name: "OG", font: "block", metal: "gold", ice: "all" },
+      { kind: "pendant", name: "Marco", font: "graffiti", metal: "silver", ice: "line" },
+      { kind: "earrings", name: "Mia", font: "elegant", metal: "rose", ice: "none" },
+      { kind: "pendant", name: "Jayden", font: "brush", metal: "gold", ice: "all" },
+      { kind: "earrings", name: "LA", font: "old", metal: "silver", ice: "all" },
     ];
     let demo = true, demoI = (demoIndexRef.current ?? 0) % DEMOS.length, demoTimer = 0;
     const demoOn = () => demo && !input.value.trim() && kind === "pendant";
@@ -139,13 +143,61 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       text.setAttribute("stroke", "none");
       edgeText.setAttribute("fill", edge);
       edgeText.setAttribute("stroke", edge);
-      edgeText.setAttribute("stroke-width", ice === "all" ? "5" : "4");
+      edgeText.setAttribute("stroke-width", ice === "all" ? "4" : "2.5");
       swash.setAttribute("stroke", fill);
       $("#np-hooks").setAttribute("stroke", fill);
+      $("#np-chain").setAttribute("stroke", fill);
       beads.querySelectorAll(".st-base").forEach(c => { c.setAttribute("fill", "url(#m-dia)"); c.setAttribute("stroke", edge); });
       const fx = (sel: string, f: string) => beads.querySelectorAll(sel).forEach(c => { c.setAttribute("fill", f); c.setAttribute("stroke", "#8EA2AF"); c.setAttribute("stroke-width", ".25"); });
       fx(".st-light", "#F7FBFE"); fx(".st-dark", "#9FB3C0"); fx(".st-mid", "#D5E2EA"); fx(".st-fire", "url(#m-fire)"); fx(".st-table", "url(#m-table)");
       beads.querySelectorAll(".st-hi").forEach(c => { c.setAttribute("fill", "#fff"); });
+    }
+    // the two outer ends of the piece (left-most and right-most ink of the name or its underline): where the jump rings go
+    let endsCanvas: HTMLCanvasElement | null = null;
+    function ends(f: Font, name: string, withLine: boolean) {
+      let l = { x: 0, y: -FS * 0.4 }, r = { x: 0, y: -FS * 0.4 };
+      try {
+        const cv = endsCanvas || (endsCanvas = document.createElement("canvas")), font = `${f[1]} ${f[2]} ${FS}px "${f[0]}"`;
+        const g0 = cv.getContext("2d", { willReadFrequently: true })!; g0.font = font;
+        const ox = Math.round(FS * 0.5), oy = Math.round(FS * 1.1), W2 = Math.ceil(g0.measureText(name).width + FS), H2 = Math.ceil(FS * 1.7);
+        cv.width = W2; cv.height = H2;
+        const g = cv.getContext("2d", { willReadFrequently: true })!;
+        g.font = font; g.textBaseline = "alphabetic"; g.fillStyle = "#000"; g.fillText(name, ox, oy);
+        const d = g.getImageData(0, 0, W2, H2).data;
+        const col = (x: number) => { let t = -1, b = -1; for (let y = 0; y < H2; y++) if (d[(y * W2 + x) * 4 + 3] > 110) { if (t < 0) t = y; b = y; } return t < 0 ? null : (t + b) / 2; };
+        for (let x = 0; x < W2; x++) { const y = col(x); if (y !== null) { l = { x: x - ox + 3, y: y - oy }; break; } }
+        for (let x = W2 - 1; x >= 0; x--) { const y = col(x); if (y !== null) { r = { x: x - ox - 3, y: y - oy }; break; } }
+      } catch {}
+      if (withLine) {
+        const len = swash.getTotalLength();
+        // l / r hold the ring positions (3 units inside the ink), so compare like with like
+        for (let s = 0; s <= len; s += 4) { const p = swash.getPointAtLength(s); if (p.x + 3 < l.x) l = { x: p.x + 3, y: p.y }; if (p.x - 3 > r.x) r = { x: p.x - 3, y: p.y }; }
+      }
+      return [l, r];
+    }
+    // cable chain: small round jump ring at each end, then links (alternately face-on and edge-on) running up and out
+    function drawChain(f: Font) {
+      const chain = $<SVGGElement>("#np-chain");
+      while (chain.firstChild) chain.removeChild(chain.firstChild);
+      const el = (tag: string, a: Record<string, string | number>) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, String(a[k])); chain.appendChild(e); return e; };
+      const n = (v: number) => v.toFixed(1), RR = 11;
+      const [l, r] = ends(f, text.textContent || "", line !== "none");
+      const out = { top: Infinity, left: Infinity, right: -Infinity };
+      for (const [p, dir] of [[l, -1], [r, 1]] as const) {
+        const cx = p.x + dir * RR * 0.55, cy = p.y - RR * 0.6, sx = cx, sy = cy - RR;
+        const path = el("path", { d: `M${n(sx)} ${n(sy)} C${n(sx + dir * 3)} ${n(sy - FS * 0.6)} ${n(sx + dir * FS * 0.35)} ${n(sy - FS * 1.8)} ${n(sx + dir * FS * 0.75)} ${n(sy - FS * 3.4)}`, stroke: "none" }) as SVGPathElement;
+        const len = path.getTotalLength();
+        for (let s = 3, i = 0; s < len; s += 9.5, i++) {
+          const a = path.getPointAtLength(s), b = path.getPointAtLength(Math.min(len, s + 1));
+          const at = `translate(${n(a.x)} ${n(a.y)}) rotate(${n(Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI)})`;
+          if (i % 2 === 0) el("ellipse", { rx: 6.4, ry: 3.4, "stroke-width": 2.1, transform: at });
+          else el("path", { d: "M-5.6 0H5.6", "stroke-width": 2.9, transform: at });
+        }
+        el("circle", { cx: n(cx), cy: n(cy), r: RR, "stroke-width": 3.6 });
+        out.top = Math.min(out.top, sy); out.left = Math.min(out.left, cx - RR); out.right = Math.max(out.right, cx + RR);
+      }
+      chain.style.display = "";
+      return out;
     }
     let showing: (typeof DEMOS)[number] | null = null; // showcase piece being drawn right now
     function layout() {
@@ -255,8 +307,12 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
         $("#np-h1").setAttribute("d", hook(hx, tx, 1)); $("#np-h2").setAttribute("d", hook(hx + dx, tx + dx, -1));
         hooks.style.display = "";
         left = -24; right = pw * 2 + gap + 24; tp = y0 - 52; bt = bottom * s;
+        $<SVGGElement>("#np-chain").style.display = "none";
       } else {
         piece.removeAttribute("transform"); clone.style.display = "none"; hooks.style.display = "none";
+        // show a good length of chain above the name; it runs on out of the top of the frame
+        const c = drawChain(f);
+        tp = Math.min(tp, c.top - FS * 1.05); left = Math.min(left, c.left - 30); right = Math.max(right, c.right + 30);
       }
       let w = right - left, hgt = bt - tp + 40;
       if (w / hgt < 2) w = hgt * 2; else hgt = w / 2;
@@ -361,7 +417,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
 
   return (
     <div className="np" ref={root}>
-      <div className="np-head"><p className="label">Name jewelry designer</p><span className="live">Live preview</span></div>
+      <DesignerHead />
       <div className="stage">
         <svg id="np-svg" viewBox="0 0 600 340" role="img" aria-label="Preview of a script name pendant">
           <defs>
@@ -376,28 +432,43 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
             <PavePattern id="pave-silver" base="#B9BDBF" edge="#6E7274" />
             <PavePattern id="pave-rose" base="#D29A82" edge="#8E5642" />
             {/* Fixed region in user space: a %-of-bbox region clips script letters on iOS Safari, whose text bbox is narrower than the ink */}
+            <filter id="np-bevel" filterUnits="userSpaceOnUse" x="-1500" y="-1000" width="6000" height="2500">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b" />
+              <feSpecularLighting in="b" surfaceScale="3" specularConstant="1" specularExponent="22" lightingColor="#fff" result="s"><feDistantLight azimuth="225" elevation="40" /></feSpecularLighting>
+              <feComposite in="s" in2="SourceAlpha" operator="in" result="s2" />
+              <feDiffuseLighting in="b" surfaceScale="3" diffuseConstant="1.22" lightingColor="#fff" result="dl"><feDistantLight azimuth="225" elevation="40" /></feDiffuseLighting>
+              <feComposite in="SourceGraphic" in2="dl" operator="arithmetic" k1="1" result="lit" />
+              <feComposite in="lit" in2="s2" operator="arithmetic" k2="1" k3=".75" />
+            </filter>
             <filter id="np-shadow" filterUnits="userSpaceOnUse" x="-1500" y="-1000" width="6000" height="2500"><feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity=".2" /></filter>
           </defs>
+          {/* necklace chain with a jump ring at each end of the name (pendant only) */}
+          <g id="np-chain" fill="none" strokeLinecap="round" filter="url(#np-shadow)" style={{ display: "none" }}></g>
           {/* earring wires first, so the letters sit on top of them */}
-          <g id="np-hooks" fill="none" strokeWidth="4" strokeLinecap="round" style={{ display: "none" }}><path id="np-h1" /><path id="np-h2" /></g>
+          <g id="np-hooks" filter="url(#np-bevel)" fill="none" strokeWidth="4" strokeLinecap="round" style={{ display: "none" }}><path id="np-h1" /><path id="np-h2" /></g>
           <g id="np-piece" filter="url(#np-shadow)">
-            <path id="np-swash" fill="none" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
+            <path id="np-swash" filter="url(#np-bevel)" fill="none" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
             <g id="np-beads"></g>
+            <g filter="url(#np-bevel)">
             <text id="np-text-edge" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400" strokeLinejoin="round" aria-hidden="true">Sofia</text>
             <text id="np-text" x="0" y="0" fontSize="150" fontFamily="Yellowtail, cursive" fontWeight="400">Sofia</text>
+            </g>
           </g>
           <use id="np-clone" href="#np-piece" style={{ display: "none" }} />
         </svg>
         {overlay && <div className="stage-overlay" aria-hidden="true">{overlay}</div>}
       </div>
       <div className="np-body">
-        <div className="seg kind" role="group" aria-label="Piece" id="np-kind">
-          <button type="button" data-k="pendant" aria-pressed="true">Pendant</button>
-          <button type="button" data-k="earrings" aria-pressed="false">Earrings</button>
-          <button type="button" data-k="ring" aria-pressed="false">Ring</button>
+        <div>
+          <p className="opt-label">Choose your piece</p>
+          <div className="seg kind" role="group" aria-label="Piece" id="np-kind">
+            <button type="button" data-k="pendant" aria-pressed="true"><PieceIcon kind="pendant" /><span>Pendant</span></button>
+            <button type="button" data-k="earrings" aria-pressed="false"><PieceIcon kind="earrings" /><span>Earrings</span></button>
+            <button type="button" data-k="ring" aria-pressed="false"><PieceIcon kind="ring" /><span>Ring</span></button>
+          </div>
         </div>
         <div className="np-field">
-          <label htmlFor="np-name">Name <span id="np-count">0 / 24</span></label>
+          <label htmlFor="np-name">Your name <span id="np-count">0 / 24</span></label>
           <input id="np-name" maxLength={24} defaultValue="" autoComplete="off" spellCheck={false} placeholder="Type your name" />
         </div>
         <div>
@@ -409,11 +480,11 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           </div>
         </div>
         <div>
-          <p className="opt-label">Iced</p>
+          <p className="opt-label">Diamonds</p>
           <div className="seg" role="group" aria-label="Iced" id="np-ice">
-            <button type="button" data-i="none" aria-pressed="true">No stones</button>
-            <button type="button" data-i="line" aria-pressed="false">Underline</button>
-            <button type="button" data-i="all" aria-pressed="false">Full piece</button>
+            <button type="button" data-i="none" aria-pressed="true"><IceIcon kind="none" />No stones</button>
+            <button type="button" data-i="line" aria-pressed="false"><IceIcon kind="line" />Iced line</button>
+            <button type="button" data-i="all" aria-pressed="false"><IceIcon kind="all" />Fully iced</button>
           </div>
         </div>
         <div id="np-line-wrap">
@@ -424,7 +495,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           </div>
         </div>
         <div>
-          <p className="opt-label">Font</p>
+          <p className="opt-label">Lettering style</p>
           <div className="seg fonts" role="group" aria-label="Font" id="np-fonts">
             {Object.entries(FONTS).map(([key, f], i) => (
               <button key={key} type="button" data-f={key} aria-pressed={i === 0}>
@@ -437,7 +508,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
         </div>
         <div className="np-foot">
           <small>Preview only. Your final piece is designed by hand in 3D.</small>
-          <button type="button" className="btn" id="np-order">Order this design</button>
+          <button type="button" className="btn" id="np-order">Order this design →</button>
         </div>
       </div>
     </div>
