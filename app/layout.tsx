@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/#contact">Contact</Link>
             </nav>
             <div className="top-actions">
-              <Link href="/order" className="btn">Start an order</Link>
+              <Link href="/order" className="btn top-cta"><span>Start an order</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></Link>
               <MobileMenu />
             </div>
           </div>

@@ -741,19 +741,6 @@ html.offer-open,html.offer-open body{overflow:hidden}
 /* ============ payment badges ============ */
 
 .pay-badges{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
-.pb{height:28px;min-width:46px;padding:0 .45rem;border-radius:5px;background:#fff;border:1px solid #DCDAD2;display:flex;align-items:center;justify-content:center;gap:.2rem;line-height:1;white-space:nowrap}
-.pb b{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:.72rem}
-.pb svg{height:18px;width:auto}
-.pb.visa b{color:#1A1F71;font-style:italic;font-size:.82rem;letter-spacing:.02em}
-.pb.amex{background:#2E77BC;border-color:#2E77BC}.pb.amex b{color:#fff;letter-spacing:.04em}
-.pb.apple{background:#000;border-color:#000}.pb.apple b{color:#fff;font-weight:600;font-size:.78rem}.pb.apple svg{height:14px}
-.pb.gpay b{color:#3C4043;font-weight:600}
-.pb.paypal b{font-style:italic;font-size:.78rem}.pb.paypal b span:first-child{color:#003087}.pb.paypal b span:last-child{color:#009CDE}
-.pb.zelle{background:#6D1ED4;border-color:#6D1ED4}.pb.zelle b{color:#fff}
-.pb.cashapp{background:#00D64F;border-color:#00D64F}.pb.cashapp b{color:#fff;font-size:.85rem}.pb.cashapp small{color:#fff;font:700 .58rem "Helvetica Neue",Arial,sans-serif}
-.pb.klarna{background:#FFB3C7;border-color:#FFB3C7}.pb.klarna b{color:#0B051D}
-.pb.affirm b{color:#4A4AF4;font-weight:700;font-size:.78rem}
-.pb.afterpay{background:#B2FCE4;border-color:#B2FCE4}.pb.afterpay b{color:#000;font-size:.7rem}
 
 .site-foot .foot-pay{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;margin-top:clamp(2rem,4vw,2.75rem);padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.12)}
 .site-foot .foot-pay .foot-h{display:flex;align-items:center;gap:.5rem;margin:0}
@@ -839,64 +826,22 @@ html.offer-open,html.offer-open body{overflow:hidden}
 
 /* ============ piece page (product) ============ */
 .pv{padding:clamp(1rem,3vw,2rem) 0 clamp(3rem,6vw,5rem)}
-.pv-crumbs{display:flex;flex-wrap:wrap;gap:.45rem;font-size:.78rem;color:var(--muted);margin-bottom:clamp(1rem,2.5vw,1.75rem)}
-.pv-crumbs a{color:var(--muted);text-decoration:none}.pv-crumbs a:hover{color:var(--gold-ink)}
-.pv-crumbs b{color:var(--ink);font-weight:500}
 .pv-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
 .pv-gallery{position:sticky;top:96px}
 .pv-main{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;background:#121110;box-shadow:0 30px 60px -34px rgba(60,40,10,.6)}
 .pv-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .5s ease}
 .pv-main img.on{opacity:1}
-.pv-badge{position:absolute;top:.9rem;left:.9rem;padding:.3rem .65rem;border-radius:999px;font:700 .6rem var(--font);letter-spacing:.16em;text-transform:uppercase;background:#E6F4EA;color:#1D6B3A}
-.pv-badge.sold{background:#FBEDEA;color:#B4442F}
 .pv-thumbs{display:flex;gap:.6rem;margin-top:.75rem}
 .pv-thumbs button{width:76px;aspect-ratio:1;padding:0;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:#121110;cursor:pointer}
 .pv-thumbs button[aria-pressed="true"]{border-color:#A8854F;box-shadow:0 0 0 1px #A8854F}
 .pv-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
 .pv-title{margin:.5rem 0 0;font:800 clamp(1.7rem,3.4vw,2.5rem)/1.05 "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:-.01em;text-transform:uppercase}
 .pv-price{margin:.8rem 0 0;font:700 1.35rem "Outfit","Helvetica Neue",Arial,sans-serif}
-.pv-bnpl{margin:.45rem 0 0;font-size:.85rem;color:var(--muted)}
-.pv-bnpl b{font-weight:800;font-family:"Helvetica Neue",Arial,sans-serif;padding:0 .2rem;border-radius:3px}
-.pv-bnpl .kl{background:#FFB3C7;color:#0B051D}.pv-bnpl .af{color:#4A4AF4}.pv-bnpl .ap{background:#B2FCE4;color:#000}
-.pv-desc{margin:1.1rem 0 0;line-height:1.6;color:#3A3934}
-.pv-opt{margin-top:1.4rem}
-.pv-opt-h{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 .55rem;font:600 .7rem var(--font);letter-spacing:.18em;text-transform:uppercase}
-.pv-opt-h span{font-weight:500;letter-spacing:.04em;text-transform:none;color:var(--muted)}
-.pv-opt-h a{font-weight:500;letter-spacing:.04em;text-transform:none;color:var(--gold-ink)}
-.pv-metals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem}
-.pv-metals button,.pv-sizes button{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .4rem;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);cursor:pointer;font:500 .72rem var(--font);color:var(--ink)}
-.pv-metals i{width:14px;height:14px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
-.pv-metals button[aria-pressed="true"],.pv-sizes button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.pv-sizes{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:.35rem}
-.pv-sizes.need button{border-color:#D99A8E}
-.pv-note{margin:.5rem 0 0;font-size:.8rem;color:var(--gold-ink)}
-.pv-note.warn{color:#B4442F}
-.pv-actions{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.6rem}
-.pv-actions .btn{width:100%}
 .pv-buy{background:linear-gradient(180deg,#E2C16F,#B08D46);border-color:#9C7A2C;color:#141414;font-weight:700}
 .pv-buy:hover{background:#141414;border-color:#141414;color:#F3DC93}
 .pv-pay{margin-top:1.3rem;padding:1rem;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
 .pv-pay p{display:flex;align-items:center;gap:.45rem;margin:0 0 .7rem;font-size:.82rem;color:var(--muted)}
-.pv-pay svg{width:15px;height:15px;fill:none;stroke:var(--gold-ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.pv-accs{margin-top:1.4rem;border-top:1px solid var(--line)}
-.pv-acc{border-bottom:1px solid var(--line)}
-.pv-acc > button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1rem 0;background:none;border:0;cursor:pointer;font:600 .74rem var(--font);letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
-.pv-acc > button span{font-size:1.1rem;color:var(--gold-ink)}
-.pv-acc-body{padding:0 0 1rem;font-size:.92rem;line-height:1.6;color:#3A3934}
-.pv-acc-body p{margin:0}
-.pv-dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;margin:0}
-.pv-dl dt{font-weight:500;color:var(--muted)}.pv-dl dd{margin:0}
-.pv-more{margin-top:clamp(3rem,6vw,4.5rem)}
-.pv-more-h{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 1rem}
-.pv-more ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem}
-.pv-more .aw-pic{aspect-ratio:1}
-@media (max-width:860px){
-  .pv-grid{grid-template-columns:1fr}
-  .pv-gallery{position:static}
-  .pv-more ul{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .pv-sizes{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .pv-metals{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
+@media (max-width:860px){.pv-grid{grid-template-columns:1fr}.pv-gallery{position:static}}
 .sh-link{display:block;height:100%}
 .sh-body h3 a{color:inherit;text-decoration:none}
 .sh-body h3 a:hover{color:var(--gold-ink)}
@@ -916,3 +861,94 @@ html.offer-open,html.offer-open body{overflow:hidden}
 .np .stage::after{content:"";position:absolute;left:22%;right:22%;bottom:9%;height:14%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);pointer-events:none;z-index:0}
 .np .stage > svg:not(.np-ghost),.np .stage > .ring-art{position:relative;z-index:1}
 .np svg.ready.sample{opacity:.7}
+
+/* ============ top bar: black, gold accents, animated buttons ============ */
+header.top{background:linear-gradient(180deg,#0B0A09 0%,#15130F 100%);border-bottom:0;box-shadow:0 10px 30px -18px rgba(0,0,0,.8)}
+/* thin gold line along the bottom with a slow shimmer */
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:linear-gradient(90deg,transparent,#6E5420 15%,#E7C977 35%,#FFF1C4 50%,#E7C977 65%,#6E5420 85%,transparent);background-size:200% 100%;pointer-events:none}
+header.top .brand{color:#F3EBD6}
+header.top .brand-sub{color:#C9A24E}
+header.top .top-bills .bill{filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+
+/* menu links: light text, gold on hover, underline that grows from the middle */
+nav.main{gap:.35rem}
+nav.main a{position:relative;padding:.55rem .85rem;border-radius:999px;color:#E8E1CF;font-size:.86rem;letter-spacing:.12em;transition:color .25s ease,background .25s ease,transform .25s ease}
+nav.main a::after{content:"";position:absolute;left:50%;right:50%;bottom:.3rem;height:1.5px;background:linear-gradient(90deg,#C9A24E,#F3DC93);transition:left .3s ease,right .3s ease}
+nav.main a:hover,nav.main a:focus-visible{color:#F3DC93;background:rgba(201,162,78,.1);transform:translateY(-2px)}
+nav.main a:hover::after,nav.main a:focus-visible::after{left:.85rem;right:.85rem}
+/* "Available": its own pill with a softly pulsing glow */
+nav.main a.nav-avail{border:1px solid rgba(76,175,106,.45);color:#CFF0DA;background:rgba(76,175,106,.08)}
+nav.main a.nav-avail:hover{border-color:#4CAF6A;color:#E6FBEE;background:rgba(76,175,106,.16)}
+nav.main a.nav-avail::after{display:none}
+
+/* "Start an order": gold pill, shine sweeping across, arrow slides on hover */
+header.top .top-cta{position:relative;overflow:hidden;gap:.55rem;border-radius:999px;padding:.8rem 1.35rem;background:linear-gradient(180deg,#F0D489,#C9A24E 55%,#A8822F);border:1px solid #F3DC93;color:#14110A;font-weight:700;letter-spacing:.14em;box-shadow:0 6px 18px -8px rgba(201,162,78,.7),inset 0 1px 0 rgba(255,255,255,.5)}
+header.top .top-cta svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}
+header.top .top-cta::before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);pointer-events:none}
+header.top .top-cta:hover{background:linear-gradient(180deg,#FFF1C4,#E2C16F 55%,#B08D46);color:#14110A;border-color:#FFF1C4;letter-spacing:.16em;box-shadow:0 10px 26px -8px rgba(226,193,111,.85)}
+header.top .top-cta:hover svg{transform:translateX(4px)}
+
+/* phone menu button + panel */
+header.top .menu-btn{border:1.5px solid #C9A24E;border-radius:12px;transition:background .25s ease,transform .25s ease}
+header.top .menu-btn span{background:#F3DC93}
+header.top .menu-btn:hover{background:rgba(201,162,78,.14);transform:translateY(-2px)}
+header.top .menu-panel{background:#0E0D0B;border-bottom:1px solid #2A2620;box-shadow:0 30px 50px -24px rgba(0,0,0,.9)}
+header.top .menu-panel nav a{color:#E8E1CF;border-bottom-color:#24211C;transition:color .2s ease,padding-left .25s ease}
+header.top .menu-panel nav a:hover{color:#F3DC93;padding-left:.6rem}
+header.top .menu-panel .btn{background:linear-gradient(180deg,#F0D489,#C9A24E 55%,#A8822F);border-color:#F3DC93;color:#14110A;font-weight:700;border-radius:999px}
+
+@media (prefers-reduced-motion:no-preference){
+  header.top::after{animation:topShimmer 6s linear infinite}
+  header.top .top-cta::before{animation:ctaShine 3.6s ease-in-out 1s infinite}
+  nav.main a.nav-avail{animation:availGlow 2.4s ease-in-out infinite}
+}
+@keyframes topShimmer{to{background-position:-200% 0}}
+@keyframes ctaShine{0%{left:-60%}40%,100%{left:130%}}
+@keyframes availGlow{0%,100%{box-shadow:0 0 0 0 rgba(76,175,106,0)}50%{box-shadow:0 0 14px 1px rgba(76,175,106,.35)}}
+@media (max-width:1060px){nav.main a{padding:.5rem .6rem;font-size:.8rem;letter-spacing:.08em}header.top .top-cta{padding:.7rem 1rem}}
+/* piece page: marketplace style, nothing but the item, name, price, buy and ways to pay */
+.pv-back{display:inline-block;margin-bottom:1.1rem;font-size:.8rem;color:var(--muted);text-decoration:none}
+.pv-back:hover{color:var(--gold-ink)}
+.pv-grid{align-items:center}
+.pv-info{display:flex;flex-direction:column;gap:1rem}
+.pv-title{margin:0}
+.pv-price{margin:0}
+.pv-buy{width:100%;padding:1.05rem 1rem;font-size:.85rem}
+.pv-pay{margin-top:.2rem}
+
+/* payment badges: current brand logos on clean white cards */
+.pay-badges{gap:.45rem}
+.pb{height:34px;min-width:56px;padding:0 .6rem;border-radius:8px;background:#fff;border:1px solid #E3E1DA;display:flex;align-items:center;justify-content:center;gap:.32rem;line-height:1;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.pb svg{display:block;flex:none}
+.pb b{font:700 .76rem "Helvetica Neue",Arial,sans-serif;letter-spacing:-.01em}
+/* piece page: spec table (metal, weight, size, stones…) */
+.pv-specs{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.pv-specs dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.pv-specs dl > div{padding:.7rem .9rem;border-bottom:1px solid var(--line)}
+.pv-specs dl > div:nth-child(odd){border-right:1px solid var(--line)}
+.pv-specs dt{font:600 .62rem var(--font);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.pv-specs dd{margin:.2rem 0 0;font:600 .92rem "Outfit","Helvetica Neue",Arial,sans-serif;color:var(--ink)}
+.pv-specs p{margin:0;padding:.65rem .9rem;font-size:.78rem;color:var(--gold-ink);background:#FBF7EC}
+/* window: six tiles (2 across, 3 down) */
+.aw-grid{grid-template-rows:repeat(3,minmax(0,1fr))}
+@media (max-width:1020px){.aw-grid{grid-template-rows:none}}
+.aw-cap{padding:1.4rem .7rem .65rem}
+/* designer: only Pendant | Earrings now */
+.np .seg.kind{grid-template-columns:1fr 1fr}
+/* earrings show 6 lettering styles: draw the grid lines with gaps so they stay neat with the 3 hidden */
+.seg.fonts.ear{gap:1px;background:var(--line)}
+.seg.fonts.ear button{border:0;background:var(--paper)}
+.seg.fonts.ear button[aria-pressed="true"]{background:var(--ink)}
+/* "Buy now" window: tiles fade in staggered, and stay hidden until their turn */
+.aw-cur{animation-fill-mode:backwards}
+/* discount tag on a piece's photo (window, shop, piece page): red brush-stroke swoosh */
+.deal-swoosh{position:absolute;top:8%;left:3%;z-index:2;width:46%;max-width:150px;pointer-events:none;filter:drop-shadow(0 5px 8px rgba(0,0,0,.45));transform:rotate(-7deg);transform-origin:left center}
+.deal-swoosh.big{top:7%;left:3%;width:38%;max-width:220px}
+.deal-swoosh svg{display:block;width:100%;height:auto;overflow:visible}
+.ds-stroke{fill:#D92A1E}
+.deal-swoosh text{font:900 23px "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.5px;fill:#fff;paint-order:stroke;stroke:#8E1A12;stroke-width:1.2px}
+@media (prefers-reduced-motion:no-preference){.deal-swoosh{animation:dsSway 3s ease-in-out infinite}}
+@keyframes dsSway{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(-4deg) scale(1.04)}}
+/* "Buy now" window: tiles fade in staggered, and stay hidden until their turn */
+.aw-cur{animation-fill-mode:backwards}
+.sh-img{position:relative}

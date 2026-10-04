@@ -39,6 +39,7 @@ function PavePattern({ id, base, edge }: { id: string; base: string; edge: strin
 }
 
 type Font = [family: string, style: string, weight: string, label: string, upper: boolean];
+const EAR_SKIP = ["signature", "elegant", "brush"]; // not offered for earrings
 export const FADE_MS = 700; // every showcase change uses this one crossfade
 
 const METALS: Record<string, [string, string]> = {
@@ -59,13 +60,13 @@ const FONTS: Record<string, Font> = {
 };
 
 // demoIndex: when set, the parent drives the showcase (which example to show); onTouch fires on first interaction
-type Props = { onRing?: () => void; startKind?: "pendant" | "earrings"; demoIndex?: number; onTouch?: () => void; overlay?: React.ReactNode };
+type Props = { startKind?: "pendant" | "earrings"; demoIndex?: number; onTouch?: () => void; overlay?: React.ReactNode };
 
-export default function NameDesigner({ onRing, startKind = "pendant", demoIndex, onTouch, overlay }: Props) {
+export default function NameDesigner({ startKind = "pendant", demoIndex, onTouch, overlay }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const onRingRef = useRef(onRing), onTouchRef = useRef(onTouch), demoIndexRef = useRef(demoIndex);
-  onRingRef.current = onRing; onTouchRef.current = onTouch; demoIndexRef.current = demoIndex;
+  const onTouchRef = useRef(onTouch), demoIndexRef = useRef(demoIndex);
+  onTouchRef.current = onTouch; demoIndexRef.current = demoIndex;
   const showRef = useRef<((i: number) => void) | null>(null);
   useEffect(() => { if (demoIndex !== undefined) showRef.current?.(demoIndex); }, [demoIndex]);
 
@@ -90,7 +91,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       { kind: "pendant", name: "Angel", font: "signature", metal: "gold", ice: "none" },
       { kind: "earrings", name: "OG", font: "block", metal: "gold", ice: "all" },
       { kind: "pendant", name: "Marco", font: "graffiti", metal: "silver", ice: "line" },
-      { kind: "earrings", name: "Mia", font: "elegant", metal: "rose", ice: "none" },
+      { kind: "earrings", name: "Mia", font: "retro", metal: "rose", ice: "none" },
       { kind: "pendant", name: "Jayden", font: "brush", metal: "gold", ice: "all" },
       { kind: "earrings", name: "LA", font: "old", metal: "silver", ice: "all" },
     ];
@@ -362,7 +363,6 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
     let savedLine = "line", savedIce = "none", savedName = "";
     group("np-kind", b => {
       const k = b.dataset.k!;
-      if (k === "ring") { onRingRef.current?.(); return; }
       if (k === kind) return;
       if (k === "earrings") {
         savedLine = line; savedIce = ice;
@@ -375,7 +375,13 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
         $<HTMLButtonElement>(`#np-lines [data-u="${savedLine}"]`).click();
         const ib = $<HTMLButtonElement>(`#np-ice [data-i="${savedIce}"]`); ib.disabled = false; ib.click();
       }
-      kind = k; count.textContent = `${input.value.length} / ${input.maxLength}`; samples(); layout();
+      kind = k;
+      // earrings get 3 fewer lettering styles: the thin scripts look weak at earring size
+      const fontBox = $<HTMLDivElement>("#np-fonts");
+      fontBox.classList.toggle("ear", k === "earrings");
+      $$<HTMLButtonElement>("#np-fonts button").forEach(fb => { fb.hidden = k === "earrings" && EAR_SKIP.includes(fb.dataset.f!); });
+      if (k === "earrings" && EAR_SKIP.includes(font)) $<HTMLButtonElement>('#np-fonts [data-f="script"]').click();
+      count.textContent = `${input.value.length} / ${input.maxLength}`; samples(); layout();
       input.placeholder = k === "earrings" ? "Up to 3 letters" : "Type your name";
     });
     group("np-fonts", b => {
@@ -503,7 +509,6 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           <div className="seg kind" role="group" aria-label="Piece" id="np-kind">
             <button type="button" data-k="pendant" aria-pressed="true"><PieceIcon kind="pendant" /><span>Pendant</span></button>
             <button type="button" data-k="earrings" aria-pressed="false"><PieceIcon kind="earrings" /><span>Earrings</span></button>
-            <button type="button" data-k="ring" aria-pressed="false"><PieceIcon kind="ring" /><span>Ring</span></button>
           </div>
         </div>
         <div className="np-field">

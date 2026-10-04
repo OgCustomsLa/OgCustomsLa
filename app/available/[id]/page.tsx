@@ -23,6 +23,5 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function PiecePage({ params }: { params: Promise<{ id: string }> }) {
   const p = find((await params).id);
   if (!p) notFound();
-  const others = PIECES.filter(x => x.id !== p.id && x.image && x.status === "available").slice(0, 4);
-  return <PieceView p={p} others={others} />;
+  return <PieceView p={p} />;
 }

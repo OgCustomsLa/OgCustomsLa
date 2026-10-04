@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import DealSeal from "./DealSeal";
 import { useState } from "react";
 import { PIECES, SHELVES, type Piece } from "@/lib/available";
 import { mailto } from "@/lib/site";
@@ -21,6 +22,7 @@ function Card({ p, i }: { p: Piece; i: number }) {
             <span>Photo soon</span>
           </div>
         )}
+        {p.deal && <DealSeal deal={p.deal} />}
       </div>
       <div className="sh-body">
         <h3>{p.image ? <Link href={`/available/${p.id}`}>{p.title}</Link> : p.title}</h3>
