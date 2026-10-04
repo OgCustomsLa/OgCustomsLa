@@ -5,6 +5,8 @@ import HeaderBills from "@/components/HeaderBills";
 import Logo from "@/components/Logo";
 import MobileMenu from "@/components/MobileMenu";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import StreetBackdrop from "@/components/StreetBackdrop";
+import { PayBadges } from "@/components/Trust";
 import { EMAIL } from "@/lib/site";
 import "./globals.css";
 
@@ -48,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <StreetBackdrop />
         <a href="#main" className="skip">Skip to content</a>
         <header className="top">
           <HeaderBills />
@@ -91,6 +94,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="https://www.facebook.com/ogcustomsla" target="_blank" rel="noopener">Facebook</a>
               <span>Los Angeles, CA · By appointment</span>
             </div>
+          </div>
+          <div className="wrap foot-pay">
+            <p className="foot-h"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg>Secure payments · Pay over time</p>
+            <PayBadges />
           </div>
           <div className="wrap foot-base">
             <small>© {year} OG Customs LA · 3D Jewelry Studio</small>

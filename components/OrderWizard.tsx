@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { submitOrder, type OrderInput, type SubmitResult } from "@/app/actions";
 import { DESIGN_KEY, EMAIL, mailto, type DesignPrefill } from "@/lib/site";
+import { PayBadges } from "./Trust";
 
 type Option = { v: string; content: React.ReactNode; className?: string };
 
@@ -177,6 +178,10 @@ export default function OrderWizard() {
           <p className="label">Start an order</p>
           <h1 className="op-title">Let&apos;s design <span className="g">your piece</span></h1>
           <p className="op-sub">Takes about 3 minutes. No payment now — we&apos;ll reply with questions, a quote and a timeline.</p>
+          <div className="op-pay">
+            <p>When you approve your quote, pay your way — in full or over time:</p>
+            <PayBadges />
+          </div>
         </div>
 
         <ol className="op-steps" hidden={done}>

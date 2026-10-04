@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import Ticker from "@/components/Ticker";
+import { TrustBar } from "@/components/Trust";
 import JewelryDesigner from "@/components/JewelryDesigner";
 import SizeFinder from "@/components/SizeFinder";
 import { EMAIL } from "@/lib/site";
@@ -87,6 +88,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       <Ticker />
 

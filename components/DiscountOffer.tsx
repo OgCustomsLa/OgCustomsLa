@@ -7,15 +7,14 @@ import { DISCOUNT_CODE } from "@/lib/site";
 import { BrandMark } from "./Logo";
 
 const JOINED_KEY = "og-offer-joined"; // localStorage: signed up, never show again
-const SEEN_KEY = "og-offer-seen"; // sessionStorage: already shown during this visit
 // glints around the angel: [left %, top %, size px, delay s]
 const SPARKS: [number, number, number, number][] = [[18, 30, 18, 0], [80, 22, 14, 1.1], [72, 62, 20, 2.2], [24, 70, 12, 0.6], [55, 12, 12, 1.7]];
 const DELAY_MS = 5000;
 const IDLE_MS = 2500;
 
 /**
- * "Unlock 5% off" window (about 70% of the screen) that opens a few seconds into each visit.
- * Shown once per visit; never again once the visitor has signed up.
+ * "Unlock 5% off" window (about 70% of the screen) that opens a few seconds after the site is opened or
+ * reloaded (not again while moving between pages); never once the visitor has signed up.
  */
 export default function DiscountOffer() {
   const [open, setOpen] = useState(false);
@@ -25,7 +24,7 @@ export default function DiscountOffer() {
 
   useEffect(() => {
     let skip = false;
-    try { skip = localStorage.getItem(JOINED_KEY) === "1" || sessionStorage.getItem(SEEN_KEY) === "1"; } catch {}
+    try { skip = localStorage.getItem(JOINED_KEY) === "1"; } catch {}
     if (skip) return;
     // don't cut in while someone is typing or tapping (e.g. building a piece in the designer):
     // wait until they've been idle for a moment
@@ -37,7 +36,6 @@ export default function DiscountOffer() {
       const typing = document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement;
       if (typing || Date.now() - last < IDLE_MS) { t = window.setTimeout(tryOpen, 1500); return; }
       setOpen(true);
-      try { sessionStorage.setItem(SEEN_KEY, "1"); } catch {}
     };
     t = window.setTimeout(tryOpen, DELAY_MS);
     return () => { clearTimeout(t); evs.forEach(e => document.removeEventListener(e, busy, true)); };

@@ -299,11 +299,11 @@ h2 .g{color:var(--gold)}
 .op-steps li.on{color:var(--ink);border-color:var(--ink)}
 .op-steps li.done{border-color:var(--gold)}
 .op-form{background:var(--paper);border:1px solid var(--line);padding:clamp(1.25rem,3.5vw,2.5rem)}
-.op-step{border:0;margin:0;padding:0;display:grid;gap:1.25rem}
+.op-step{border:0;margin:0;padding:0;display:grid;gap:1.25rem;min-width:0} /* fieldsets default to min-content width and overflowed on narrow phones */
 .op-step legend{font-size:1.45rem;font-weight:500;margin-bottom:1.25rem;padding:0}
 .q{grid-column:1/-1;margin:0 0 -.2rem;font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
-.tiles.four{grid-template-columns:repeat(4,1fr)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.tiles.four{grid-template-columns:repeat(4,minmax(0,1fr))}
 .tiles button{background:var(--bg);border:1.5px solid var(--line);padding:1rem;text-align:left;cursor:pointer;font-family:var(--font);color:var(--ink);display:flex;flex-direction:column;gap:.25rem;transition:border-color .15s}
 .tiles.small button{padding:.75rem .85rem}
 .op-step > .tiles + .tiles{margin-top:.5rem}
@@ -330,7 +330,7 @@ h2 .g{color:var(--gold)}
 .op-done{text-align:center;padding:clamp(2rem,6vw,4rem) 1rem;background:var(--paper);border:1px solid var(--line)}
 .op-done h2{max-width:none;margin-inline:auto}
 .op-done p:not(.label){color:var(--muted);max-width:50ch;margin:1.25rem auto 2rem}
-@media (max-width:700px){.tiles,.tiles.four{grid-template-columns:1fr 1fr}.row2{grid-template-columns:1fr}.op-steps li{font-size:0;letter-spacing:0}.op-steps li::before{font-size:.8rem}}
+@media (max-width:700px){.tiles,.tiles.four{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.row2{grid-template-columns:1fr}.op-steps li{font-size:0;letter-spacing:0}.op-steps li::before{font-size:.8rem}}
 
 /* size guide */
 .how{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
@@ -738,3 +738,49 @@ html.offer-open,html.offer-open body{overflow:hidden}
 @supports (-webkit-touch-callout: none){
   .np [filter="url(#np-bevel)"],.np [filter="url(#rd-bevel)"]{filter:none}
 }
+/* ============ street-life backdrop (cash, bills, dice, chain, diamonds drifting up) ============ */
+.street-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.street-bg .sb{position:absolute;top:100%;display:block;opacity:.17;will-change:transform;animation:sbRise linear infinite}
+.street-bg .sb img,.street-bg .sb svg{display:block;width:100%;height:auto}
+.street-bg .sb.bill{opacity:.14}
+.street-bg .sb.gem,.street-bg .sb.link{opacity:.28}
+@keyframes sbRise{
+  0%{transform:translate3d(0,0,0) rotate(var(--r))}
+  50%{transform:translate3d(18px,calc(-50vh - 80px),0) rotate(calc(var(--r) + 20deg))}
+  100%{transform:translate3d(0,calc(-100vh - 180px),0) rotate(calc(var(--r) + 40deg))}
+}
+@media (max-width:700px){.street-bg .sb-wide{display:none}.street-bg .sb{opacity:.12}}
+@media (prefers-reduced-motion:reduce){.street-bg{display:none}}
+
+/* ============ trust strip + payment badges ============ */
+.trust{background:#fff;border-block:1px solid var(--line)}
+.trust-row{list-style:none;margin:0 auto;padding-block:clamp(1rem,2.4vw,1.4rem);display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.trust-row li{display:flex;align-items:center;gap:.75rem}
+.trust-row svg{width:22px;height:22px;flex:none;padding:9px;box-sizing:content-box;border-radius:50%;background:#F6EFDD;color:#8A6A2A}
+.trust-row b{display:block;font:700 .74rem "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.trust-row span{display:block;font-size:.82rem;line-height:1.35;color:var(--muted)}
+@media (max-width:900px){.trust-row{grid-template-columns:repeat(2,1fr);row-gap:1.1rem}}
+@media (max-width:420px){.trust-row svg{padding:7px}.trust-row b{font-size:.66rem;letter-spacing:.08em}.trust-row span{font-size:.75rem}}
+
+.pay-badges{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.pb{height:28px;min-width:46px;padding:0 .45rem;border-radius:5px;background:#fff;border:1px solid #DCDAD2;display:flex;align-items:center;justify-content:center;gap:.2rem;line-height:1;white-space:nowrap}
+.pb b{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:.72rem}
+.pb svg{height:18px;width:auto}
+.pb.visa b{color:#1A1F71;font-style:italic;font-size:.82rem;letter-spacing:.02em}
+.pb.amex{background:#2E77BC;border-color:#2E77BC}.pb.amex b{color:#fff;letter-spacing:.04em}
+.pb.apple{background:#000;border-color:#000}.pb.apple b{color:#fff;font-weight:600;font-size:.78rem}.pb.apple svg{height:14px}
+.pb.gpay b{color:#3C4043;font-weight:600}
+.pb.paypal b{font-style:italic;font-size:.78rem}.pb.paypal b span:first-child{color:#003087}.pb.paypal b span:last-child{color:#009CDE}
+.pb.zelle{background:#6D1ED4;border-color:#6D1ED4}.pb.zelle b{color:#fff}
+.pb.cashapp{background:#00D64F;border-color:#00D64F}.pb.cashapp b{color:#fff;font-size:.85rem}.pb.cashapp small{color:#fff;font:700 .58rem "Helvetica Neue",Arial,sans-serif}
+.pb.klarna{background:#FFB3C7;border-color:#FFB3C7}.pb.klarna b{color:#0B051D}
+.pb.affirm b{color:#4A4AF4;font-weight:700;font-size:.78rem}
+.pb.afterpay{background:#B2FCE4;border-color:#B2FCE4}.pb.afterpay b{color:#000;font-size:.7rem}
+
+.site-foot .foot-pay{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;margin-top:clamp(2rem,4vw,2.75rem);padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.12)}
+.site-foot .foot-pay .foot-h{display:flex;align-items:center;gap:.5rem;margin:0}
+.site-foot .foot-pay .foot-h svg{width:16px;height:16px;fill:none;stroke:#C9A55A;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.site-foot .foot-pay + .foot-base{margin-top:1.25rem}
+.op-pay{margin:1.1rem 0 1.75rem;display:grid;justify-items:start;gap:.55rem}
+.op-pay p{margin:0;font-size:.85rem;color:var(--muted)}
+.op-pay .pay-badges{justify-content:flex-start}
