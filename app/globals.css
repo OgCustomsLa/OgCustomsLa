@@ -901,3 +901,18 @@ html.offer-open,html.offer-open body{overflow:hidden}
 .sh-body h3 a{color:inherit;text-decoration:none}
 .sh-body h3 a:hover{color:var(--gold-ink)}
 @media (min-width:1021px){.hero-grid.duo .np{justify-self:end}.hero-grid.duo .aw{justify-self:start}}
+/* phones / tablets: designer and Available window stacked, full width (must come after the two-column rule) */
+@media (max-width:1020px){
+  .hero-grid.duo{grid-template-columns:minmax(0,600px);justify-content:center}
+  .hero-grid.duo .np,.hero-grid.duo .aw{justify-self:stretch;width:100%;max-width:600px}
+  .aw-grid{grid-template-rows:none}
+}
+@media (max-width:1020px){.aw .aw-tile{min-height:0}}
+/* ============ designer preview: dark studio look, like our product photos ============ */
+.np .stage,.stage-overlay{background:
+  radial-gradient(ellipse 55% 50% at 50% 46%,rgba(255,236,190,.10),transparent 70%),
+  radial-gradient(ellipse 80% 75% at 50% 45%,#2B2823 0%,#191714 55%,#0B0A09 100%);border-bottom-color:#2A2620}
+/* soft floor shadow under the piece */
+.np .stage::after{content:"";position:absolute;left:22%;right:22%;bottom:9%;height:14%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);pointer-events:none;z-index:0}
+.np .stage > svg:not(.np-ghost),.np .stage > .ring-art{position:relative;z-index:1}
+.np svg.ready.sample{opacity:.7}

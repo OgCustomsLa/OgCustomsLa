@@ -52,12 +52,6 @@ export const RING_DEMOS: RingOpts[] = [
   { ...BASE, metal: "rose", cut: "oval", setting: "halo" },
 ];
 
-/** Load the showcase rings' lettering up front, so their initials are sized right the moment they appear. */
-export function preloadRingDemoFonts() {
-  if (typeof document === "undefined" || !document.fonts) return;
-  for (const o of RING_DEMOS) { const f = FONTS[o.font]; document.fonts.load(`${f.weight} 100px ${f.family}`, o.initials || "OG").catch(() => {}); }
-}
-
 /* ---------- faceted diamonds ---------- */
 
 type Pt = [number, number];
