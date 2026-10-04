@@ -23,9 +23,15 @@ export const SHELVES = {
   top: { title: "Top shelf: heavy gold & iced out", sub: "Statement chains, iced pendants and grillz. One of each, made by hand." },
 } as const;
 
-// Placeholder pieces until the real photos arrive.
-const CATS: Category[] = ["Pendants", "Rings", "Chains", "Earrings", "Bracelets", "Grillz"];
+// Real pieces first, then placeholders until more photos arrive.
+const REAL: Piece[] = [
+  { id: "angel-ak", title: "Masked Angel Pendant", category: "Pendants", shelf: "new", image: "/images/available/angel-ak-pendant.jpg", status: "available" },
+  { id: "three-angels", title: "Three Wise Angels Pendant", category: "Pendants", shelf: "new", image: "/images/available/three-angels-pendant.jpg", status: "available" },
+  { id: "drama-masks", title: "Laugh Now Cry Later Masks Pendant", category: "Pendants", shelf: "new", image: "/images/available/drama-masks-pendant.jpg", status: "available" },
+];
+const CATS: Category[] = ["Rings", "Chains", "Earrings"];
 export const PIECES: Piece[] = [
+  ...REAL,
   ...CATS.map((category, i): Piece => ({ id: `new-${i}`, title: `New ${category.toLowerCase().replace(/s$/, "")} drop`, category, shelf: "new", status: "coming" })),
   ...["Chains", "Pendants", "Grillz", "Chains", "Rings", "Bracelets"].map((category, i): Piece => ({ id: `top-${i}`, title: "Top shelf piece", category: category as Category, shelf: "top", status: "coming" })),
 ];

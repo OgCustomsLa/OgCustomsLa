@@ -395,7 +395,7 @@ export default function RingDesigner({ onPick, demoIndex, onTouch }: Props) {
     const n = Object.keys(opts).length;
     return (
       <div>
-        <p className="opt-label">{label}</p>
+        <p className="opt-label" data-ico={k}>{label}</p>
         <div className={"seg" + (n === 2 ? " c2" : n >= 4 ? " c4" : "")} role="group" aria-label={label}>
           {Object.entries(opts).map(([v, l]) => (
             <button key={v} type="button" aria-pressed={!demo && o[k] === v} onClick={() => set(k, v as RingOpts[K])}>
@@ -415,7 +415,7 @@ export default function RingDesigner({ onPick, demoIndex, onTouch }: Props) {
       </div>
       <div className="np-body">
         <div>
-          <p className="opt-label">Choose your piece</p>
+          <p className="opt-label" data-ico="piece">Choose your piece</p>
           <div className="seg kind" role="group" aria-label="Piece">
             <button type="button" aria-pressed="false" onClick={() => onPick?.("pendant")}><PieceIcon kind="pendant" /><span>Pendant</span></button>
             <button type="button" aria-pressed="false" onClick={() => onPick?.("earrings")}><PieceIcon kind="earrings" /><span>Earrings</span></button>
@@ -426,7 +426,7 @@ export default function RingDesigner({ onPick, demoIndex, onTouch }: Props) {
         {(demo ? shown.style : o.style) === "signet" ? (
           <>
             <div className="np-field">
-              <label htmlFor="ring-initials">Your initials <span>{o.initials.length} / 3</span></label>
+              <label htmlFor="ring-initials" data-ico="name">Your initials <span>{o.initials.length} / 3</span></label>
               <input id="ring-initials" maxLength={3} autoComplete="off" spellCheck={false} placeholder="Your initials"
                 value={o.initials} onChange={e => set("initials", e.target.value.replace(/[^\p{L}&]/gu, "").slice(0, 3))} />
             </div>
@@ -434,7 +434,7 @@ export default function RingDesigner({ onPick, demoIndex, onTouch }: Props) {
             {seg("face", FACES, "Ring face")}
             {seg("stones", STONES, "Diamonds")}
             <div>
-              <p className="opt-label">Lettering style</p>
+              <p className="opt-label" data-ico="font">Lettering style</p>
               <div className="seg fonts" role="group" aria-label="Lettering style">
                 {(Object.entries(FONTS) as [Font, (typeof FONTS)[Font]][]).map(([k, v]) => (
                   <button key={k} type="button" aria-pressed={!demo && o.font === k} onClick={() => set("font", k)}>

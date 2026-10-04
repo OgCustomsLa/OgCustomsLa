@@ -150,6 +150,11 @@ export default function Home() {
             <h2>Ready to wear. <span className="g">One of one.</span></h2>
             <p className="sub">Finished pieces from our studio, ready to ship. When it&apos;s gone, it&apos;s gone.</p>
           </div>
+          <Link href="/available" className="av-thumbs" aria-label="See the available pendants">
+            <img src="/images/available/angel-ak-pendant.jpg" alt="Masked angel pendant in gold" loading="lazy" decoding="async" />
+            <img src="/images/available/three-angels-pendant.jpg" alt="Three wise angels pendant in gold" loading="lazy" decoding="async" />
+            <img src="/images/available/drama-masks-pendant.jpg" alt="Laugh now cry later masks pendant in gold" loading="lazy" decoding="async" />
+          </Link>
           <Link href="/available" className="btn">Shop available pieces</Link>
         </div>
       </section>

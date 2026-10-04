@@ -499,7 +499,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
       </div>
       <div className="np-body">
         <div>
-          <p className="opt-label">Choose your piece</p>
+          <p className="opt-label" data-ico="piece">Choose your piece</p>
           <div className="seg kind" role="group" aria-label="Piece" id="np-kind">
             <button type="button" data-k="pendant" aria-pressed="true"><PieceIcon kind="pendant" /><span>Pendant</span></button>
             <button type="button" data-k="earrings" aria-pressed="false"><PieceIcon kind="earrings" /><span>Earrings</span></button>
@@ -507,11 +507,11 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           </div>
         </div>
         <div className="np-field">
-          <label htmlFor="np-name">Your name <span id="np-count">0 / 24</span></label>
+          <label htmlFor="np-name" data-ico="name">Your name <span id="np-count">0 / 24</span></label>
           <input id="np-name" maxLength={24} defaultValue="" autoComplete="off" spellCheck={false} placeholder="Type your name" />
         </div>
         <div>
-          <p className="opt-label">Metal</p>
+          <p className="opt-label" data-ico="metal">Metal</p>
           <div className="seg" role="group" aria-label="Metal" id="np-metals">
             <button type="button" data-m="gold" aria-pressed="true"><i style={{ background: "linear-gradient(#F6E3A6,#A9822F)" }}></i>Gold</button>
             <button type="button" data-m="silver" aria-pressed="false"><i style={{ background: "linear-gradient(#fff,#8E9294)" }}></i>Silver</button>
@@ -519,7 +519,7 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           </div>
         </div>
         <div>
-          <p className="opt-label">Diamonds</p>
+          <p className="opt-label" data-ico="stones">Diamonds</p>
           <div className="seg" role="group" aria-label="Iced" id="np-ice">
             <button type="button" data-i="none" aria-pressed="true"><IceIcon kind="none" />No stones</button>
             <button type="button" data-i="line" aria-pressed="false"><IceIcon kind="line" />Iced line</button>
@@ -527,14 +527,14 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           </div>
         </div>
         <div id="np-line-wrap">
-          <p className="opt-label">Underline</p>
+          <p className="opt-label" data-ico="line">Underline</p>
           <div className="seg c2" role="group" aria-label="Underline" id="np-lines">
             <button type="button" data-u="line" aria-pressed="true">With line</button>
             <button type="button" data-u="none" aria-pressed="false">No line</button>
           </div>
         </div>
         <div>
-          <p className="opt-label">Lettering style</p>
+          <p className="opt-label" data-ico="font">Lettering style</p>
           <div className="seg fonts" role="group" aria-label="Font" id="np-fonts">
             {Object.entries(FONTS).map(([key, f], i) => (
               <button key={key} type="button" data-f={key} aria-pressed={i === 0}>
