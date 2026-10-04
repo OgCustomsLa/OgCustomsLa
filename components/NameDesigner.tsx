@@ -546,7 +546,6 @@ export default function NameDesigner({ onRing, startKind = "pendant", demoIndex,
           <p className="font-note">These are just a few examples — we have many more fonts. Tell us any style you like when you order. This preview is only a rough idea; your finished piece will look much better.</p>
         </div>
         <div className="np-foot">
-          <small>Preview only. Your final piece is designed by hand in 3D.</small>
           <button type="button" className="btn" id="np-order">Order this design →</button>
         </div>
       </div>

@@ -453,7 +453,6 @@ export default function RingDesigner({ onPick, demoIndex, onTouch }: Props) {
           </>
         )}
         <div className="np-foot">
-          <small>Preview only. Your final ring is designed by hand in 3D and sized to your finger.</small>
           <button type="button" className="btn" onClick={order}>Order this ring →</button>
         </div>
       </div>

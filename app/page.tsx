@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import Ticker from "@/components/Ticker";
-import { TrustBar } from "@/components/Trust";
+import AvailableWindow from "@/components/AvailableWindow";
 import JewelryDesigner from "@/components/JewelryDesigner";
 import SizeFinder from "@/components/SizeFinder";
 import { EMAIL } from "@/lib/site";
@@ -83,13 +83,12 @@ export default function Home() {
             <h1 className="sr-only">OG Customs LA — custom name pendants, earrings and rings, handmade in Los Angeles</h1>
             <p className="hero-sub">Pick a piece, add your name or initials and choose your diamonds. Our professional team will make it by hand in Los Angeles.</p>
           </div>
-          <div className="hero-grid solo">
+          <div className="hero-grid duo">
             <JewelryDesigner />
+            <AvailableWindow />
           </div>
         </div>
       </section>
-
-      <TrustBar />
 
       <Ticker />
 

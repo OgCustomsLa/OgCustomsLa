@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { PIECES, SHELVES, type Piece } from "@/lib/available";
 import { mailto } from "@/lib/site";
@@ -13,7 +14,7 @@ function Card({ p, i }: { p: Piece; i: number }) {
     <article className={"sh-card is-" + p.status} style={{ "--n": i } as React.CSSProperties}>
       <div className="sh-img">
         {p.image ? (
-          <img src={p.image} alt={p.title} loading="lazy" decoding="async" />
+          <Link href={`/available/${p.id}`} className="sh-link"><img src={p.image} alt={p.title} loading="lazy" decoding="async" /></Link>
         ) : (
           <div className="sh-empty" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"><path d="M14 8h20l8 10-18 22L6 18z" /><path d="M6 18h36M14 8l4 10 6 22M34 8l-4 10-6 22M18 18l6-10 6 10" /></svg>
@@ -22,7 +23,7 @@ function Card({ p, i }: { p: Piece; i: number }) {
         )}
       </div>
       <div className="sh-body">
-        <h3>{p.title}</h3>
+        <h3>{p.image ? <Link href={`/available/${p.id}`}>{p.title}</Link> : p.title}</h3>
         <p className="sh-price">{p.price ? money(p.price) : p.status === "coming" ? "Dropping soon" : "Price on request"}</p>
         {p.status === "available" && <a className="sh-offer" href={ask}>Make an offer</a>}
         <span className={"sh-tag " + p.status}>{STATUS_LABEL[p.status]}</span>

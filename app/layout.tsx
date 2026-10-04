@@ -5,7 +5,6 @@ import HeaderBills from "@/components/HeaderBills";
 import Logo from "@/components/Logo";
 import MobileMenu from "@/components/MobileMenu";
 import RevealOnScroll from "@/components/RevealOnScroll";
-import StreetBackdrop from "@/components/StreetBackdrop";
 import { PayBadges } from "@/components/Trust";
 import { EMAIL } from "@/lib/site";
 import "./globals.css";
@@ -50,7 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <StreetBackdrop />
         <a href="#main" className="skip">Skip to content</a>
         <header className="top">
           <HeaderBills />

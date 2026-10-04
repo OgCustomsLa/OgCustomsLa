@@ -1,7 +1,3 @@
-/** Trust signals: the "secure checkout / pay over time" strip and the payment methods we accept. */
-
-const I = { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
-
 /** Small badge for each payment method (simple marks in each brand's colours). */
 export function PayBadges({ className = "" }: { className?: string }) {
   return (
@@ -18,31 +14,5 @@ export function PayBadges({ className = "" }: { className?: string }) {
       <li className="pb affirm" aria-label="Affirm"><b>affirm</b></li>
       <li className="pb afterpay" aria-label="Afterpay"><b>afterpay</b></li>
     </ul>
-  );
-}
-
-/** Strip of reasons to trust us, shown under the designer. */
-export function TrustBar() {
-  return (
-    <section className="trust" aria-label="Why order with us">
-      <ul className="wrap trust-row" data-stagger="">
-        <li>
-          <svg {...I}><rect x="4.5" y="10.5" width="15" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /><circle cx="12" cy="15.5" r="1.3" /></svg>
-          <div><b>Secure checkout</b><span>Cards, Apple Pay, Google Pay, PayPal</span></div>
-        </li>
-        <li>
-          <svg {...I}><rect x="3.5" y="5" width="17" height="15" rx="2" /><path d="M3.5 9.5h17M8 3v4M16 3v4M8 13.5h2M14 13.5h2M8 16.5h2" /></svg>
-          <div><b>Pay over time</b><span>Klarna · Affirm · Afterpay</span></div>
-        </li>
-        <li>
-          <svg {...I}><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
-          <div><b>Handmade in Los Angeles</b><span>Designed in 3D, finished by hand</span></div>
-        </li>
-        <li>
-          <svg {...I}><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.5 2.6 3.6 5.3 3.6 8.5s-1.1 5.9-3.6 8.5c-2.5-2.6-3.6-5.3-3.6-8.5S9.5 6.1 12 3.5z" /></svg>
-          <div><b>Ships worldwide</b><span>From our studio to your door</span></div>
-        </li>
-      </ul>
-    </section>
   );
 }
