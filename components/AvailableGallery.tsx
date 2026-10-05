@@ -5,11 +5,11 @@ import DealSeal from "./DealSeal";
 import { useState } from "react";
 import { PIECES, SHELVES, type Piece } from "@/lib/available";
 import { mailto } from "@/lib/site";
+import { dealPrice, money } from "@/lib/gold";
 
 const STATUS_LABEL: Record<Piece["status"], string> = { available: "Available", sold: "Sold", coming: "Coming soon" };
-const money = (n: number) => "$" + n.toLocaleString("en-US");
 
-function Card({ p, i }: { p: Piece; i: number }) {
+function Card({ p, i, price }: { p: Piece; i: number; price?: number }) {
   const ask = mailto(`About: ${p.title}`, `Hi! I'm interested in "${p.title}" (${p.category}). Is it still available?`);
   return (
     <article className={"sh-card is-" + p.status} style={{ "--n": i } as React.CSSProperties}>
@@ -26,7 +26,7 @@ function Card({ p, i }: { p: Piece; i: number }) {
       </div>
       <div className="sh-body">
         <h3>{p.image ? <Link href={`/available/${p.id}`}>{p.title}</Link> : p.title}</h3>
-        <p className="sh-price">{p.price ? money(p.price) : p.status === "coming" ? "Dropping soon" : "Price on request"}</p>
+        <p className="sh-price">{price ? (p.deal ? <><s>{money(price)}</s> {money(dealPrice(price, p.deal))}</> : money(price)) : p.status === "coming" ? "Dropping soon" : "Price on request"}</p>
         {p.status === "available" && <a className="sh-offer" href={ask}>Make an offer</a>}
         <span className={"sh-tag " + p.status}>{STATUS_LABEL[p.status]}</span>
       </div>
@@ -35,7 +35,7 @@ function Card({ p, i }: { p: Piece; i: number }) {
 }
 
 /** Category filter + shop shelves of ready-made pieces. */
-export default function AvailableGallery() {
+export default function AvailableGallery({ prices = {} }: { prices?: Record<string, number> }) {
   const categories = ["All", ...Array.from(new Set(PIECES.map(p => p.category)))];
   const [filter, setFilter] = useState("All");
   const shown = filter === "All" ? PIECES : PIECES.filter(p => p.category === filter);
@@ -62,7 +62,7 @@ export default function AvailableGallery() {
               </div>
               {items.length ? (
                 <div className="sh-grid" key={filter}>
-                  {items.map((p, i) => <Card key={p.id} p={p} i={i} />)}
+                  {items.map((p, i) => <Card key={p.id} p={p} i={i} price={prices[p.id]} />)}
                 </div>
               ) : (
                 <p className="shelf-empty">Nothing in {filter.toLowerCase()} on this shelf right now.</p>

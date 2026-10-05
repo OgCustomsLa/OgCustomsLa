@@ -952,3 +952,8 @@ header.top .menu-panel .btn{background:linear-gradient(180deg,#F0D489,#C9A24E 55
 /* "Buy now" window: tiles fade in staggered, and stay hidden until their turn */
 .aw-cur{animation-fill-mode:backwards}
 .sh-img{position:relative}
+/* prices: crossed-out original when a piece has a deal */
+.pv-price s,.sh-price s{font-weight:500;color:var(--muted);margin-right:.35rem}
+.pv-price b{color:#B92D22}
+.pv-save{display:inline-block;margin-left:.4rem;padding:.2rem .5rem;border-radius:6px;background:#FBEDEA;color:#B92D22;font:700 .72rem var(--font);letter-spacing:.06em;vertical-align:middle}
+.pv-price-note{margin:-.6rem 0 0;font-size:.78rem;color:var(--muted)}

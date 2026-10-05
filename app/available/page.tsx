@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AvailableGallery from "@/components/AvailableGallery";
+import { PIECES } from "@/lib/available";
+import { priceList } from "@/lib/gold";
 
 export const metadata: Metadata = {
   title: "Available now",
@@ -14,7 +16,10 @@ const TRUST = [
   ["Free quote", "on any custom piece"],
 ];
 
-export default function AvailablePage() {
+export const revalidate = 3600; // prices follow the gold price, checked hourly
+
+export default async function AvailablePage() {
+  const prices = await priceList(PIECES);
   return (
     <div className="av">
       <div className="wrap">
@@ -25,7 +30,7 @@ export default function AvailablePage() {
         </div>
       </div>
 
-      <AvailableGallery />
+      <AvailableGallery prices={prices} />
 
       <div className="wrap">
         <div className="custom-banner" data-reveal>

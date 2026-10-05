@@ -7,19 +7,19 @@ import type { Piece } from "@/lib/available";
 import { DESIGN_KEY, type DesignPrefill } from "@/lib/site";
 import DealSeal from "./DealSeal";
 import { PayBadges } from "./Trust";
+import { dealPrice, money } from "@/lib/gold";
 
 /** One available piece, marketplace style: photo, name, price, buy button and the ways to pay. */
-export default function PieceView({ p }: { p: Piece }) {
+export default function PieceView({ p, price: base }: { p: Piece; price?: number }) {
   const router = useRouter();
   const photos = [p.image!, ...(p.more ?? [])];
   const [shot, setShot] = useState(0);
-  const price = p.price ? "$" + p.price.toLocaleString("en-US") : "Price on request";
 
   function buy() {
     const prefill: DesignPrefill = {
       piece: p.category.replace(/s$/, ""),
       name: "",
-      desc: `Available piece: ${p.title}.`,
+      desc: `Available piece: ${p.title}${base ? ` (${money(dealPrice(base, p.deal))}${p.deal ? ` after ${p.deal}% off` : ""})` : ""}.`,
       metal: p.metal ?? "Yellow gold",
       stones: p.stones && p.stones !== "None" ? "Not sure — advise me" : "No stones",
     };
@@ -50,7 +50,10 @@ export default function PieceView({ p }: { p: Piece }) {
 
           <div className="pv-info">
             <h1 className="pv-title">{p.title}</h1>
-            <p className="pv-price">{price}</p>
+            <p className="pv-price">
+              {base ? (p.deal ? <><s>{money(base)}</s> <b>{money(dealPrice(base, p.deal))}</b> <span className="pv-save">Save {p.deal}%</span></> : money(base)) : "Price on request"}
+            </p>
+            {base && !p.price && <p className="pv-price-note">Based on today&apos;s {p.karat ?? 14}K gold price</p>}
             <button type="button" className="btn pv-buy" onClick={buy} disabled={p.status !== "available"}>
               {p.status === "available" ? "Buy now" : "Sold"}
             </button>
