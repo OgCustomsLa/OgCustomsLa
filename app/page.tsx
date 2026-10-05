@@ -3,6 +3,8 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import Ticker from "@/components/Ticker";
 import AvailableWindow from "@/components/AvailableWindow";
+import { PIECES } from "@/lib/available";
+import { priceList } from "@/lib/gold";
 import JewelryDesigner from "@/components/JewelryDesigner";
 import SizeFinder from "@/components/SizeFinder";
 import { EMAIL } from "@/lib/site";
@@ -72,7 +74,10 @@ function Strip({ label, images }: { label: string; images: [string, string, stri
   );
 }
 
-export default function Home() {
+export const revalidate = 3600; // the window shows gold-based prices, checked hourly
+
+export default async function Home() {
+  const prices = await priceList(PIECES);
   return (
     <main id="home">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_LD) }} />
@@ -85,7 +90,7 @@ export default function Home() {
           </div>
           <div className="hero-grid duo">
             <JewelryDesigner />
-            <AvailableWindow />
+            <AvailableWindow prices={prices} />
           </div>
         </div>
       </section>

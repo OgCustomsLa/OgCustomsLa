@@ -957,3 +957,7 @@ header.top .menu-panel .btn{background:linear-gradient(180deg,#F0D489,#C9A24E 55
 .pv-price b{color:#B92D22}
 .pv-save{display:inline-block;margin-left:.4rem;padding:.2rem .5rem;border-radius:6px;background:#FBEDEA;color:#B92D22;font:700 .72rem var(--font);letter-spacing:.06em;vertical-align:middle}
 .pv-price-note{margin:-.6rem 0 0;font-size:.78rem;color:var(--muted)}
+/* Buy now window: price under each tile's name */
+.aw-price{display:block;margin-top:.15rem;font:700 .82rem "Outfit","Helvetica Neue",Arial,sans-serif;color:#F3DC93}
+.aw-price s{font-weight:500;color:#B9AE96;margin-right:.25rem}
+.aw-price b{color:#FF7466}
