@@ -65,6 +65,10 @@ const REAL: Piece[] = [
     metal: "Yellow gold", stones: "Pavé crown, diamond eyes",
     specs: [["Metal","14K yellow gold"],["Weight","≈ 8 g"],["Size","2.0 × 1.4 in"],["Stones","Pavé crown, diamond eyes"],["Bail","Fits chains up to 6 mm"],["Finish","High polish, hand detailed"]],
     description: "A roaring lion in polished yellow gold wearing an iced pavé crown, with diamond eyes, a carved mane and a heavy bail." },
+  { id: "king-spades", title: "Iced King of Spades Pendant", category: "Pendants", shelf: "new", image: "/images/available/king-spades-pendant.jpg", grams: 8, karat: 14, status: "available",
+    more: ["/images/available/king-spades-pendant-side.jpg"], metal: "Yellow gold", stones: "Pavé frame, robe and bail",
+    specs: [["Metal","14K yellow gold"],["Weight","≈ 8 g"],["Size","1.9 × 1.2 in"],["Stones","Pavé frame, robe and bail"],["Details","Black enamel K and spades"],["Bail","Iced, fits chains up to 6 mm"]],
+    description: "The King of Spades as an iced playing card: a sculpted king in yellow gold inside a pavé-set frame, with black enamel K and spades and a fully iced bail." },
 ];
 const CATS: Category[] = ["Chains", "Earrings"];
 export const PIECES: Piece[] = [

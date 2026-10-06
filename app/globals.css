@@ -961,3 +961,36 @@ header.top .menu-panel .btn{background:linear-gradient(180deg,#F0D489,#C9A24E 55
 .aw-price{display:block;margin-top:.15rem;font:700 .82rem "Outfit","Helvetica Neue",Arial,sans-serif;color:#F3DC93}
 .aw-price s{font-weight:500;color:#B9AE96;margin-right:.25rem}
 .aw-price b{color:#FF7466}
+/* phones / tablets: the Buy now window comes first, the designer after it */
+@media (max-width:1020px){.hero-grid.duo .aw{order:-1}}
+
+/* ============ "Buy now" window frame: simple black card with a thin gold border ============ */
+.aw{background:#12110E;border:1px solid #A8854F;border-radius:18px;box-shadow:0 24px 50px -30px rgba(0,0,0,.7)}
+.aw-head{padding:.95rem 1.1rem .8rem;background:transparent;border-bottom:1px solid #2E2A22}
+.aw-title{font-size:1.1rem;letter-spacing:.14em;color:#E2C16F}
+.aw-title span{margin-top:.15rem;font-size:.7rem;letter-spacing:.06em;color:#A89A7C}
+.aw-grid{padding:1rem 1.1rem}
+.aw-foot{padding:0 1.1rem 1.1rem}
+.aw-foot .aw-cta{gap:.5rem;border-radius:12px;background:#C9A24E;border:1px solid #C9A24E;color:#14110A;font-weight:700;letter-spacing:.14em}
+.aw-foot .aw-cta svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
+.aw-foot .aw-cta:hover{background:#E2C16F;border-color:#E2C16F;color:#14110A}
+.aw-foot .aw-cta:hover svg{transform:translateX(3px)}
+/* phones / tablets: Buy now window → intro text → designer, in one column */
+@media (max-width:1020px){
+  .hero > .wrap{display:flex;flex-direction:column;align-items:center}
+  .hero-grid.duo{display:contents}
+  .hero-grid.duo .aw{order:1;width:100%;max-width:600px}
+  .hero-intro{order:2;margin:clamp(1.5rem,5vw,2.25rem) auto clamp(1rem,3vw,1.5rem)}
+  .hero-grid.duo .np{order:3;width:100%;max-width:600px;margin-top:0}
+}
+/* Buy now window: slimmer header and button, more room for the photos */
+.aw-head{padding:.55rem .9rem .5rem}
+.aw-title{font-size:.88rem;letter-spacing:.14em}
+.aw-title span{margin-top:.05rem;font-size:.62rem}
+.aw-grid{padding:.75rem .9rem;gap:.6rem}
+.aw-foot{padding:0 .9rem .8rem}
+.aw-foot .aw-cta{padding:.6rem 1rem;font-size:.66rem;border-radius:10px}
+.aw-foot .aw-cta svg{width:14px;height:14px}
+/* Buy now window: eight tiles, 2 across and 4 down */
+.aw-grid{grid-template-rows:repeat(4,minmax(0,1fr))}
+@media (max-width:1020px){.aw-grid{grid-template-rows:none}}

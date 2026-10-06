@@ -8,7 +8,7 @@ import { dealPrice, money } from "@/lib/gold";
 
 const ready = PIECES.filter(p => p.status === "available" && p.image);
 const pool = ready;
-const MOVING = Math.min(6, pool.length);
+const MOVING = Math.min(8, pool.length);
 const STEP_MS = 1800; // one tile changes this often, the next one after it
 
 function Tile({ p, prev, price }: { p: Piece; prev?: Piece; price?: number }) {
@@ -35,11 +35,11 @@ function Tile({ p, prev, price }: { p: Piece; prev?: Piece; price?: number }) {
 }
 
 // tiles change one after another along a snake path through the 2-across grid:
-// top row left → right, middle row right → left, bottom row left → right
-const SNAKE = [0, 1, 3, 2, 4, 5];
+// row 1 left → right, row 2 right → left, row 3 left → right, row 4 right → left
+const SNAKE = [0, 1, 3, 2, 4, 5, 7, 6];
 
 /**
- * "Buy now" window beside the designer: six same-size tiles with name and price. Like dominoes, one tile
+ * "Buy now" window beside the designer: eight same-size tiles with name and price. Like dominoes, one tile
  * at a time (following SNAKE) fades to the piece that is off screen, so pieces travel along the grid.
  * A piece with a deal carries its discount tag wherever it shows up. Tap a tile for its page.
  */
@@ -50,7 +50,7 @@ export default function AvailableWindow({ prices = {} }: { prices?: Record<strin
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    if (paused || pool.length <= MOVING || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (paused || pool.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setInterval(() => setStep(s => s + 1), STEP_MS);
     return () => clearInterval(t);
   }, [paused]);
@@ -62,7 +62,10 @@ export default function AvailableWindow({ prices = {} }: { prices?: Record<strin
     setTiles(ts => {
       const shown = new Set(ts.map(x => x.cur));
       const next = pool.findIndex((_, i) => !shown.has(i)); // the piece that's off screen moves in
-      return next < 0 ? ts : ts.map((x, i) => (i === k ? { cur: next, prev: x.cur } : x));
+      if (next >= 0) return ts.map((x, i) => (i === k ? { cur: next, prev: x.cur } : x));
+      // every piece is already on screen: swap with the next tile along the snake, so pieces travel
+      const k2 = order[(step % order.length)];
+      return ts.map((x, i) => (i === k ? { cur: ts[k2].cur, prev: x.cur } : i === k2 ? { cur: ts[k].cur, prev: x.cur } : x));
     });
   }, [step]);
 
@@ -78,7 +81,7 @@ export default function AvailableWindow({ prices = {} }: { prices?: Record<strin
         ))}
       </ul>
       <div className="aw-foot">
-        <Link href="/available" className="btn">Shop all available →</Link>
+        <Link href="/available" className="btn aw-cta"><span>Shop all available</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></Link>
       </div>
     </div>
   );
