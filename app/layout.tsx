@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import DiscountOffer from "@/components/DiscountOffer";
+import AnnouncementBar from "@/components/AnnouncementBar";
 import HeaderBills from "@/components/HeaderBills";
 import Logo from "@/components/Logo";
 import MobileMenu from "@/components/MobileMenu";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import SpinWheel from "@/components/SpinWheel";
 import { PayBadges } from "@/components/Trust";
 import { EMAIL } from "@/lib/site";
 import "./globals.css";
@@ -50,15 +51,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <a href="#main" className="skip">Skip to content</a>
+        <AnnouncementBar />
         <header className="top">
           <HeaderBills />
           <div className="wrap">
             <Logo />
             <nav className="main" aria-label="Main">
-              <Link href="/available" className="nav-avail"><span className="live-dot" aria-hidden="true" />Available</Link>
-              <Link href="/#make">What we make</Link>
+              <Link href="/available" className="nav-avail"><span className="live-dot" aria-hidden="true" />Shop all</Link>
+              <Link href="/available?cat=Pendants">Pendants</Link>
+              <Link href="/available?cat=Rings">Rings</Link>
+              <Link href="/#design">Design yours</Link>
               <Link href="/#sizes">Size guide</Link>
-              <Link href="/#contact">Contact</Link>
             </nav>
             <div className="top-actions">
               <Link href="/order" className="btn top-cta"><span>Start an order</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></Link>
@@ -103,7 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <RevealOnScroll />
-        <DiscountOffer />
+        <SpinWheel />
       </body>
     </html>
   );

@@ -4,6 +4,7 @@
  * The gold price is fetched at most once an hour. To change the margin, change MARKUP.
  */
 import type { Piece } from "./available";
+import { SITE_SALE } from "./site";
 
 export const MARKUP = 1.2; // 20% on top of the gold value
 export const DIAMOND_FEE = 200; // added to pieces set with diamonds
@@ -30,8 +31,14 @@ export function piecePrice(p: Piece, usdPerOz: number): number | undefined {
   return Math.round(p.grams * perGram * MARKUP) + (p.diamonds ? DIAMOND_FEE : 0);
 }
 
-/** Price after the piece's deal (if any). */
-export const dealPrice = (price: number, deal?: number) => (deal ? Math.round(price * (1 - deal / 100)) : price);
+/** Sale price: the site-wide sale, then the piece's own deal on top (if any). */
+export const dealPrice = (price: number, deal?: number) => Math.round(price * (1 - SITE_SALE / 100) * (1 - (deal ?? 0) / 100));
+
+/** Total percent off shown on the badge (site-wide sale plus the piece's own deal). */
+export const offPct = (deal?: number) => Math.round(100 * (1 - (1 - SITE_SALE / 100) * (1 - (deal ?? 0) / 100)));
+
+/** True when the piece is shown with a crossed-out regular price. */
+export const onSale = (deal?: number) => SITE_SALE > 0 || !!deal;
 
 export const money = (n: number) => "$" + n.toLocaleString("en-US");
 

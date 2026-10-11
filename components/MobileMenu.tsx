@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const LINKS: { href: string; label: string; hidePhone?: boolean; live?: boolean }[] = [
-  { href: "/available", label: "Available now", live: true },
-  { href: "/#make", label: "What we make" },
+  { href: "/available", label: "Shop all", live: true },
+  { href: "/available?cat=Pendants", label: "Pendants" },
+  { href: "/available?cat=Rings", label: "Rings" },
+  { href: "/#design", label: "Design yours" },
   { href: "/#work", label: "Our work" },
   { href: "/#sizes", label: "Size guide" },
   { href: "/#faq", label: "FAQ", hidePhone: true },

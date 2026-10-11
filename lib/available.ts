@@ -71,6 +71,22 @@ const REAL: Piece[] = [
     more: ["/images/available/king-spades-pendant-side.jpg"], metal: "Yellow gold", stones: "Pavé frame, robe and bail",
     specs: [["Metal","14K yellow gold"],["Weight","≈ 8 g"],["Size","1.9 × 1.2 in"],["Stones","Pavé frame, robe and bail"],["Details","Black enamel K and spades"],["Bail","Iced, fits chains up to 6 mm"]],
     description: "The King of Spades as an iced playing card: a sculpted king in yellow gold inside a pavé-set frame, with black enamel K and spades and a fully iced bail." },
+  { id: "archangel", title: "Archangel Michael Icon Pendant", category: "Pendants", shelf: "new", image: "/images/available/archangel-pendant.jpg", grams: 10, karat: 14, diamonds: true, status: "available",
+    more: ["/images/available/archangel-pendant-side.jpg"], metal: "Yellow gold", stones: "Diamond rows, white gold icon",
+    specs: [["Metal","14K yellow & white gold"],["Weight","≈ 10 g"],["Size","2.2 × 1.2 in"],["Stones","Two diamond rows"],["Details","White gold icon on black enamel"],["Bail","Engraved shield bail"]],
+    description: "Archangel Michael in white gold, framed by a carved yellow gold arch with columns and scrollwork, a cherub on top, two rows of diamonds and a black enamel background." },
+  { id: "clown-ring", title: "Laughing Clown Ring", category: "Rings", shelf: "new", image: "/images/available/clown-ring.jpg", grams: 9, karat: 14, status: "available",
+    more: ["/images/available/clown-ring-side.jpg"], metal: "White gold", stones: "None",
+    specs: [["Metal","14K white gold"],["Weight","≈ 9 g"],["Ring size","5 – 13"],["Stones","None"],["Details","Deep 3D clown face, wide band"],["Finish","High polish"]],
+    description: "A grinning clown face carved in deep 3D relief across a wide, heavy band, polished white gold from the nose to the teeth." },
+  { id: "nail-cross", title: "Iced Nail Cross Pendant", category: "Pendants", shelf: "new", image: "/images/available/nail-cross-pendant.jpg", grams: 5, karat: 14, diamonds: true, status: "available",
+    more: ["/images/available/nail-cross-pendant-side.jpg"], metal: "Yellow gold", stones: "Diamond-set heads, tips and bail",
+    specs: [["Metal","14K yellow gold"],["Weight","≈ 5 g"],["Size","1.8 × 1.1 in"],["Stones","Diamond heads, tips and bail"],["Details","Three crossed nails"],["Bail","Iced, fits chains up to 4 mm"]],
+    description: "Three crossed nails in polished yellow gold forming a cross, with diamonds set into the heads, the tips and the bail." },
+  { id: "money-bag", title: "Money Bag Pendant", category: "Pendants", shelf: "new", image: "/images/available/money-bag-pendant.jpg", grams: 9, karat: 14, diamonds: true, status: "available",
+    metal: "Yellow gold", stones: "Diamond border and bail",
+    specs: [["Metal","14K yellow gold, tri-color rope"],["Weight","≈ 9 g"],["Size","1.7 × 1.1 in"],["Stones","Diamond border and bail"],["Details","Black enamel gothic $"],["Bail","Iced, fits chains up to 5 mm"]],
+    description: "A tied money bag in satin yellow gold with a black enamel gothic dollar sign, a tri-color gold rope and a diamond-set border and bail." },
 ];
 const CATS: Category[] = ["Chains", "Earrings"];
 export const PIECES: Piece[] = [

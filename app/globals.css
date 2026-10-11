@@ -994,3 +994,190 @@ header.top .menu-panel .btn{background:linear-gradient(180deg,#F0D489,#C9A24E 55
 /* Buy now window: eight tiles, 2 across and 4 down */
 .aw-grid{grid-template-rows:repeat(4,minmax(0,1fr))}
 @media (max-width:1020px){.aw-grid{grid-template-rows:none}}
+
+/* ======================================================================
+   SHOP LOOK (HelloIce-style layout, OG Customs colours)
+   ====================================================================== */
+/* announcement bar above the header */
+.announce{background:#C9A24E;color:#14110A;font:600 .74rem "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.announce ul{list-style:none;margin:0 auto;padding:0;height:34px;position:relative;max-width:1200px}
+.announce li{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(6px);transition:opacity .45s ease,transform .45s ease;pointer-events:none;padding:0 1rem;text-align:center}
+.announce li.on{opacity:1;transform:none;pointer-events:auto}
+.announce a,.announce button{color:inherit;text-decoration:none;background:none;border:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;padding:0}
+.announce b{font-weight:800}
+@media (min-width:1100px){
+  .announce ul{display:flex;justify-content:center;gap:3rem}
+  .announce li{position:static;opacity:1;transform:none;pointer-events:auto;padding:0}
+  .announce li + li::before{content:"";width:5px;height:5px;background:#14110A;transform:rotate(45deg);margin-right:3rem}
+}
+@media (prefers-reduced-motion:reduce){.announce li{transition:none}}
+
+/* breadcrumb */
+.crumbs{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.1rem 0;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.crumbs a{color:var(--muted);text-decoration:none}.crumbs a:hover{color:var(--gold-ink)}
+.crumbs b{color:var(--ink);font-weight:600}
+
+/* home banner */
+.promo{background:radial-gradient(ellipse 70% 120% at 80% 50%,#2A241A 0%,#0E0D0B 60%);color:#F3EBD6;overflow:hidden}
+.promo-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:2rem;padding-block:clamp(2.5rem,6vw,4.5rem)}
+.promo .label{color:#C9A24E}
+.promo h1{margin:.6rem 0 0;font:800 clamp(2.4rem,6vw,4.6rem)/.95 "Outfit","Helvetica Neue",Arial,sans-serif;text-transform:uppercase;letter-spacing:-.01em}
+.promo h1 .g{display:block;color:#E2C16F}
+.promo-text > p:not(.label){margin:1rem 0 0;max-width:42ch;color:#CFC6B2;font-size:1.02rem}
+.promo-text b{color:#FFF1C4}
+.promo-ctas{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.6rem}
+.promo .btn{background:#C9A24E;border-color:#C9A24E;color:#14110A;font-weight:700}
+.promo .btn:hover{background:#E2C16F;border-color:#E2C16F;color:#14110A}
+.promo .btn.ghost{background:transparent;border-color:#C9A24E;color:#F3DC93}
+.promo .btn.ghost:hover{background:rgba(201,162,78,.12);color:#FFF1C4}
+.promo-pics{position:relative;height:clamp(260px,34vw,420px)}
+.promo-pics img{position:absolute;width:48%;aspect-ratio:1;object-fit:cover;border-radius:16px;border:1px solid rgba(201,162,78,.5);box-shadow:0 30px 50px -24px rgba(0,0,0,.9)}
+.promo-pics img:nth-child(1){left:0;top:12%;transform:rotate(-6deg)}
+.promo-pics img:nth-child(2){left:26%;top:0;z-index:2;width:52%}
+.promo-pics img:nth-child(3){right:0;top:16%;transform:rotate(6deg)}
+@media (max-width:760px){.promo-in{grid-template-columns:1fr;text-align:center}.promo-text > p:not(.label){margin-inline:auto}.promo-ctas{justify-content:center}.promo-pics{height:62vw}}
+
+/* home product grid */
+.best{padding:clamp(2rem,5vw,3.5rem) 0 clamp(1rem,3vw,2rem)}
+.best-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
+.best-head h2{margin:0;font-size:clamp(1.6rem,3.6vw,2.4rem)}
+.best-head a{font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);text-decoration:none;white-space:nowrap}
+.design-h{margin:.5rem 0 0;font-size:clamp(1.8rem,4vw,2.8rem)}
+
+/* product cards */
+.pc-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.6rem,1.6vw,1.1rem)}
+.pc-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.pc-grid,.pc-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pc{display:flex;flex-direction:column;height:100%;text-decoration:none;color:var(--ink);background:#fff;border:1px solid #E7E4DA;border-radius:12px;overflow:hidden;transition:box-shadow .25s ease,transform .25s ease,border-color .25s ease}
+.pc:hover{transform:translateY(-3px);border-color:#C9A24E;box-shadow:0 16px 30px -18px rgba(60,40,10,.5)}
+.pc-pic{position:relative;display:block;aspect-ratio:1;background:#121110;overflow:hidden}
+.pc-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .45s ease,transform .6s ease}
+.pc-pic .pc-alt{opacity:0}
+.pc:hover .pc-pic.has-alt img:first-child{opacity:0}
+.pc:hover .pc-pic .pc-alt{opacity:1}
+.pc:hover .pc-pic:not(.has-alt) img{transform:scale(1.05)}
+.pc-off{position:absolute;top:.6rem;left:.6rem;z-index:1;padding:.28rem .5rem;border-radius:4px;background:#D92A1E;color:#fff;font:800 .7rem/1 "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:.04em}
+.pc-off.big{top:1rem;left:1rem;padding:.42rem .7rem;font-size:.9rem}
+.pc-tag{position:absolute;top:.6rem;right:.6rem;z-index:1;padding:.25rem .45rem;border-radius:4px;background:rgba(255,255,255,.92);color:#14110A;font:700 .58rem/1 var(--font);letter-spacing:.1em;text-transform:uppercase}
+.pc-body{display:flex;flex-direction:column;gap:.3rem;padding:.75rem .8rem .85rem;flex:1}
+.pc-name{font-size:.88rem;font-weight:500;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.pc-price{display:flex;align-items:baseline;flex-wrap:wrap;gap:.45rem}
+.pc-price b{font:800 1.05rem "Outfit","Helvetica Neue",Arial,sans-serif;color:#D92A1E}
+.pc-price s{font-size:.85rem;color:#9A968A}
+.pc-meta{margin-top:auto;font-size:.72rem;color:var(--muted)}
+
+/* shop page */
+.shop{padding-bottom:clamp(2rem,5vw,4rem)}
+.shop-head{margin-bottom:1.2rem}
+.shop-head h1{margin:0;font:800 clamp(1.8rem,4vw,2.6rem)/1 "Outfit","Helvetica Neue",Arial,sans-serif;text-transform:uppercase}
+.shop-head p{margin:.5rem 0 0;color:var(--muted)}
+.shop-head b{color:#D92A1E}
+.cv{display:grid;grid-template-columns:230px minmax(0,1fr);gap:clamp(1.25rem,3vw,2.25rem);align-items:start}
+.cv-filters{position:sticky;top:110px}
+.cv-f-head{display:flex;align-items:center;gap:.6rem;padding-bottom:.7rem;border-bottom:2px solid var(--ink)}
+.cv-f-head p{margin:0;flex:1;font:700 .82rem var(--font);letter-spacing:.16em;text-transform:uppercase}
+.cv-f-head button{background:none;border:0;cursor:pointer;font:500 .74rem var(--font);color:var(--gold-ink);text-decoration:underline}
+.cv-f-head .cv-close{display:none;font-size:1.6rem;line-height:1;text-decoration:none;color:var(--ink)}
+.cv-filters details{border-bottom:1px solid var(--line);padding:.8rem 0}
+.cv-filters summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;font:600 .78rem var(--font);letter-spacing:.12em;text-transform:uppercase}
+.cv-filters summary::-webkit-details-marker{display:none}
+.cv-filters summary::after{content:"+";font-size:1.05rem;line-height:1;color:var(--muted)}
+.cv-filters details[open] summary::after{content:"−"}
+.cv-filters label{display:flex;align-items:center;gap:.55rem;margin-top:.6rem;font-size:.9rem;cursor:pointer}
+.cv-filters label span{margin-left:auto;font-size:.75rem;color:var(--muted)}
+.cv-filters input[type=checkbox],.cv-filters input[type=radio]{width:16px;height:16px;padding:0;accent-color:#14110A;flex:none}
+.cv-sw{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);flex:none;background:linear-gradient(#F6E3A6,#A9822F)}
+.cv-sw.white{background:linear-gradient(#fff,#B9BDBF)}.cv-sw.rose{background:linear-gradient(#F9D9C9,#A86C55)}
+.cv-price{display:flex;align-items:center;gap:.4rem;margin-top:.7rem}
+.cv-price input{width:100%;padding:.5rem .55rem;font-size:.85rem}
+.cv-apply,.cv-open{display:none}
+.cv-bar{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--line)}
+.cv-count{margin:0;flex:1;font-size:.82rem;color:var(--muted)}
+.cv-sort{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted)}
+.cv-sort select{width:auto;padding:.5rem 2rem .5rem .7rem;font-size:.85rem;border-radius:8px;background-color:#fff}
+.cv-empty{padding:3rem 1rem;text-align:center;color:var(--muted)}
+@media (max-width:900px){
+  .cv{grid-template-columns:1fr}
+  .cv-open{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem .9rem;border:1px solid var(--ink);border-radius:8px;background:#fff;font:600 .78rem var(--font);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+  .cv-open svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+  .cv-filters{position:fixed;top:0;bottom:0;left:0;z-index:90;width:min(320px,86vw);overflow-y:auto;background:var(--bg);padding:1rem 1.1rem 1.5rem;transform:translateX(-105%);transition:transform .3s ease;box-shadow:20px 0 40px -20px rgba(0,0,0,.5)}
+  .cv-filters.open{transform:none}
+  .cv-f-head .cv-close{display:block}
+  .cv-apply{display:block;width:100%;margin-top:1.2rem}
+  .cv-scrim{position:fixed;inset:0;z-index:80;background:rgba(10,10,9,.5)}
+  .cv-count{text-align:center}
+  .cv-sort span{display:none}
+}
+
+/* product page */
+.pv-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start}
+.pv-gallery.multi{display:grid;grid-template-columns:72px minmax(0,1fr);gap:.75rem}
+.pv-gallery.multi .pv-thumbs{flex-direction:column;margin-top:0}
+.pv-thumbs button{width:100%;max-width:76px}
+.pv-info{gap:1rem}
+.pv-title{font:700 clamp(1.4rem,2.6vw,1.9rem)/1.2 "Outfit","Helvetica Neue",Arial,sans-serif;text-transform:none;letter-spacing:0}
+.pv-pricebox{display:flex;align-items:baseline;flex-wrap:wrap;gap:.6rem}
+.pv-now{margin:0;font:800 1.9rem "Outfit","Helvetica Neue",Arial,sans-serif;color:#D92A1E}
+.pv-was{font-size:1.05rem;color:#9A968A}
+.pv-badge{padding:.22rem .5rem;border-radius:4px;background:#FBEDEA;color:#D92A1E;font:700 .75rem var(--font)}
+.pv-klarna{margin:-.4rem 0 0;font-size:.85rem;color:var(--muted)}
+.pv-klarna b{color:var(--ink)}
+.pv-klarna span{display:inline-block;padding:.05rem .4rem;border-radius:4px;background:#FFB3C7;color:#0B051D;font:800 .78rem "Helvetica Neue",Arial,sans-serif}
+.pv-opt-h{margin:0 0 .5rem;font-size:.82rem;color:var(--muted)}
+.pv-opt-h b{color:var(--ink);font-weight:600}
+.pv-opt-h a{margin-left:.6rem;color:var(--gold-ink);font-size:.78rem}
+.pv-chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.pv-chips button{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem .85rem;border:1.5px solid #DAD7CD;border-radius:8px;background:#fff;cursor:pointer;font:500 .8rem var(--font);color:var(--ink)}
+.pv-chips.sizes button{min-width:44px;justify-content:center;padding:.55rem .5rem}
+.pv-chips i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.pv-chips button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.pv-chips.need button{border-color:#E7A99F}
+.pv-note{margin:.45rem 0 0;font-size:.78rem;color:var(--gold-ink)}
+.pv-note.warn{color:#D92A1E}
+.pv-buy{width:100%;padding:1.05rem 1rem;font-size:.85rem;border-radius:10px}
+.pv-ask{margin-top:-.4rem;text-align:center;font-size:.82rem;color:var(--ink)}
+.pv-perks{list-style:none;margin:0;padding:.9rem 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;border-block:1px solid var(--line)}
+.pv-perks li{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center;font-size:.72rem;color:var(--muted)}
+.pv-perks svg{width:22px;height:22px;fill:none;stroke:var(--gold-ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pv-pay{margin:0;padding:0;border:0;background:none}
+.pv-sec{padding-top:.4rem}
+.pv-sec h2{margin:0 0 .55rem;font:700 .82rem var(--font);letter-spacing:.16em;text-transform:uppercase}
+.pv-sec p{margin:0;line-height:1.6;color:#3A3934}
+.pv-spec{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.pv-spec > div{padding:.6rem .8rem;border-bottom:1px solid var(--line)}
+.pv-spec > div:nth-child(odd){border-right:1px solid var(--line)}
+.pv-spec dt{font:600 .6rem var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pv-spec dd{margin:.15rem 0 0;font-size:.88rem;font-weight:500}
+.pv-small{margin-top:.6rem!important;font-size:.76rem!important;color:var(--muted)!important}
+@media (max-width:860px){.pv-gallery.multi{grid-template-columns:1fr}.pv-gallery.multi .pv-thumbs{flex-direction:row;order:2}}
+
+/* discount wheel popup (uses the offer window frame) */
+.wheel-card{grid-template-columns:1.05fr 1fr}
+.wheel-side{background:radial-gradient(ellipse at 50% 45%,#2A241A,#0B0A08 75%);display:grid;place-items:center;padding:1.5rem}
+.wheel-box{position:relative;width:min(100%,360px);aspect-ratio:1}
+.wheel-svg{width:100%;height:100%;display:block;filter:drop-shadow(0 20px 30px rgba(0,0,0,.6))}
+.wheel-spin{transition:transform 5s cubic-bezier(.12,.62,.1,1);transform-origin:0 0}
+.wheel-pct{font:900 17px "Outfit","Helvetica Neue",Arial,sans-serif}
+.wheel-off{font:800 8px "Outfit","Helvetica Neue",Arial,sans-serif;letter-spacing:1.5px}
+.wheel-pct.light,.wheel-off.light{fill:#F3DC93}.wheel-pct.dark,.wheel-off.dark{fill:#14110A}
+.wheel-light{fill:#FFF1C4}
+@media (prefers-reduced-motion:no-preference){.wheel-light{animation:wheelBlink 1s steps(1) infinite}}
+@keyframes wheelBlink{50%{fill:#8A6A2A}}
+.wheel-pointer{position:absolute;top:-4%;left:50%;width:11%;transform:translateX(-50%);filter:drop-shadow(0 4px 4px rgba(0,0,0,.5))}
+.wheel-body{text-align:center}
+.wheel-kicker{margin:0;font:600 .78rem var(--font);letter-spacing:.3em;text-transform:uppercase;color:#7A6233}
+.wheel-title{margin:.4rem 0 0;font:900 clamp(2.2rem,4.6vw,3.2rem)/1 "Outfit","Helvetica Neue",Arial,sans-serif;text-transform:uppercase;color:#D92A1E}
+.wheel-text{margin:.8rem 0 1.1rem;color:#444;font-size:.92rem}
+.wheel-body form{width:100%;display:grid;gap:.8rem}
+.offer-body .wheel-btn{background:linear-gradient(180deg,#E5483B,#B92D22);border-radius:12px}
+.offer-body .wheel-btn:hover{background:linear-gradient(180deg,#F05A4D,#C9372C)}
+.wheel-fine{margin:.6rem 0 0;font-size:.72rem;color:#999}
+@media (max-width:700px){.wheel-card{grid-template-rows:auto auto}.wheel-side{padding:1rem}.wheel-box{width:min(64vw,250px)}}
+
+/* design section on phones: intro above the designer */
+@media (max-width:1020px){.hero-grid.solo{order:3;width:100%;display:grid;justify-items:center}}
+.cv-filters label{text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink)}
+/* wheel popup on phones: wheel on top, text below (must come after the two-column rule) */
+@media (max-width:700px){.offer-card.wheel-card{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;max-height:94vh;overflow-y:auto}.wheel-title{font-size:2.2rem}.wheel-body{padding:1.1rem 1.2rem 1.3rem}}
+/* product page on phones: photos on top, details below (after the two-column rule) */
+@media (max-width:860px){.pv-grid{grid-template-columns:1fr}.pv-gallery{position:static}}

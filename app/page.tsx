@@ -2,12 +2,12 @@ import { Fragment } from "react";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import Ticker from "@/components/Ticker";
-import AvailableWindow from "@/components/AvailableWindow";
+import ProductCard from "@/components/ProductCard";
 import { PIECES } from "@/lib/available";
 import { priceList } from "@/lib/gold";
 import JewelryDesigner from "@/components/JewelryDesigner";
 import SizeFinder from "@/components/SizeFinder";
-import { EMAIL } from "@/lib/site";
+import { EMAIL, SITE_SALE } from "@/lib/site";
 
 const strokeIcon = { fill: "none", strokeWidth: 1.4 } as const;
 const roundIcon = { ...strokeIcon, strokeLinecap: "round", strokeLinejoin: "round" } as const;
@@ -77,20 +77,50 @@ function Strip({ label, images }: { label: string; images: [string, string, stri
 export const revalidate = 3600; // the window shows gold-based prices, checked hourly
 
 export default async function Home() {
-  const prices = await priceList(PIECES);
+  const pieces = PIECES.filter(p => p.status === "available" && p.image);
+  const prices = await priceList(pieces);
+  const pic = (id: string) => pieces.find(p => p.id === id)?.image;
   return (
     <main id="home">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_LD) }} />
-      <section className="hero">
+      <section className="promo">
+        <div className="wrap promo-in">
+          <div className="promo-text">
+            <p className="label">Handmade in Los Angeles</p>
+            <h1>Iced out. <span className="g">One of one.</span></h1>
+            <p>{SITE_SALE ? <><b>{SITE_SALE}% off</b> every ready-to-ship piece, or </> : "Shop ready-to-ship pieces, or "}design your own name pendant in minutes.</p>
+            <div className="promo-ctas">
+              <Link href="/available" className="btn">Shop now</Link>
+              <Link href="#design" className="btn ghost">Design yours</Link>
+            </div>
+          </div>
+          <div className="promo-pics" aria-hidden="true">
+            {["king-spades", "lion-crown", "angel-ak"].map(id => pic(id) && <img key={id} src={pic(id)} alt="" />)}
+          </div>
+        </div>
+      </section>
+
+      <section className="best">
+        <div className="wrap">
+          <div className="best-head">
+            <h2>Shop the collection</h2>
+            <Link href="/available">View all →</Link>
+          </div>
+          <ul className="pc-grid four">
+            {pieces.map(p => <li key={p.id}><ProductCard p={p} price={prices[p.id]} /></li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section className="hero" id="design">
         <div className="wrap">
           <div className="hero-intro" data-reveal>
             <p className="label"><span className="live-dot" aria-hidden="true" />Live jewelry designer</p>
-            <h1 className="sr-only">OG Customs LA — custom name pendants, earrings and rings, handmade in Los Angeles</h1>
+            <h2 className="design-h">Design <span className="g">yours</span></h2>
             <p className="hero-sub">Pick a piece, add your name or initials and choose your diamonds. Our professional team will make it by hand in Los Angeles.</p>
           </div>
-          <div className="hero-grid duo">
+          <div className="hero-grid solo">
             <JewelryDesigner />
-            <AvailableWindow prices={prices} />
           </div>
         </div>
       </section>

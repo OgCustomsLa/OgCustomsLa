@@ -1,38 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import AvailableGallery from "@/components/AvailableGallery";
+import CollectionView from "@/components/CollectionView";
 import { PIECES } from "@/lib/available";
 import { priceList } from "@/lib/gold";
+import { SITE_SALE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Available now",
+  title: "Shop — ready to ship",
   description: "One-of-a-kind OG Customs LA pieces, finished and ready to ship from Los Angeles.",
 };
 
-const TRUST = [
-  ["Made in", "Los Angeles"],
-  ["Designed in 3D", "approved before casting"],
-  ["Ships worldwide", "or pick up in LA"],
-  ["Free quote", "on any custom piece"],
-];
-
 export const revalidate = 3600; // prices follow the gold price, checked hourly
 
-export default async function AvailablePage() {
-  const prices = await priceList(PIECES);
+export default async function AvailablePage({ searchParams }: { searchParams: Promise<{ cat?: string }> }) {
+  const pieces = PIECES.filter(p => p.status === "available" && p.image);
+  // category links from the menu: /available?cat=Pendants
+  const asked = (await searchParams).cat;
+  const cat = pieces.some(p => p.category === asked) ? asked : undefined;
+  const prices = await priceList(pieces);
   return (
-    <div className="av">
+    <div className="shop">
       <div className="wrap">
-        <div className="av-hero" data-reveal>
-          <p className="label"><span className="live-dot" aria-hidden="true" />Ready to wear</p>
-          <h1 className="op-title">Available <span className="g">now</span></h1>
-          <p className="av-sub">One-of-a-kind pieces, finished and polished in our Los Angeles studio. When it&apos;s gone, it&apos;s gone.</p>
+        <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><b>Shop</b></nav>
+        <div className="shop-head">
+          <h1>{cat ?? "Ready to ship"}</h1>
+          <p>One-of-a-kind pieces, finished in our Los Angeles studio.{SITE_SALE ? <> <b>{SITE_SALE}% off everything</b> right now.</> : null}</p>
         </div>
-      </div>
+        <CollectionView key={cat ?? "all"} pieces={pieces} prices={prices} initialCat={cat} />
 
-      <AvailableGallery prices={prices} />
-
-      <div className="wrap">
         <div className="custom-banner" data-reveal>
           <div className="cb-thumbs" aria-hidden="true">
             <img src="/images/elena-sketch.jpg" alt="" loading="lazy" />
@@ -40,16 +35,10 @@ export default async function AvailablePage() {
             <img src="/images/elena-gold.jpg" alt="" loading="lazy" />
           </div>
           <div className="cb-text">
-            <h2>Start your custom piece</h2>
-            <p>Sketch · 3D design · cast in gold or silver</p>
+            <h2>Want something one of a kind?</h2>
+            <p>Send a sketch or an idea · we design it in 3D · cast in gold or silver</p>
           </div>
-          <Link href="/order" className="btn">Start project</Link>
-        </div>
-      </div>
-
-      <div className="trust-bar" aria-label="Why OG Customs LA">
-        <div className="wrap">
-          {TRUST.map(([b, s]) => <p key={b}><b>{b}</b> {s}</p>)}
+          <Link href="/order" className="btn">Start a custom order</Link>
         </div>
       </div>
     </div>
